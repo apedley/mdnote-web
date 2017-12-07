@@ -1,0 +1,32 @@
+<div class="layout" [class.app-is-mobile]="mobileQuery.matches">
+
+  <mat-toolbar color="primary" class="app-toolbar">
+    <button mat-icon-button (click)="menuButtonClicked()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="app-title-name">
+      <ng-content select="[page-title]"></ng-content>
+    </h1>
+  </mat-toolbar>
+  <mat-sidenav-container class="app-sidebar-container" *ngIf="sidebarEnabled">
+
+    <mat-sidenav mode="side" [opened]="sidebarOpen && !mobileQuery.matches" class="app-sidebar-nav">
+      <!-- sidebar projected here -->
+      <ng-content select="[sidenav-content]">
+      </ng-content>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="app-main-content">
+
+      <!-- main content projected here -->
+      <ng-content select="[main-content]">
+      </ng-content>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <div *ngIf="!sidebarEnabled">
+    <!-- main content projected here for pages without sidebars -->
+    <ng-content select="[no-sidebar-main-content]"></ng-content>
+  </div>
+</div>

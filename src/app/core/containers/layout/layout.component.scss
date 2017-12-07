@@ -1,0 +1,20 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.app-sidebar-container {
+  flex: 1;
+}
+
+.app-main-content {
+  flex: 1;
+}
+.app-sidebar-nav {
+  width: 300px;
+}
