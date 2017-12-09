@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { UsersModule } from './users/users.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -17,6 +18,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     CoreModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     UsersModule,
     AppRoutingModule
   ],

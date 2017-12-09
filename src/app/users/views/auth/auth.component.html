@@ -1,25 +1,25 @@
 <app-layout>
   <div no-sidebar-main-content>
-    <div class="signup-form-container">
-      <form [formGroup]="signupForm" class="signup-form" (ngSubmit)="submitSignupForm()">
-        <h2>Sign Up</h2>
+    <div class="auth-form-container">
+      <form [formGroup]="authForm" class="auth-form" (ngSubmit)="submitAuthForm()">
+        <h2>{{ authFunction }}</h2>
         <h5 class="form-error" *ngIf="formError">Error: {{ formError }}</h5>
         <mat-form-field>
           <input matInput formControlName="email" placeholder="Email Address">
-          <mat-error *ngIf="signupForm.controls['email'].hasError('email')">
+          <mat-error *ngIf="authForm.controls['email'].hasError('email')">
             Please enter a valid email address
           </mat-error>
         </mat-form-field>
         <mat-form-field hintLabel="Min 6 characters">
           <input type="password" matInput formControlName="password" placeholder="Password">
-          <mat-error *ngIf="signupForm.controls['password'].hasError('minlength') || signupForm.controls['password'].hasError('required')">
+          <mat-error *ngIf="authForm.controls['password'].hasError('minlength') || authForm.controls['password'].hasError('required')">
             Please enter at least 6 characters
           </mat-error>
         </mat-form-field>
         <div class="form-buttons">
-          <button mat-raised-button color="primary" [disabled]="signupForm.invalid || formLoading">
+          <button mat-raised-button color="primary" [disabled]="authForm.invalid || formLoading">
             <span *ngIf="!formLoading">
-              Sign Up
+              {{ authFunction }}
             </span>
             <span *ngIf="formLoading">
               Loading

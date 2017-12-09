@@ -1,3 +1,5 @@
+import { AuthGuard } from './users/auth.guard';
+import { AuthComponent } from './users/views/auth/auth.component';
 import { SigninComponent } from './users/views/signin/signin.component';
 import { SignupComponent } from './users/views/signup/signup.component';
 import { LayoutComponent } from './core/containers/layout/layout.component';
@@ -9,22 +11,25 @@ const routes: Routes = [
 
   {
     path: 'signup',
-    component: SignupComponent,
+    component: AuthComponent,
     data: {
-      sidebar: false
+      sidebar: false,
+      authFunction: 'Sign Up'
     }
   },
   {
     path: 'signin',
-    component: SigninComponent,
+    component: AuthComponent,
     data: {
-      sidebar: false
+      sidebar: false,
+      authFunction: 'Sign In'
     }
   },
     {
       path: '',
       pathMatch: 'full',
       component: HomeViewComponent,
+      canActivate: [AuthGuard],
       data: {
         sidebar: true
       }

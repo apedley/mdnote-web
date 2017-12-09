@@ -13,7 +13,6 @@ export class CategoryListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
   }
 
   categoryItemSelected(category) {

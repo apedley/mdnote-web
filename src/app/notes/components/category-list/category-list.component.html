@@ -1,6 +1,9 @@
 <mat-list>
-  <h3 mat-subheader>Categories</h3>
-    <app-category-list-item [category]="category" *ngFor="let category of categories" (click)="categoryItemSelected(category)">
+  <h3 mat-header class="list-header">All</h3>
+  <h3 mat-header class="list-header">Categories</h3>
+
+
+    <app-category-list-item [category]="category" *ngFor="let category of categories" (click)="categoryItemSelected(category)" class="category-list-item">
 
     </app-category-list-item>
 </mat-list>

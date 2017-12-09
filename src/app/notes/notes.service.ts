@@ -13,8 +13,6 @@ export class NotesService {
   private _categories: Category[] = [];
   public categorySubscription = new ReplaySubject<Category[]>();
 
-  // private _selectedCategory: Category;
-  // public selectedCategorySubscription = new ReplaySubject<Category>();
   private _selectedCategorySubject: ReplaySubject<Category> = new ReplaySubject<Category>();
   public readonly selectedCategory: Observable<Category> = this._selectedCategorySubject.asObservable();
 
@@ -25,7 +23,13 @@ export class NotesService {
     return this.httpClient.get<[Category]>(url, {
       headers: new HttpHeaders().set('Authorization', `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.vkzuR0AkSP-4cEqKzlCnbJdISIHCb5ZOnXiSbdgDiQg`)
     }).subscribe(response => {
-      this._categories = response;
+
+      const uncategorized = {
+        name: 'Uncategorized',
+        id: null
+      };
+
+      this._categories = [uncategorized, ...response];
       this.categorySubscription.next(this._categories.slice());
     });
   }

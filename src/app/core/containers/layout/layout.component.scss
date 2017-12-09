@@ -15,6 +15,12 @@
 .app-main-content {
   flex: 1;
 }
-.app-sidebar-nav {
+
+.app-sidebar {
   width: 300px;
+  padding: 0 20px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
 }

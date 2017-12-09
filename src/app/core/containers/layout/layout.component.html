@@ -7,10 +7,26 @@
     <h1 class="app-title-name">
       <ng-content select="[page-title]"></ng-content>
     </h1>
+
+
+    <span class="toolbar-spacer"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>person</mat-icon>
+    </button>
+
+
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Log Out</span>
+      </button>
+    </mat-menu>
   </mat-toolbar>
+
   <mat-sidenav-container class="app-sidebar-container" *ngIf="sidebarEnabled">
 
-    <mat-sidenav mode="side" [opened]="sidebarOpen && !mobileQuery.matches" class="app-sidebar-nav">
+    <mat-sidenav mode="side" [opened]="sidebarOpen && !mobileQuery.matches" class="app-sidebar">
       <!-- sidebar projected here -->
       <ng-content select="[sidenav-content]">
       </ng-content>
