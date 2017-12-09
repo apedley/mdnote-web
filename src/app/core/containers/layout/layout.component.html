@@ -17,7 +17,7 @@
 
 
     <mat-menu #userMenu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="signout()">
         <mat-icon>power_settings_new</mat-icon>
         <span>Log Out</span>
       </button>

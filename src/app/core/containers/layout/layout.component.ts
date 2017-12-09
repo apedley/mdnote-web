@@ -1,3 +1,4 @@
+import { AuthService } from './../../../users/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from '../../../notes/category.model';
 import { NotesService } from './../../../notes/notes.service';
@@ -15,9 +16,8 @@ export class LayoutComponent implements OnDestroy, OnInit {
   public sidebarOpen = false;
   @Input() sidebarStartsOpen: boolean;
 
-
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, route: ActivatedRoute) {
-    this.sidebarEnabled = route.snapshot.data['sidebar'];
+  constructor(public changeDetectorRef: ChangeDetectorRef, public media: MediaMatcher, private route: ActivatedRoute, private authService: AuthService) {
+    this.sidebarEnabled = !route.snapshot.data['hideSidebar'];
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -38,4 +38,7 @@ export class LayoutComponent implements OnDestroy, OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
+  signout() {
+    this.authService.signout();
+  }
 }

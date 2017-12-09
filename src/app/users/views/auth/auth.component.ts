@@ -42,7 +42,6 @@ export class AuthComponent implements OnInit {
   private signup() {
     this.authService.signup(this.authForm.value).subscribe(
       (response) => {
-        console.dir(response);
         this.router.navigate(['/signin']);
       },
       (err) => {

@@ -13,7 +13,7 @@ const routes: Routes = [
     path: 'signup',
     component: AuthComponent,
     data: {
-      sidebar: false,
+      hideSidebar: true,
       authFunction: 'Sign Up'
     }
   },
@@ -21,7 +21,7 @@ const routes: Routes = [
     path: 'signin',
     component: AuthComponent,
     data: {
-      sidebar: false,
+      hideSidebar: true,
       authFunction: 'Sign In'
     }
   },
@@ -29,10 +29,7 @@ const routes: Routes = [
       path: '',
       pathMatch: 'full',
       component: HomeViewComponent,
-      canActivate: [AuthGuard],
-      data: {
-        sidebar: true
-      }
+      canActivate: [AuthGuard]
     }
 ];
 

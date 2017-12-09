@@ -51,7 +51,6 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    console.log('isAuthenticated: ' + this.token !== null);
     return this.token !== null;
   }
 }
