@@ -1,3 +1,4 @@
+import { AuthEffects } from './auth/store/effects';
 import { LayoutEffects } from './core/store/layout.effects';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
@@ -31,7 +32,7 @@ import * as fromRootStore from './reducers';
     NotesModule,
     StoreRouterConnectingModule,
     StoreModule.forRoot(fromRootStore.reducers),
-    EffectsModule.forRoot([LayoutEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     !environment.production
     ? StoreDevtoolsModule.instrument()
     : []

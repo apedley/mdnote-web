@@ -1,3 +1,4 @@
+import { LayoutService } from '../layout.service';
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -23,7 +24,19 @@ export class LayoutEffects {
   //     return this.dialogRef.afterClosed();
   //   })
   // );
+  // @Effect({ dispatch: false })
+  // saveLayout = this.actions.ofType(layoutActions.CLOSE_SIDEBAR, layoutActions.OPEN_SIDEBAR, layoutActions.TOGGLE_SIDEBAR).pipe(
+  //   map((action) => {
+  //     return this.layoutService.getLayoutState();
+  //   }),
+  //   switchMap((state) => {
+  //     debugger;
+  //     return {
 
-  constructor(private actions: Actions, private router: Router, public dialog: MatDialog) { }
+  //     }
+  //   })
+  // );
+
+  constructor(private actions: Actions, private router: Router, public dialog: MatDialog, private layoutService: LayoutService) { }
 
 }

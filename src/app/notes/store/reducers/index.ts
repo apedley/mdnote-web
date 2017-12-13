@@ -70,3 +70,11 @@ export const getSelectedNote = createSelector(
     return selectedId && entities[selectedId];
   }
 );
+
+export const getRouteNote = createSelector(
+  getNoteEntities,
+  fromRoot.getRouterState,
+  (entities, router) => {
+    return router.state && entities[router.state.params.noteId];
+  }
+);

@@ -1,9 +1,11 @@
+import { LayoutService } from '../../layout.service';
 import { AuthService } from '../../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from '../../../notes/models/category.model';
 import { NotesService } from '../../../notes/notes.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
 import {MediaMatcher, BreakpointObserver} from '@angular/cdk/layout';
+import { Observable } from 'rxjs/Observable';
 
 @Component({selector: 'app-layout', templateUrl: './layout.component.html', styleUrls: ['./layout.component.scss']})
 export class LayoutComponent implements OnDestroy, OnInit {
@@ -14,14 +16,16 @@ export class LayoutComponent implements OnDestroy, OnInit {
 
   public sidebarEnabled = true;
   public sidebarOpen = true;
-  // @Input() sidebarStartsOpen: boolean;
 
-  constructor(public changeDetectorRef: ChangeDetectorRef, public media: MediaMatcher, private route: ActivatedRoute, private authService: AuthService) {
+  public sidebar: Observable<boolean>;
+
+  constructor(public changeDetectorRef: ChangeDetectorRef, public media: MediaMatcher, private route: ActivatedRoute, private authService: AuthService, private layoutService: LayoutService) {
     this.sidebarEnabled = !route.snapshot.data['hideSidebar'];
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.sidebar = this.layoutService.getSidebarOpen();
   }
 
   ngOnInit(): void {
@@ -35,7 +39,8 @@ export class LayoutComponent implements OnDestroy, OnInit {
   }
 
   menuButtonClicked() {
-    this.sidebarOpen = !this.sidebarOpen;
+    // this.sidebarOpen = !this.sidebarOpen;
+    this.layoutService.toggleSidebar();
   }
 
   signout() {

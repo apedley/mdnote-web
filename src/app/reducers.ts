@@ -3,11 +3,12 @@ import * as fromLayout from './core/store/layout.reducers';
 import * as fromRouter from '@ngrx/router-store';
 
 import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
-import { Params, RouterStateSnapshot } from '@angular/router';
+import { Params, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 export interface RouterStateUrl {
   url: string;
   queryParams: Params;
+  params: Params;
 }
 
 export class CustomRouterStateSerializer implements fromRouter.RouterStateSerializer<RouterStateUrl> {
@@ -15,7 +16,13 @@ export class CustomRouterStateSerializer implements fromRouter.RouterStateSerial
     const { url } = routerState;
     const queryParams = routerState.root.queryParams;
 
-    return { url, queryParams };
+    let state: ActivatedRouteSnapshot = routerState.root;
+    while (state.firstChild) {
+      state = state.firstChild;
+    }
+    const { params } = state;
+
+    return { url, queryParams, params };
   }
 }
 
@@ -31,11 +38,16 @@ export const reducers: ActionReducerMap<State> = {
   routerReducer: fromRouter.routerReducer
 };
 
+export const getRouterState = createFeatureSelector<fromRouter.RouterReducerState<RouterStateUrl>>('routerReducer');
 
 export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
+
 export const getSidebarOpen = createSelector(getLayoutState, fromLayout.getSidebarOpen);
 
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
 
 export const getUser = createSelector(getAuthState, fromAuth.getUser);
+export const getToken = createSelector(getAuthState, fromAuth.getToken);
+export const getError = createSelector(getAuthState, fromAuth.getError);
 export const getLoggedIn = createSelector(getAuthState, fromAuth.getLoggedIn);
+export const getFormLoading = createSelector(getAuthState, fromAuth.getFormLoading);

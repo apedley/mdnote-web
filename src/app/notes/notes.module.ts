@@ -38,9 +38,9 @@ import { ShowNoteComponent } from './views/notes/show-note/show-note.component';
     MarkdownModule.forRoot(),
     RouterModule.forChild([
       { path: 'new', component: CreateNoteComponent },
-      { path: ':id', component: ShowNoteComponent },
-      { path: ':id/edit', component: EditNoteComponent },
-      { path: 'categories/:id', component: ShowCategoryComponent },
+      { path: ':noteId', component: ShowNoteComponent },
+      { path: ':noteId/edit', component: EditNoteComponent },
+      { path: 'categories/:categoryId', component: ShowCategoryComponent },
       { path: '', component: ListCategoriesComponent, pathMatch: 'full' }
     ]),
     StoreModule.forFeature('notes', reducers),

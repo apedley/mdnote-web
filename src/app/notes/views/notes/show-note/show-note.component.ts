@@ -18,9 +18,10 @@ export class ShowNoteComponent implements OnInit {
   noteId: number;
 
   constructor(private notesService: NotesService, private route: ActivatedRoute, public router: Router, private layoutService: LayoutService) {
-    this.noteId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
-    this.notesService.selectNote(this.route.snapshot.paramMap.get('id'));
-    this.note = this.notesService.getSelectedNote();
+    this.noteId = parseInt(this.route.snapshot.paramMap.get('noteId'), 10);
+    this.note = this.notesService.getRouterSelectedNote();
+    // this.notesService.selectNote(this.route.snapshot.paramMap.get('noteId'));
+    // this.note = this.notesService.getSelectedNote();
     this.note.subscribe(note => {
       if (note && !note.categoryId) {
         this.category = this.notesService.getCategoryWithNotes(0);

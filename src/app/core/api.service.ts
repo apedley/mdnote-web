@@ -1,3 +1,4 @@
+import { Authenticate } from '../auth/user.model';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Category } from '../notes/models/category.model';
@@ -10,12 +11,29 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ApiService {
+  public authToken: string;
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) {
+    this.authService.getToken().subscribe( token => {
+      this.authToken = token;
+    });
+  }
+
+  signUp(userInfo: Authenticate) {
+    const url = `${environment.baseApiUrl}/signup`;
+
+    return this.httpClient.post(url, userInfo);
+  }
+
+  signIn(userInfo: Authenticate) {
+    const url = `${environment.baseApiUrl}/signin`;
+
+    return this.httpClient.post(url, userInfo);
+  }
 
   getAllNotes() {
     const url = `${environment.baseApiUrl}/notes`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
     return this.httpClient.get<[Category]>(url, {
       headers: new HttpHeaders().set('Authorization', authHeader)
     });
@@ -23,7 +41,7 @@ export class ApiService {
 
   getAllCategories() {
     const url = `${environment.baseApiUrl}/categories`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
 
     return this.httpClient.get<[Category]>(url, {
       headers: new HttpHeaders().set('Authorization', authHeader)
@@ -32,7 +50,7 @@ export class ApiService {
 
   createNote(noteData: Note) {
     const url = `${environment.baseApiUrl}/notes`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
 
     const cleanNoteData = this._removeInvalidKeys(noteData);
 
@@ -43,7 +61,7 @@ export class ApiService {
 
   editNote(noteId: number, noteData: Note) {
     const url = `${environment.baseApiUrl}/notes/${noteId}`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
     const cleanNoteData = this._removeInvalidKeys(noteData);
 
     return this.httpClient.patch(url, cleanNoteData, {
@@ -53,7 +71,7 @@ export class ApiService {
 
   deleteNote(noteId) {
     const url = `${environment.baseApiUrl}/notes/${noteId}`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
 
     return this.httpClient.delete(url, {
       headers: new HttpHeaders().set('Authorization', authHeader)
@@ -62,7 +80,7 @@ export class ApiService {
 
   createCategory(categoryName: string) {
     const url = `${environment.baseApiUrl}/categories`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
 
     const body = { name: categoryName };
 
@@ -73,7 +91,7 @@ export class ApiService {
 
   deleteCategory(categoryId) {
     const url = `${environment.baseApiUrl}/categories/${categoryId}`;
-    const authHeader = `bearer ${this.authService.token}`;
+    const authHeader = `bearer ${this.authToken}`;
 
     return this.httpClient.delete(url, {
       headers: new HttpHeaders().set('Authorization', authHeader)

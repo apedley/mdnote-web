@@ -18,8 +18,8 @@ export class EditNoteComponent implements OnInit {
   noteId: number;
 
   constructor(private notesService: NotesService, private route: ActivatedRoute) {
-    this.noteId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
-    this.notesService.selectNote(this.route.snapshot.paramMap.get('id'));
+    this.noteId = parseInt(this.route.snapshot.paramMap.get('noteId'), 10);
+    this.notesService.selectNote(this.route.snapshot.paramMap.get('noteId'));
     this.note = this.notesService.getSelectedNote();
     this.categories = this.notesService.categories;
     this.notesService.loadCategoriesAndNotes();

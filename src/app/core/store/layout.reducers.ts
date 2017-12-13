@@ -22,6 +22,9 @@ export function reducer(state = initialState, action: layout.Actions): State {
     case layout.CLOSE_SIDEBAR: {
       return { ...state, sidebarOpen: false };
     }
+    case layout.TOGGLE_SIDEBAR: {
+      return { ...state, sidebarOpen: !state.sidebarOpen };
+    }
     case layout.OPEN_INPUT_DIALOG: {
       return { ...state, inputDialogOpen: true, inputDialog: action.payload };
     }

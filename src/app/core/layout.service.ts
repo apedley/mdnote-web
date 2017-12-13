@@ -3,9 +3,11 @@ import { InputDialog, ConfirmationDialog } from './models/dialog.model';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromLayout from './store/layout.reducers';
+import * as fromRoot from '../reducers';
 import * as layout from './store/layout.actions';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UserInputDialogComponent } from './components/user-input-dialog.component';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -32,4 +34,13 @@ export class LayoutService {
 
     return dialogRef.afterClosed();
   }
+
+  getSidebarOpen(): Observable<boolean> {
+    return this.layoutStore.select(fromRoot.getSidebarOpen);
+  }
+
+  toggleSidebar() {
+    this.layoutStore.dispatch(new layout.ToggleSidebar());
+  }
+
 }

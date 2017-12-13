@@ -5,7 +5,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="app-title-name">
-        mdNote
+        mdNote {{ ( sidebar | async ) | json }}
     </h1>
     <span class="app-subtitle">
       <ng-content select="[page-title]"></ng-content>
@@ -30,7 +30,7 @@
 
   <mat-sidenav-container class="app-sidebar-container" *ngIf="sidebarEnabled">
 
-    <mat-sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidebarOpen" class="app-sidebar">
+    <mat-sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidebar | async" class="app-sidebar">
       <!-- sidebar projected here -->
       <!-- sidebar
       <ng-content select="[sidenav-content]">

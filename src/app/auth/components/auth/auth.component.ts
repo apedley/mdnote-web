@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-auth',
@@ -16,8 +17,13 @@ export class AuthComponent implements OnInit {
   public formError: string;
   formLoading = false;
 
+  public error;
+  public authFormLoading: Observable<boolean>;
+
   constructor(public fb: FormBuilder, private authService: AuthService, private router: Router, route: ActivatedRoute) {
     this.authFunction = route.snapshot.data['authFunction'];
+    this.error = this.authService.getError();
+    this.authFormLoading = this.authService.getFormLoading();
   }
 
   ngOnInit() {
@@ -30,36 +36,46 @@ export class AuthComponent implements OnInit {
 
   submitAuthForm() {
     this.formLoading = true;
+
     if (this.authFunction === 'Sign Up') {
+      // this.signUpUser();
       this.signup();
     } else if (this.authFunction === 'Sign In') {
+      // this.signinUser();
       this.signin();
     }
   }
   forgotPassword(e) {
     e.preventDefault();
   }
+  // private signup() {
+  //   this.authService.signup(this.authForm.value).subscribe(
+  //     (response) => {
+  //       this.router.navigate(['/signin']);
+  //     },
+  //     (err) => {
+  //       this.formError = err.error;
+  //       this.formLoading = false;
+  //     }
+  //   );
+  // }
+
   private signup() {
-    this.authService.signup(this.authForm.value).subscribe(
-      (response) => {
-        this.router.navigate(['/signin']);
-      },
-      (err) => {
-        this.formError = err.error;
-        this.formLoading = false;
-      }
-    );
+    this.authService.signup(this.authForm.value);
   }
+  // private signin() {
+  //   this.authService.signin(this.authForm.value).subscribe(
+  //     null,
+  //     (err) => {
+  //       this.formLoading = false;
+  //       this.formError = err.error;
+  //       if (err.error === 'Unauthorized') {
+  //         this.formError = 'Incorrect email or password';
+  //       }
+  //     }
+  //   );
+  // }
   private signin() {
-    this.authService.signin(this.authForm.value).subscribe(
-      null,
-      (err) => {
-        this.formLoading = false;
-        this.formError = err.error;
-        if (err.error === 'Unauthorized') {
-          this.formError = 'Incorrect email or password';
-        }
-      }
-    );
+    this.authService.signin(this.authForm.value);
   }
 }

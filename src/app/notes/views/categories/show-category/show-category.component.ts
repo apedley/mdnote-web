@@ -21,7 +21,7 @@ export class ShowCategoryComponent implements OnInit {
   constructor(private notesService: NotesService, private route: ActivatedRoute, public router: Router, private layoutService: LayoutService) {
     this.notesService.loadCategoriesAndNotes();
     this.route.paramMap.subscribe(paramMap => {
-      this.categoryId = parseInt(paramMap.get('id'), 10);
+      this.categoryId = parseInt(paramMap.get('categoryId'), 10);
       this.notesService.selectCategory(this.categoryId);
       this.category = this.notesService.getCategoryWithNotes(this.categoryId);
     });

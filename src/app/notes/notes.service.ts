@@ -135,4 +135,8 @@ export class NotesService {
   deleteCategory(categoryId) {
     return this.store.dispatch(new category.Delete(categoryId));
   }
+
+  getRouterSelectedNote() {
+    return this.store.select(fromNotes.getRouteNote);
+  }
 }
