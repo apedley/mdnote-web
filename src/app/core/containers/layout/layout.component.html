@@ -26,10 +26,13 @@
 
   <mat-sidenav-container class="app-sidebar-container" *ngIf="sidebarEnabled">
 
-    <mat-sidenav mode="side" [opened]="sidebarOpen && !mobileQuery.matches" class="app-sidebar">
+    <mat-sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidebarOpen" class="app-sidebar">
       <!-- sidebar projected here -->
+      <!-- sidebar
       <ng-content select="[sidenav-content]">
-      </ng-content>
+      </ng-content> -->
+      <app-sidebar-container></app-sidebar-container>
+
     </mat-sidenav>
 
     <mat-sidenav-content class="app-main-content">

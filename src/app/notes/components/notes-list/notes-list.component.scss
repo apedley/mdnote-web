@@ -1,0 +1,28 @@
+@import '../../../../theme.scss';
+.notes-list {
+  width: 100%;
+}
+
+table {
+  border-spacing: 0;
+  font-size: .8em;
+}
+
+tr {
+  cursor: pointer;
+}
+
+tr.alt {
+  background: $bright-background;
+}
+
+tr:hover {
+  background: #f3f3f3;
+}
+
+td {
+  padding: 2px;
+}
+td.date {
+  text-align: right;
+}

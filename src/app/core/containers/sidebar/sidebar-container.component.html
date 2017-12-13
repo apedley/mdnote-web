@@ -1,0 +1,32 @@
+<div>
+  <mat-nav-list>
+
+    <mat-list-item [routerLink]="['/notes', 'new']">
+      <mat-icon mat-list-icon>add</mat-icon>
+      <h4 mat-line>New Note</h4>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item [routerLink]="['/notes']">
+      <mat-icon mat-list-icon>library_books</mat-icon>
+      <h4 mat-line>All</h4>
+    </mat-list-item>
+    <h3 matSubheader>Categories</h3>
+    <mat-list-item *ngFor="let category of categories | async" [routerLink]="['/notes','categories',category.id]">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>{{ category.name }} ({{ category.notes.length }})</h4>
+    </mat-list-item>
+    <!-- <mat-list-item [routerLink]="['/notes','categories','0']">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>Uncategorized</h4>
+    </mat-list-item> -->
+    <mat-list-item (click)="newCategory()">
+      <mat-icon mat-list-icon>create_new_folder</mat-icon>
+      <h4 mat-line>New Category</h4>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item (click)="logout()">
+      <mat-icon mat-list-icon>power_settings_new</mat-icon>
+      <h4 mat-line>Logout</h4>
+    </mat-list-item>
+  </mat-nav-list>
+</div>

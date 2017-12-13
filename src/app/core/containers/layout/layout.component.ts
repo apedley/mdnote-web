@@ -1,7 +1,7 @@
-import { AuthService } from './../../../users/auth.service';
+import { AuthService } from '../../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from '../../../notes/category.model';
-import { NotesService } from './../../../notes/notes.service';
+import { Category } from '../../../notes/models/category.model';
+import { NotesService } from '../../../notes/notes.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
 import {MediaMatcher, BreakpointObserver} from '@angular/cdk/layout';
 
@@ -13,8 +13,8 @@ export class LayoutComponent implements OnDestroy, OnInit {
   private _mobileQueryListener: () => void;
 
   public sidebarEnabled = true;
-  public sidebarOpen = false;
-  @Input() sidebarStartsOpen: boolean;
+  public sidebarOpen = true;
+  // @Input() sidebarStartsOpen: boolean;
 
   constructor(public changeDetectorRef: ChangeDetectorRef, public media: MediaMatcher, private route: ActivatedRoute, private authService: AuthService) {
     this.sidebarEnabled = !route.snapshot.data['hideSidebar'];
@@ -25,8 +25,8 @@ export class LayoutComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    if (this.sidebarStartsOpen) {
-      this.sidebarOpen = true;
+    if (this.mobileQuery.matches) {
+      this.sidebarOpen = false;
     }
   }
 

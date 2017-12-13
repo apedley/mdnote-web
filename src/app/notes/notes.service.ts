@@ -1,41 +1,138 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Category } from './category.model';
+import { Store } from '@ngrx/store';
+import * as category from './store/actions/category';
+import * as notes from './store/actions/notes';
+import * as fromNotes from './store/reducers/index';
+import { Category } from './models/category.model';
+import { Note } from './models/note.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { AuthService } from 'app/auth/auth.service';
+import { environment } from '../../environments/environment';
+import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/first';
 
 @Injectable()
 export class NotesService {
+  categories: Observable<Category[]>;
+  notes: Observable<Note[]>;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private store: Store<fromNotes.State>) {
+    this.categories = store.select(fromNotes.getAllCategories);
+    this.notes = store.select(fromNotes.getAllNotes);
+  }
 
-  private _categories: Category[] = [];
-  public categorySubscription = new ReplaySubject<Category[]>();
+  loadCategories() {
+    this.store.dispatch(new category.Load());
+  }
+  loadCategoriesAndNotes() {
 
-  private _selectedCategorySubject: ReplaySubject<Category> = new ReplaySubject<Category>();
-  public readonly selectedCategory: Observable<Category> = this._selectedCategorySubject.asObservable();
+    this.store.dispatch(new category.Load());
+    this.store.dispatch(new notes.Load());
+  }
 
 
-  getCategories() {
-    const url = 'http://localhost:3030/categories';
+  getCategoriesWithNotes() {
+    return Observable.combineLatest(this.categories, this.notes, (selectedCategories, selectedNotes) => {
 
-    return this.httpClient.get<[Category]>(url, {
-      headers: new HttpHeaders().set('Authorization', `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.vkzuR0AkSP-4cEqKzlCnbJdISIHCb5ZOnXiSbdgDiQg`)
-    }).subscribe(response => {
+      selectedCategories.forEach(cat => {
+        cat.notes = selectedNotes.filter(note => {
+          return note.categoryId === cat.id;
+        });
+      });
 
-      const uncategorized = {
+
+      const uncategorizedNotes = selectedNotes.filter(note => {
+        return note.categoryId === null;
+      });
+
+
+      if (uncategorizedNotes.length === 0) {
+        return selectedCategories;
+      }
+
+      const uncategorizedCategory = {
+        id: '0',
         name: 'Uncategorized',
-        id: null
+        notes: uncategorizedNotes
       };
 
-      this._categories = [uncategorized, ...response];
-      this.categorySubscription.next(this._categories.slice());
+      const newCategories = [...selectedCategories, uncategorizedCategory];
+
+      return newCategories;
     });
   }
 
-  selectCategory(category: Category) {
-    this._selectedCategorySubject.next({ ...category });
+  getCategoryWithNotes(categoryId: number) {
+    return Observable.combineLatest(this.categories, this.notes, (selectedCategories, selectedNotes) => {
+
+      if (categoryId === 0) {
+
+        const uncategorizedNotes = selectedNotes.filter(note => {
+          return note.categoryId === null;
+        });
+
+        return {
+          id: '0',
+          name: 'Uncategorized',
+          notes: uncategorizedNotes
+        };
+      }
+
+      selectedCategories = selectedCategories.filter(selectedCategory => {
+        return selectedCategory.id + '' === categoryId + '';
+      });
+
+      selectedCategories.forEach(cat => {
+        cat.notes = selectedNotes.filter(note => {
+          return note.categoryId === cat.id;
+        });
+      });
+
+      return selectedCategories[0];
+    });
   }
 
+  selectNote(id) {
+    this.store.dispatch(new notes.Select(id));
+  }
+
+  deselectNote() {
+    this.store.dispatch(new notes.Deselect());
+  }
+
+  getSelectedNote() {
+    return this.store.select(fromNotes.getSelectedNote);
+  }
+
+  createNote(noteData) {
+    return this.store.dispatch(new notes.Create(noteData));
+  }
+
+  editNote(noteId: number, noteData: Note) {
+    return this.store.dispatch(new notes.Edit(noteId, noteData));
+  }
+
+  selectCategory(id) {
+    this.store.dispatch(new category.Select(id));
+  }
+
+  getSelectedCategory() {
+    return this.store.select(fromNotes.getSelectedCategory);
+  }
+
+  deleteNote(noteId) {
+    return this.store.dispatch(new notes.Delete(noteId));
+  }
+
+  createCategory(name: string) {
+    return this.store.dispatch(new category.Create(name));
+  }
+
+  deleteCategory(categoryId) {
+    return this.store.dispatch(new category.Delete(categoryId));
+  }
 }

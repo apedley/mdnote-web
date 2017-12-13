@@ -1,0 +1,28 @@
+@import '../../../../theme.scss';
+
+h1 {
+  background: $primary;
+  color: white;
+  margin: 0 0 10px;
+  padding: 20px 10px;
+}
+
+.icon {
+  vertical-align: middle !important;
+  padding-bottom: 3px;
+  padding-right: 5px;
+}
+
+.subheader {
+  color: #666
+}
+
+.subheader a {
+  cursor: pointer;
+  color: #666;
+  text-decoration: none;
+}
+
+.subheader a:hover {
+  color: #999;
+}

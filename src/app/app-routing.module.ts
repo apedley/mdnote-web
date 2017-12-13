@@ -1,11 +1,8 @@
-import { AuthGuard } from './users/auth.guard';
-import { AuthComponent } from './users/views/auth/auth.component';
-import { SigninComponent } from './users/views/signin/signin.component';
-import { SignupComponent } from './users/views/signup/signup.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthComponent } from './auth/components/auth/auth.component';
 import { LayoutComponent } from './core/containers/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeViewComponent } from './core/containers/home-view/home-view.component';
 
 const routes: Routes = [
 
@@ -25,12 +22,17 @@ const routes: Routes = [
       authFunction: 'Sign In'
     }
   },
-    {
-      path: '',
-      pathMatch: 'full',
-      component: HomeViewComponent,
-      canActivate: [AuthGuard]
-    }
+  {
+    path: 'notes',
+    loadChildren: './notes/notes.module#NotesModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    redirectTo: '/notes',
+    canActivate: [AuthGuard],
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

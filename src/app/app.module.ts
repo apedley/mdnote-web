@@ -1,14 +1,21 @@
+import { LayoutEffects } from './core/store/layout.effects';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
-
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
+import { NotesModule } from 'app/notes/notes.module';
+import { environment } from '../environments/environment';
 
+import * as fromRootStore from './reducers';
 
 @NgModule({
   declarations: [
@@ -16,13 +23,22 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    CoreModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    UsersModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    AuthModule,
+    NotesModule,
+    StoreRouterConnectingModule,
+    StoreModule.forRoot(fromRootStore.reducers),
+    EffectsModule.forRoot([LayoutEffects]),
+    !environment.production
+    ? StoreDevtoolsModule.instrument()
+    : []
   ],
-  providers: [],
+  providers: [
+    {provide: RouterStateSerializer, useClass: fromRootStore.CustomRouterStateSerializer}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
