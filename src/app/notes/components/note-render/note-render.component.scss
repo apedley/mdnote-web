@@ -1,8 +1,9 @@
 @import '../../../../theme.scss';
 
 h1 {
-  background: $primary;
-  color: white;
+  // background: white;
+  color: $primary;
+  border-bottom: 3px solid $accent;
   margin: 0 0 10px;
   padding: 20px 10px;
 }

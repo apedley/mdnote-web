@@ -1,4 +1,6 @@
 <app-layout>
+  <div page-title>{{ authFunction }}</div>
+
   <div no-sidebar-main-content>
     <div class="auth-form-container">
       <form [formGroup]="authForm" class="auth-form" (ngSubmit)="submitAuthForm()">
@@ -25,8 +27,17 @@
               Loading
             </span>
           </button>
+          <button mat-raised-button color="primary" (click)="forgotPassword($event)" *ngIf="authFunction === 'Sign In'">
+            Forgot Password
+          </button>
         </div>
       </form>
+      <div class="authInfo" *ngIf="authFunction === 'Sign Up'">
+        Already have an account? <a [routerLink]="['/signin']">Click here to sign in</a>
+      </div>
+      <div class="authInfo" *ngIf="authFunction === 'Sign In'">
+        Need an account? <a [routerLink]="['/signup']">Click here to sign up</a>
+      </div>
     </div>
   </div>
 </app-layout>

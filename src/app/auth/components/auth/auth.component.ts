@@ -36,7 +36,9 @@ export class AuthComponent implements OnInit {
       this.signin();
     }
   }
-
+  forgotPassword(e) {
+    e.preventDefault();
+  }
   private signup() {
     this.authService.signup(this.authForm.value).subscribe(
       (response) => {

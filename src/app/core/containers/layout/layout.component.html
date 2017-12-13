@@ -1,19 +1,23 @@
 <div class="layout" [class.app-is-mobile]="mobileQuery.matches">
 
-  <mat-toolbar color="primary" class="app-toolbar">
+  <mat-toolbar color="primary" class="app-toolbar mat-elevation-z8">
     <button mat-icon-button (click)="menuButtonClicked()">
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="app-title-name">
-      <ng-content select="[page-title]"></ng-content>
+        mdNote
     </h1>
-
-
+    <span class="app-subtitle">
+      <ng-content select="[page-title]"></ng-content>
+    </span>
     <span class="toolbar-spacer"></span>
-
+    <button mat-mini-fab color="accent" [routerLink]="['/notes','new']" class="add-fab">
+      <mat-icon>add</mat-icon>
+    </button>
+<!--
     <button mat-icon-button [matMenuTriggerFor]="userMenu">
       <mat-icon>person</mat-icon>
-    </button>
+    </button> -->
 
 
     <mat-menu #userMenu="matMenu">

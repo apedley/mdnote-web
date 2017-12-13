@@ -1,3 +1,5 @@
+@import '../../../../theme.scss';
+
 .layout {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,9 @@
   left: 0;
   right: 0;
 }
-
+.app-toolbar {
+  z-index: 30
+}
 .app-sidebar-container {
   flex: 1;
 }
@@ -23,4 +27,18 @@
 
 .toolbar-spacer {
   flex: 1 1 auto;
+}
+
+
+.app-subtitle {
+  padding-left: 20px;
+}
+
+.app-title-name {
+  margin-left: 20px;
+}
+
+
+.add-fab {
+  margin-right: 30px;
 }

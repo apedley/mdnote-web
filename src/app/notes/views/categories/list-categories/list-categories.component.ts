@@ -27,6 +27,7 @@ export class ListCategoriesComponent implements OnInit {
 
   clickedNote(note) {
     this.notesService.selectNote(note.id);
+    this.router.navigate(['/notes', note.id]);
   }
 
   deleteNote(noteId) {

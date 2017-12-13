@@ -1,11 +1,13 @@
 <app-layout>
+  <div page-title *ngIf="category | async as cat">Category: {{ cat.name }}</div>
   <div class="app-main-content" main-content>
     <div class="split-view">
       <div class="category-list">
+        <app-category-item [category]="category | async" (noteClicked)="clickedNote($event)" *ngIf="(category | async)" (deleteCategoryClicked)="deleteCategory($event)"></app-category-item>
+
         <button mat-icon-button [routerLink]="['/notes']">
           <mat-icon>arrow_back</mat-icon>
         </button>
-        <app-category-item [category]="category | async" (noteClicked)="clickedNote($event)" *ngIf="(category | async)" (deleteCategoryClicked)="deleteCategory($event)"></app-category-item>
       </div>
       <div class="note-view">
         <app-note-render [note]="selectedNote | async" *ngIf="(selectedNote | async)" (deleteNoteClicked)="deleteNote($event)"></app-note-render>

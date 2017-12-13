@@ -6,12 +6,14 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../core/app-material.module';
 import { AuthComponent } from './components/auth/auth.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
     ReactiveFormsModule,
+    RouterModule,
     AppMaterialModule
   ],
   providers: [

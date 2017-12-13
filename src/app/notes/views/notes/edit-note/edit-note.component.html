@@ -1,4 +1,6 @@
 <app-layout>
+  <div page-title *ngIf="note | async as theNote">Edit Note: {{ theNote.title }}</div>
+
   <div class="app-main-content" main-content>
     <div class="create-note">
       <div>

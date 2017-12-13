@@ -2,8 +2,36 @@
 // @include mat-core();
 
 // $mdnote-warn: mat-palette($mat-red);
-$warn: #f44336;
-$primary: #673ab7;
-$background: #fafafa;
-$bright-background: #ffffff;
+// $warn: #f44336;
+// $primary: #673ab7;
+// $background: #fafafa;
+// $bright-background: #ffffff;
+// $accent: #ffd740;
+// $accent-two: #ffcdd2
 
+// $primary: #3f51b5;
+$primary: #388E3C;
+$warn: #f44336;
+$accent: #FFD740;
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+
+$mdnote-app-primary: mat-palette($mat-green, 700, 100, 900);
+$mdnote-app-accent:  mat-palette($mat-amber, A200, A100, A700);
+
+$mdnote-app-warn:    mat-palette($mat-deep-orange);
+$mdnote-app-theme: mat-light-theme($mdnote-app-primary, $mdnote-app-accent, $mdnote-app-warn);
+
+@include angular-material-theme($mdnote-app-theme);
+
+@mixin mdnote-app-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .mdnote {
+    background-color: mat-color($primary);
+    border-color: mat-color($accent, A400);
+  }
+}
