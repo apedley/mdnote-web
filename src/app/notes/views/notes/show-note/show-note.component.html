@@ -3,17 +3,18 @@
 
   <div class="app-main-content" main-content>
     <div class="split-view">
-      <div class="category-list">
-
-        <app-category-item [category]="category | async" (noteClicked)="clickedNote($event)" *ngIf="(category | async)"></app-category-item>
-
-        <button mat-icon-button [routerLink]="['/notes']">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-      </div>
       <div class="note-view">
         <app-note-render [note]="note | async" *ngIf="(note | async)" (deleteNoteClicked)="deleteNote($event)"></app-note-render>
       </div>
+      <div class="category-list">
+
+
+        <app-category-item [category]="category | async" (noteClicked)="clickedNote($event)" *ngIf="(category | async)"></app-category-item>
+        <button mat-button color="primary" [routerLink]="['/notes']" class="back-arrow">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+
     </div>
   </div>
 </app-layout>

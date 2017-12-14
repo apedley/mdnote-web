@@ -10,6 +10,7 @@ import { Note } from '../../models/note.model';
       <button mat-button color="primary" (click)="editCategory(category.id)">Edit</button>
       <button mat-button color="warn" (click)="deleteCategory(category.id)">Delete</button>
     </div>
+
     <h3 [routerLink]="['/notes', 'categories', category.id]">
       {{ category.name | titlecase }} <span class="note-count">({{ category.notes.length }})</span>
     </h3>

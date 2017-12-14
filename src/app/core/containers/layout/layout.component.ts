@@ -22,7 +22,7 @@ export class LayoutComponent implements OnDestroy, OnInit {
   constructor(public changeDetectorRef: ChangeDetectorRef, public media: MediaMatcher, private route: ActivatedRoute, private authService: AuthService, private layoutService: LayoutService) {
     this.sidebarEnabled = !route.snapshot.data['hideSidebar'];
 
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQuery = media.matchMedia('(max-width: 800px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.sidebar = this.layoutService.getSidebarOpen();
@@ -30,7 +30,7 @@ export class LayoutComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     if (this.mobileQuery.matches) {
-      this.sidebarOpen = false;
+      this.layoutService.closeSidebar();
     }
   }
 

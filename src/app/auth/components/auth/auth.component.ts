@@ -38,43 +38,18 @@ export class AuthComponent implements OnInit {
     this.formLoading = true;
 
     if (this.authFunction === 'Sign Up') {
-      // this.signUpUser();
       this.signup();
     } else if (this.authFunction === 'Sign In') {
-      // this.signinUser();
       this.signin();
     }
   }
   forgotPassword(e) {
     e.preventDefault();
   }
-  // private signup() {
-  //   this.authService.signup(this.authForm.value).subscribe(
-  //     (response) => {
-  //       this.router.navigate(['/signin']);
-  //     },
-  //     (err) => {
-  //       this.formError = err.error;
-  //       this.formLoading = false;
-  //     }
-  //   );
-  // }
 
   private signup() {
     this.authService.signup(this.authForm.value);
   }
-  // private signin() {
-  //   this.authService.signin(this.authForm.value).subscribe(
-  //     null,
-  //     (err) => {
-  //       this.formLoading = false;
-  //       this.formError = err.error;
-  //       if (err.error === 'Unauthorized') {
-  //         this.formError = 'Incorrect email or password';
-  //       }
-  //     }
-  //   );
-  // }
   private signin() {
     this.authService.signin(this.authForm.value);
   }

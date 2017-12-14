@@ -10,7 +10,8 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma')
+      require('@angular/cli/plugins/karma'),
+      require('karma-notify-reporter')
     ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -22,7 +23,11 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'notify'],
+    notifyReporter: {
+      reportEachFailure: false, // Default: false, Will notify on every failed sepc
+      reportSuccess: true, // Default: true, Will notify when a suite was successful
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

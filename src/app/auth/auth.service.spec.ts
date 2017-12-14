@@ -14,21 +14,21 @@ describe('AuthService', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
-  let httpMock: HttpTestingController;
-  let authService: AuthService;
+  // let httpMock: HttpTestingController;
+  // let authService: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule],
-      providers: [
-        AuthService,
-        { provide: Router, useValue: router}
-      ]
-    });
+  //   TestBed.configureTestingModule({
+  //     imports: [ HttpClientTestingModule],
+  //     providers: [
+  //       AuthService,
+  //       { provide: Router, useValue: router}
+  //     ]
+  //   });
 
-    authService = TestBed.get(AuthService);
-    httpMock = TestBed.get(HttpTestingController);
-  });
+  //   authService = TestBed.get(AuthService);
+  //   httpMock = TestBed.get(HttpTestingController);
+  // });
   describe('signup', () => {
     // it('should navigate to signin after signing up', (done) => {
     //   authService.signup(userData).subscribe(res => {
@@ -69,4 +69,5 @@ describe('AuthService', () => {
 
   });
 
+  });
 });

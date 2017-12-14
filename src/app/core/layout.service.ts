@@ -43,4 +43,8 @@ export class LayoutService {
     this.layoutStore.dispatch(new layout.ToggleSidebar());
   }
 
+  closeSidebar() {
+    this.layoutStore.dispatch(new layout.CloseSidebar());
+  }
+
 }

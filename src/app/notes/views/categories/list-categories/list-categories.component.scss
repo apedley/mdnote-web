@@ -1,16 +1,19 @@
 .split-view {
   display: flex;
+  margin: 0 5px;
 }
+
 .split-view div {
   width: 50%;
   margin: 10px;
-  flex: 1 1 auto;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 800px) {
+  .split-view {
+    flex-wrap: wrap;
+  }
   .split-view div {
     width: 100%;
     margin: 10px;
-    flex: 1 1 auto;
   }
 }

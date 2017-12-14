@@ -8,7 +8,7 @@ export interface State {
   inputDialog: InputDialog | null;
 }
 
-const initialState: State = {
+export const initialState: State = {
   sidebarOpen: false,
   inputDialogOpen: false,
   inputDialog: null

@@ -9,7 +9,7 @@ export interface State {
   token: string | null;
 }
 
-const initialState: State = {
+export const initialState: State = {
   user: null,
   loggedIn: false,
   error: null,
