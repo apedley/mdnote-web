@@ -14,3 +14,9 @@ h3 {
   padding-bottom: 10px;
   border-bottom: 1px solid $primary;
 }
+
+
+
+.delete-button:hover {
+  color: $warn;
+}

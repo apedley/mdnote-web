@@ -4,7 +4,7 @@
   <div class="app-main-content" main-content>
     <div class="create-note">
       <div>
-        <app-edit-note-form (bodyChanged)="updatePreview($event)" (formSubmitted)="editNote($event)" [categories]="categories" [initialData]="note"></app-edit-note-form>
+        <app-edit-note-form (bodyChanged)="updatePreview($event)" (formSubmitted)="editNote($event)" [categories]="categories" [initialData]="note" (newCategory)="newCategory()"></app-edit-note-form>
       </div>
       <div>
         <app-edit-note-preview [body]="rawBody"></app-edit-note-preview>

@@ -1,12 +1,15 @@
 .split-view {
   display: flex;
-  flex-direction: row-reverse;
   margin: 0 5px;
 }
 
 .split-view div {
-  width: 50%;
+  width: 48%;
   margin: 10px;
+}
+
+.note-view {
+  order: 2;
 }
 
 @media (max-width: 800px) {
@@ -16,6 +19,9 @@
   .split-view div {
     width: 100%;
     margin: 10px;
+  }
+  .note-view {
+    order: -1;
   }
 }
 

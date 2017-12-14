@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from '../../models/category.model';
 import { Note } from '../../models/note.model';
+// <button mat-button color="primary" (click)="editCategory(category.id)">Edit</button>
 
 @Component({
   selector: 'app-category-item',
   template: `
   <div>
     <div class="actions">
-      <button mat-button color="primary" (click)="editCategory(category.id)">Edit</button>
-      <button mat-button color="warn" (click)="deleteCategory(category.id)">Delete</button>
+      <button mat-button (click)="deleteCategory(category.id)" class="delete-button">Delete</button>
     </div>
 
     <h3 [routerLink]="['/notes', 'categories', category.id]">

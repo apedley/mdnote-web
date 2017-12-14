@@ -24,6 +24,9 @@ import { Observable } from 'rxjs/Observable';
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <button mat-button (click)="newCategoryClicked($event)">New Category</button>
+
       <div>
         <button mat-raised-button color="primary" [disabled]="noteForm.invalid || formLoading">
           {{ formLoading ? 'Loading..' : 'Submit' }}
@@ -37,6 +40,7 @@ export class EditNoteFormComponent implements OnInit {
 
   @Output() formSubmitted = new EventEmitter<any>();
   @Output() bodyChanged = new EventEmitter<string>();
+  @Output() newCategory = new EventEmitter<boolean>();
   @Input() categories: Category[];
   @Input() initialData: Observable<Note>;
 
@@ -71,6 +75,11 @@ export class EditNoteFormComponent implements OnInit {
 
   changeBody(body) {
     this.bodyChanged.emit(body);
+  }
+
+  newCategoryClicked(event: Event) {
+    event.preventDefault();
+    this.newCategory.emit(true);
   }
 
 }

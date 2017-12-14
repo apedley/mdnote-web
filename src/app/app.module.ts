@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import { AuthEffects } from './auth/store/effects';
 import { LayoutEffects } from './core/store/layout.effects';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
 import { NotesModule } from 'app/notes/notes.module';
-import { environment } from '../environments/environment';
+
 
 import * as fromRootStore from './reducers';
 
