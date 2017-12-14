@@ -11,7 +11,7 @@
       <ng-content select="[page-title]"></ng-content>
     </span>
     <span class="toolbar-spacer"></span>
-    <button mat-mini-fab color="accent" [routerLink]="['/notes','new']" class="add-fab">
+    <button mat-mini-fab color="accent" [routerLink]="['/notes','new']" class="add-fab" *ngIf="authenticated | async">
       <mat-icon>add</mat-icon>
     </button>
 <!--
