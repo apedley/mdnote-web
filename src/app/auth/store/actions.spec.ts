@@ -17,6 +17,7 @@ describe('Auth Actions', () => {
         });
       });
     });
+
     describe('SignupSuccess', () => {
       it('should create an action', () => {
         const action = new fromAuth.SignupSuccess();
@@ -25,6 +26,7 @@ describe('Auth Actions', () => {
         });
       });
     });
+
     describe('SignupFailure', () => {
       it('should create an action', () => {
         const action = new fromAuth.SignupFailure(error);
@@ -35,6 +37,7 @@ describe('Auth Actions', () => {
       });
     });
   });
+
   describe('Sign In Actions', () => {
     describe('Signin', () => {
       it('should create an action', () => {
@@ -55,6 +58,7 @@ describe('Auth Actions', () => {
         });
       });
     });
+
     describe('SigninRedirect', () => {
       it('should create an action', () => {
         const action = new fromAuth.SigninRedirect();
@@ -63,6 +67,7 @@ describe('Auth Actions', () => {
         });
       });
     });
+
     describe('SigninFailure', () => {
       it('should create an action', () => {
         const action = new fromAuth.SigninFailure(error);
@@ -73,6 +78,7 @@ describe('Auth Actions', () => {
       });
     });
   });
+
   describe('Signout', () => {
     it('should create an action', () => {
       const action = new fromAuth.Signout();
@@ -81,6 +87,7 @@ describe('Auth Actions', () => {
       });
     });
   });
+
   describe('Local Auth Data Actions', () => {
     describe('ReadLocalAuthData', () => {
       it('should create an action', () => {
@@ -90,6 +97,7 @@ describe('Auth Actions', () => {
         });
       });
     });
+
     describe('LoadLocalAuthData', () => {
       it('should create an action', () => {
         const payload = { user: userInfo, token: 'abc'};
