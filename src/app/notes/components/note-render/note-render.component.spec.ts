@@ -52,7 +52,8 @@ describe('Component: NoteRenderComponent', () => {
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      expect(element.querySelector('h1[class=note-title]').value).toBe('A Title');
+      const h1 = element.querySelector('h1');
+      expect(h1.innerText).toBe('A Title');
       expect(queryTitleHTMLElement.textContent).toContain('A Title');
     });
   });
