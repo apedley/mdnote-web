@@ -23,7 +23,7 @@ export class EditNoteComponent implements OnInit {
     this.notesService.selectNote(this.route.snapshot.paramMap.get('noteId'));
     this.note = this.notesService.getSelectedNote();
     this.categories = this.notesService.categories;
-    this.notesService.loadCategoriesAndNotes();
+    // this.notesService.loadCategoriesAndNotes();
   }
 
   ngOnInit() {

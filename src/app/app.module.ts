@@ -11,6 +11,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { MarkdownModule } from 'ngx-markdown';
+
 
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
@@ -27,6 +29,7 @@ import * as fromRootStore from './reducers';
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MarkdownModule.forRoot(),
     AppRoutingModule,
     CoreModule,
     AuthModule,

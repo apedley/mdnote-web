@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="note-view">
-        <app-note-render [note]="selectedNote | async" *ngIf="(selectedNote | async)" (deleteNoteClicked)="deleteNote($event)"></app-note-render>
+        <app-note-render [note]="selectedNote | async" *ngIf="(selectedNote | async).body" (deleteNoteClicked)="deleteNote($event)"></app-note-render>
       </div>
     </div>
   </div>

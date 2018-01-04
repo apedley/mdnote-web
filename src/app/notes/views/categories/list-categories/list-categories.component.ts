@@ -17,7 +17,7 @@ export class ListCategoriesComponent implements OnInit {
   selectedNote: Observable<Note>;
 
   constructor(private notesService: NotesService, public router: Router, private layoutService: LayoutService) {
-    this.notesService.loadCategoriesAndNotes();
+    // this.notesService.loadCategoriesAndNotes();
   }
 
   ngOnInit() {

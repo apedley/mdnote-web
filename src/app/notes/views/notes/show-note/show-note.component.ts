@@ -32,7 +32,7 @@ export class ShowNoteComponent implements OnInit {
       }
 
     });
-    this.notesService.loadCategoriesAndNotes();
+    // this.notesService.loadCategoriesAndNotes();
   }
 
   ngOnInit() {

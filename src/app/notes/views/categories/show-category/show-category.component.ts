@@ -28,7 +28,7 @@ export class ShowCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedNote = this.notesService.getSelectedNote();
+    // this.selectedNote = this.notesService.getSelectedNote();
   }
 
   clickedNote(note) {

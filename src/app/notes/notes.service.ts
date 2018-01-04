@@ -14,13 +14,25 @@ import { environment } from '../../environments/environment';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/first';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class NotesService {
   categories: Observable<Category[]>;
   notes: Observable<Note[]>;
 
+  categoriesLoaded: Observable<boolean>;
+  categoriesLoadedSubscription: Subscription;
+
   constructor(private store: Store<fromNotes.State>) {
+    this.categoriesLoaded = store.select(fromNotes.getCategoriesLoaded);
+
+    this.categoriesLoadedSubscription = this.categoriesLoaded.subscribe(loaded => {
+      // debugger;
+      if (!loaded) {
+        this.loadCategoriesAndNotes();
+      }
+    })
     this.categories = store.select(fromNotes.getAllCategories);
     this.notes = store.select(fromNotes.getAllNotes);
   }

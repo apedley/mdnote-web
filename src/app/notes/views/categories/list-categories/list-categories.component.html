@@ -6,7 +6,7 @@
         <app-category-item *ngFor="let category of categories | async" [category]="category" (noteClicked)="clickedNote($event)" (deleteCategoryClicked)="deleteCategory($event)"></app-category-item>
       </div>
       <div class="note-view">
-        <app-note-render [note]="selectedNote | async" *ngIf="(selectedNote | async)" (deleteNoteClicked)="deleteNote($event)"></app-note-render>
+        <app-note-render [note]="selectedNote | async" *ngIf="(selectedNote | async) && (selectedNote | async).body" (deleteNoteClicked)="deleteNote($event)"></app-note-render>
       </div>
     </div>
   </div>

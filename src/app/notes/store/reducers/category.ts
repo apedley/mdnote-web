@@ -6,6 +6,7 @@ import { Category } from '../../models/category.model';
 export interface State extends EntityState<Category> {
   selectedCategoryId: string | null;
   deletingCategoryId: string | null;
+  categoriesLoaded: boolean;
 }
 
 export const adapter: EntityAdapter<Category> = createEntityAdapter<Category>({
@@ -15,7 +16,8 @@ export const adapter: EntityAdapter<Category> = createEntityAdapter<Category>({
 
 export const initialState: State = adapter.getInitialState({
   selectedCategoryId: null,
-  deletingCategoryId: null
+  deletingCategoryId: null,
+  categoriesLoaded: false
 });
 
 export function reducer(state = initialState, action: categories.actions): State {
@@ -23,7 +25,8 @@ export function reducer(state = initialState, action: categories.actions): State
     case categories.LOAD_SUCCESS: {
       return {
         ...adapter.addAll(action.payload, state),
-        selectedCategoryId: state.selectedCategoryId
+        selectedCategoryId: state.selectedCategoryId,
+        categoriesLoaded: true
       };
     }
 
@@ -71,3 +74,5 @@ export function reducer(state = initialState, action: categories.actions): State
 
 
 export const getSelectedId = (state: State) => state.selectedCategoryId;
+
+export const getCategoriesLoaded = (state: State) => state.categoriesLoaded;

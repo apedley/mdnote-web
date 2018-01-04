@@ -30,6 +30,11 @@ export const getSelectedCategoryId = createSelector(
   fromCategories.getSelectedId
 );
 
+export const getCategoriesLoaded = createSelector(
+  getCategoriesState,
+  fromCategories.getCategoriesLoaded
+);
+
 export const getNoteEntitiesState = createSelector(
   getNotesState,
   state => state.notes
@@ -39,7 +44,6 @@ export const getSelectedNoteId = createSelector(
   getNoteEntitiesState,
   fromNotes.getSelectedId
 );
-
 export const {
   selectIds: getCategoryIds,
   selectEntities: getCategoryEntities,
