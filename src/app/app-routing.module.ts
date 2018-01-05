@@ -23,6 +23,10 @@ const routes: Routes = [
     }
   },
   {
+    path: 'auth',
+    loadChildren: './auth/auth.module#AuthModule',
+  },
+  {
     path: 'notes',
     loadChildren: './notes/notes.module#NotesModule',
     canActivate: [AuthGuard]

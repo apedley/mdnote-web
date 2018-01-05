@@ -70,5 +70,26 @@ export class AuthEffects {
       this.router.navigate(['/signin']);
     })
   );
+
+  @Effect()
+  authenticateWithGoogle = this.actions.ofType(auth.AUTHENTICATE_WITH_GOOGLE).pipe(
+    switchMap((action: auth.AuthenticateWithGoogle) => {
+      return this.api.authenticateWithGoogle(action.payload);
+    }),
+    map((result) => {
+      debugger;
+      this.router.navigate(['/notes']);
+      return {
+        type: auth.SIGNIN_SUCCESS,
+        payload: {
+          user: result['user'],
+          token: result['token']
+        }
+      };
+    }),
+    catchError(error => of(new auth.SigninFailure(error)))
+  );
+
+
   constructor(private actions: Actions, private api: ApiService, private router: Router) {}
 }

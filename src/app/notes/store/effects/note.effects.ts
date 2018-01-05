@@ -7,6 +7,7 @@ import { map, tap, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { ApiService } from '../../../core/api.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../auth/auth.service';
 
 
 @Injectable()
@@ -79,6 +80,29 @@ export class NoteEffects {
     })
   );
 
+  @Effect({ dispatch: false })
+  loadFail = this.actions.ofType(notesActions.LOAD_FAIL).pipe(
+    map((action: notesActions.LoadFail) => {
+      if (action.payload.error && action.payload.error === 'Unauthorized') {
+        this.auth.signout();
+      }
+    })
+  );
 
-  constructor(private actions: Actions, private api: ApiService, private router: Router) { }
+  @Effect()
+  search = this.actions.ofType(notesActions.SEARCH).pipe(
+    switchMap((action: notesActions.Search) => {
+      return this.api.searchNotes(action.searchString);
+    }),
+    map((rows) => {
+      return {
+        type: notesActions.SEARCH_SUCCESS,
+        notes: rows
+      };
+    }),
+    catchError(error => of(new notesActions.SearchFail(error)))
+  );
+
+
+  constructor(private actions: Actions, private api: ApiService, private router: Router, private auth: AuthService) { }
 }

@@ -98,6 +98,23 @@ export class ApiService {
     });
   }
 
+
+  searchNotes(searchString: string) {
+    const url = `${environment.baseApiUrl}/notes/search?q=${searchString}`;
+    const authHeader = `bearer ${this.authToken}`;
+
+    return this.httpClient.get(url, {
+      headers: new HttpHeaders().set('Authorization', authHeader)
+    });
+  }
+
+  authenticateWithGoogle(code) {
+    const url = `${environment.baseApiUrl}/auth/google`;
+    const body = { code };
+
+    return this.httpClient.post(url, body);
+  }
+
   private _removeInvalidKeys(dataObject: any) {
     return Object.keys(dataObject).reduce((prev, key) => {
       if (dataObject[key] && dataObject[key] !== 'null') {

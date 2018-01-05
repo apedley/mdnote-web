@@ -7,12 +7,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../core/app-material.module';
 import { AuthComponent } from './components/auth/auth.component';
 import { RouterModule } from '@angular/router';
+import { GoogleComponent } from './components/google.component';
+import { OAuthListComponent } from './components/oauth-list/oauth-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
     ReactiveFormsModule,
+    RouterModule.forChild([
+      { path: 'google', component: GoogleComponent }
+    ]),
     RouterModule,
     AppMaterialModule
   ],
@@ -21,7 +26,9 @@ import { RouterModule } from '@angular/router';
     AuthGuard
   ],
   declarations: [
-    AuthComponent
+    AuthComponent,
+    OAuthListComponent,
+    GoogleComponent
   ]
 })
 export class AuthModule { }

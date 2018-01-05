@@ -15,6 +15,9 @@ export const EDIT_FAIL = '[Notes] Edit Fail';
 export const DELETE = '[Notes] Delete';
 export const DELETE_SUCCESS = '[Notes] Delete Success';
 export const DELETE_FAIL = '[Notes] Delete Fail';
+export const SEARCH = '[Notes] Search';
+export const SEARCH_SUCCESS = '[Notes] Search Success';
+export const SEARCH_FAIL = '[Notes] Search Fail';
 
 
 export class Load implements Action {
@@ -98,6 +101,26 @@ export class DeleteFail implements Action {
 export class DeleteSuccess implements Action {
   readonly type = DELETE_SUCCESS;
 }
+
+export class Search implements Action {
+  readonly type = SEARCH;
+
+  constructor(public searchString: string) {}
+}
+
+export class SearchFail implements Action {
+  readonly type = SEARCH_FAIL;
+
+  constructor(public payload: any) {}
+}
+
+export class SearchSuccess implements Action {
+  readonly type = SEARCH_SUCCESS;
+
+  constructor(public notes: Note[]) { }
+}
+
+
 export type actions =
   Load |
   LoadSuccess |
@@ -110,6 +133,9 @@ export type actions =
   Edit |
   EditFail |
   EditSuccess |
+  Search |
+  SearchFail |
+  SearchSuccess |
   Delete |
   DeleteFail |
   DeleteSuccess;

@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 import * as fromLayout from './store/layout.reducers';
 import * as fromRoot from '../reducers';
 import * as layout from './store/layout.actions';
+import * as fromNotes from '../notes/store/reducers';
+import * as notesActions from '../notes/store/actions/notes';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UserInputDialogComponent } from './components/user-input-dialog.component';
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 export class LayoutService {
 
 
-  constructor(private layoutStore: Store<fromLayout.State>, public dialog: MatDialog) { }
+  constructor(private layoutStore: Store<fromLayout.State>, private notesStore: Store<fromNotes.State>, public dialog: MatDialog) { }
 
   openUserInputDialog(dialog: InputDialog) {
 
@@ -47,4 +49,7 @@ export class LayoutService {
     this.layoutStore.dispatch(new layout.CloseSidebar());
   }
 
+  searchFromToolbar(searchString: string) {
+    this.notesStore.dispatch(new notesActions.Search(searchString));
+  }
 }

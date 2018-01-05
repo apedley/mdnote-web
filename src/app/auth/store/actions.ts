@@ -12,6 +12,8 @@ export const SIGNIN_SUCCESS = '[Auth] Signin Success';
 export const SIGNIN_FAILURE = '[Auth] Signin Failure';
 export const SIGNIN_REDIRECT = '[Auth] Signin Redirect';
 
+export const AUTHENTICATE_WITH_GOOGLE = '[Auth] Authenticate With Google';
+
 export const READ_LOCAL_AUTH_DATA = '[Auth] Read Local Auth Data';
 export const LOAD_LOCAL_AUTH_DATA = '[Auth] Load Local Auth Data';
 
@@ -53,6 +55,12 @@ export class SigninRedirect implements Action {
   readonly type = SIGNIN_REDIRECT;
 }
 
+export class AuthenticateWithGoogle implements Action {
+  readonly type = AUTHENTICATE_WITH_GOOGLE;
+
+  constructor(public payload: string) {}
+}
+
 export class Signout implements Action {
   readonly type = SIGNOUT;
 }
@@ -75,6 +83,7 @@ export type Actions =
   | SigninSuccess
   | SigninFailure
   | SigninRedirect
+  | AuthenticateWithGoogle
   | Signout
   | LoadLocalAuthData
   | ReadLocalAuthData;

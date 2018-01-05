@@ -54,4 +54,8 @@ export class AuthService {
   getAuthenticated() {
     return this.authStore.select(fromRoot.getLoggedIn);
   }
+
+  authenticateWithGoogle(code) {
+    this.authStore.dispatch(new auth.AuthenticateWithGoogle(code));
+  }
 }
