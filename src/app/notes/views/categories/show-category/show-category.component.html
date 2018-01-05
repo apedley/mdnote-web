@@ -9,7 +9,7 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
       </div>
-      <div class="note-view">
+      <div class="note-view" *ngIf="(selectedNote | async)">
         <app-note-render [note]="selectedNote | async" *ngIf="(selectedNote | async).body" (deleteNoteClicked)="deleteNote($event)"></app-note-render>
       </div>
     </div>
