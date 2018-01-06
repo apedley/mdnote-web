@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   baseApiUrl: 'http://localhost:3030',
   google: {
-    clientId: '968991795000-m7hs50col31r4j1lc9qqp8e2dgj82tep.apps.googleusercontent.com',
-    redirectURI: 'http://localhost:4200/auth/google'
+    clientId: '',
+    redirectURI: ''
   }
 };

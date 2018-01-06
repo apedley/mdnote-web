@@ -1,0 +1,23 @@
+<div class="auth-form-container">
+  <app-auth-form [loading]="formLoading | async" [authFunction]="authFunction" (submitForm)="submitAuthForm($event)" [error]="formError | async">
+  </app-auth-form>
+
+
+  <div class="authInfo">
+    <div class="switch">
+      <span *ngIf="authFunction === 'Sign Up'">
+        Already have an account?
+        <a [routerLink]="['/signin']">Click here to sign in</a>
+      </span>
+      <span *ngIf="authFunction === 'Sign In'">
+        Need an account?
+        <a [routerLink]="['/signup']">Click here to sign up</a>
+      </span>
+    </div>
+    <div class="forgot">
+      <a [routerLink]="['/forgot']">Forgot your password?</a>
+    </div>
+  </div>
+
+
+</div>

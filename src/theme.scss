@@ -11,8 +11,10 @@
 
 // $primary: #3f51b5;
 $primary: #388E3C;
-$warn: #f44336;
+$warn: rgb(244, 67, 54);
 $accent: #FFD740;
+
+$warn-bg: rgba($warn, 0.05);
 
 @import '~@angular/material/theming';
 @include mat-core();

@@ -1,18 +1,16 @@
 import { Action } from '@ngrx/store';
-import { Authenticate, User } from '../user.model';
+import { Authenticate, User, TokenAuthenticate } from '../user.model';
 
 export const SIGNUP = '[Auth] Signup';
 export const SIGNUP_SUCCESS = '[Auth] Signup Success';
 export const SIGNUP_FAILURE = '[Auth] Signup Failure';
 
 export const SIGNIN = '[Auth] Signin';
-export const SIGNOUT = '[Auth] Signout';
 
 export const SIGNIN_SUCCESS = '[Auth] Signin Success';
 export const SIGNIN_FAILURE = '[Auth] Signin Failure';
-export const SIGNIN_REDIRECT = '[Auth] Signin Redirect';
 
-export const AUTHENTICATE_WITH_GOOGLE = '[Auth] Authenticate With Google';
+export const SIGNOUT = '[Auth] Signout';
 
 export const READ_LOCAL_AUTH_DATA = '[Auth] Read Local Auth Data';
 export const LOAD_LOCAL_AUTH_DATA = '[Auth] Load Local Auth Data';
@@ -25,38 +23,30 @@ export class Signup implements Action {
 
 export class SignupSuccess implements Action {
   readonly type = SIGNUP_SUCCESS;
+
+  constructor(public payload: { user: User, token: string }) {}
 }
 
 export class SignupFailure implements Action {
   readonly type = SIGNUP_FAILURE;
 
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class Signin implements Action {
   readonly type = SIGNIN;
 
-  constructor(public payload: Authenticate) {}
+  constructor(public payload: Authenticate ) {}
 }
 
 export class SigninSuccess implements Action {
   readonly type = SIGNIN_SUCCESS;
 
-  constructor(public payload: { user: User, token: string }) {}
+  constructor(public payload: TokenAuthenticate ) {}
 }
 
 export class SigninFailure implements Action {
   readonly type = SIGNIN_FAILURE;
-
-  constructor(public payload: any) {}
-}
-
-export class SigninRedirect implements Action {
-  readonly type = SIGNIN_REDIRECT;
-}
-
-export class AuthenticateWithGoogle implements Action {
-  readonly type = AUTHENTICATE_WITH_GOOGLE;
 
   constructor(public payload: string) {}
 }
@@ -82,8 +72,6 @@ export type Actions =
   | Signin
   | SigninSuccess
   | SigninFailure
-  | SigninRedirect
-  | AuthenticateWithGoogle
   | Signout
   | LoadLocalAuthData
   | ReadLocalAuthData;

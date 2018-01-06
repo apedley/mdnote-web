@@ -1,13 +1,9 @@
-<app-layout>
   <div page-title class="page-title" *ngIf="( share | async ) as currentShare">
     {{ currentShare.title }}
   </div>
 
-  <div no-sidebar-main-content>
 
     <div *ngIf="(share | async) as currentShare" class="share">
       <h1 [routerLink]="['/s', currentShare.url]">{{ currentShare.title }}</h1>
       <markdown [data]="currentShare.body"></markdown>
     </div>
-  </div>
-</app-layout>

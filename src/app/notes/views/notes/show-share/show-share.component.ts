@@ -16,7 +16,7 @@ export class ShowShareComponent implements OnInit {
   shareUrl: string;
 
   constructor(public route: ActivatedRoute, public notes: NotesService, public router: Router) {
-    this.shareUrl = this.route.snapshot.paramMap.get('shareId');
+    this.shareUrl = this.route.snapshot.paramMap.get('shareUrl');
 
     this.notes.getShare(this.shareUrl);
 

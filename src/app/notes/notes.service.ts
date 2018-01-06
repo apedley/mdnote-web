@@ -41,7 +41,7 @@ export class NotesService {
     this.store.dispatch(new category.Load());
   }
   loadCategoriesAndNotes() {
-
+    // debugger;
     this.store.dispatch(new category.Load());
     this.store.dispatch(new notes.Load());
   }

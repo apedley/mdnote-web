@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="app-toolbar mat-elevation-z8">
+  <button mat-icon-button (click)="onMenuClick()" *ngIf="sidebarEnabled">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 class="app-title-name app-toolbar-name" [routerLink]="['/notes']">
+    mdNote
+  </h1>
+  <span class="app-subtitle">
+    <ng-content></ng-content>
+  </span>
+  <span class="toolbar-spacer"></span>
+  <!-- <span class="app-search">
+        <form #searchForm="ngForm" (ngSubmit)="submitSearch()">
+          <mat-form-field>
+            <input matInput placeholder="search" floatPlaceholder="never" name="search" [(ngModel)]="searchString">
+          </mat-form-field>
+        </form>
+      </span> -->
+  <span class="toolbar-spacer"></span>
+  <button mat-mini-fab color="accent" [routerLink]="['/notes','new']" class="add-fab" *ngIf="authenticated | async">
+    <mat-icon>add</mat-icon>
+  </button>
+  <!--
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>person</mat-icon>
+      </button> -->
+
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="signout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Log Out</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

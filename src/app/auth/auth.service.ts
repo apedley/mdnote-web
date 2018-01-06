@@ -2,7 +2,7 @@ import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as fromAuth from './store/reducers';
-import * as fromRoot from '../reducers';
+import * as fromRoot from '../store/reducers';
 import * as auth from './store/actions';
 import { map } from 'rxjs/operators/map';
 import { Router } from '@angular/router';
@@ -21,41 +21,37 @@ export class AuthService {
 
   }
 
+  // signup(userData: Authenticate) {
+  //   this.authStore.dispatch(new auth.Signup(userData));
+  // }
 
-  signup(userData: Authenticate) {
-    this.authStore.dispatch(new auth.Signup(userData));
-  }
-
-  signin(userData: Authenticate) {
-    this.authStore.dispatch(new auth.Signin(userData));
-  }
+  // signin(userData: Authenticate) {
+  //   this.authStore.dispatch(new auth.Signin(userData));
+  // }
 
 
   signout() {
     this.authStore.dispatch(new auth.Signout());
   }
 
-  getError() {
-    return this.authStore.select(fromRoot.getError);
-  }
+  // getError() {
+  //   return this.authStore.select(fromRoot.getFormErrors);
+  // }
 
-  getFormLoading() {
-    return this.authStore.select(fromRoot.getFormLoading);
-  }
+  // getFormLoading() {
+  //   return this.authStore.select(fromRoot.getFormLoading);
+  // }
 
   isAuthenticated() {
     return this.token !== null;
   }
 
   getToken() {
-    return this.authStore.select(fromRoot.getToken);
+    return this.authStore.select(fromAuth.getToken);
   }
 
   getAuthenticated() {
-    return this.authStore.select(fromRoot.getLoggedIn);
+    return this.authStore.select(fromAuth.getLoggedIn);
   }
 
-  authenticateWithGoogle(code) {
-    this.authStore.dispatch(new auth.AuthenticateWithGoogle(code));
-  }
 }

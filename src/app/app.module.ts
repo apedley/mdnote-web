@@ -15,35 +15,41 @@ import { MarkdownModule } from 'ngx-markdown';
 
 
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { AppComponent } from './app.component';
+
 import { NotesModule } from 'app/notes/notes.module';
 
 
-import * as fromRootStore from './reducers';
+import * as fromRootStore from './store/reducers';
+import { LayoutComponent } from './core/containers/layout/layout.component';
+import { RouterEffects } from './store/router-effects';
+import { AppViewComponent } from './core/containers/app-view/app-view.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ApiInterceptor } from './shared/api.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
+    HttpClientModule,
     AppRoutingModule,
-    CoreModule,
-    AuthModule,
-    NotesModule,
+    CoreModule.forRoot(),
+    AuthModule.forRoot(),
     StoreRouterConnectingModule,
     StoreModule.forRoot(fromRootStore.reducers),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RouterEffects]),
     !environment.production
     ? StoreDevtoolsModule.instrument()
     : []
   ],
   providers: [
-    {provide: RouterStateSerializer, useClass: fromRootStore.CustomRouterStateSerializer}
+    {provide: RouterStateSerializer, useClass: fromRootStore.CustomRouterStateSerializer},
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  // bootstrap: [AppComponent]
+  bootstrap: [AppViewComponent]
 })
 export class AppModule { }

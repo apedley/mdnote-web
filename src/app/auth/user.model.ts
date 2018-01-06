@@ -3,12 +3,17 @@ export interface User {
   id?: number;
   firstName?: string;
   lastName?: string;
-  tokens?: string[];
-  created_at?: string;
-  updated_at?: string;
+  tokens: string[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Authenticate {
   email: string;
   password: string;
+}
+
+export interface TokenAuthenticate {
+  user: User;
+  token: string;
 }

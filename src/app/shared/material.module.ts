@@ -53,4 +53,4 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatDialogModule
   ]
 })
-export class AppMaterialModule {}
+export class MaterialModule {}

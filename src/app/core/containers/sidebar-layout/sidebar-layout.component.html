@@ -1,0 +1,16 @@
+<div class="layout">
+
+  <app-header [sidebarEnabled]="true" pageTitle="sidebar layout" (menuClicked)="menuButtonClicked()"></app-header>
+  <mat-sidenav-container class="app-sidebar-container">
+    <mat-sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidebar | async" class="app-sidebar">
+      <app-sidebar-container></app-sidebar-container>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="app-main-content">
+      <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>
+<h1>sidebar: {{ (sidebar | async) | json }}</h1>

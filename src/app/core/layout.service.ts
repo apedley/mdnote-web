@@ -3,20 +3,24 @@ import { InputDialog, ConfirmationDialog } from './models/dialog.model';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromLayout from './store/layout.reducers';
-import * as fromRoot from '../reducers';
+import * as fromRoot from '../store/reducers';
 import * as layout from './store/layout.actions';
-import * as fromNotes from '../notes/store/reducers';
-import * as notesActions from '../notes/store/actions/notes';
+// import * as fromNotes from '../notes/store/reducers';
+// import * as notesActions from '../notes/store/actions/notes';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UserInputDialogComponent } from './components/user-input-dialog.component';
 import { Observable } from 'rxjs/Observable';
 
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class LayoutService {
 
 
-  constructor(private layoutStore: Store<fromLayout.State>, private notesStore: Store<fromNotes.State>, public dialog: MatDialog) { }
+  constructor(
+    private layoutStore: Store<fromLayout.State>,
+    // private notesStore: Store<fromNotes.State>,
+    public dialog: MatDialog) { }
 
   openUserInputDialog(dialog: InputDialog) {
 
@@ -37,19 +41,8 @@ export class LayoutService {
     return dialogRef.afterClosed();
   }
 
-  getSidebarOpen(): Observable<boolean> {
-    return this.layoutStore.select(fromRoot.getSidebarOpen);
+  sidebarDisabledForRoute(path: string) {
+
   }
 
-  toggleSidebar() {
-    this.layoutStore.dispatch(new layout.ToggleSidebar());
-  }
-
-  closeSidebar() {
-    this.layoutStore.dispatch(new layout.CloseSidebar());
-  }
-
-  searchFromToolbar(searchString: string) {
-    this.notesStore.dispatch(new notesActions.Search(searchString));
-  }
 }

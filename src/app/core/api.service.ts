@@ -1,34 +1,34 @@
-import { Authenticate } from '../auth/user.model';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Authenticate, User, TokenAuthenticate } from '../auth/user.model';
 import { Observable } from 'rxjs/Observable';
 import { Category } from '../notes/models/category.model';
 import { Note } from '../notes/models/note.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { AuthService } from 'app/auth/auth.service';
 import { environment } from '../../environments/environment';
+import * as fromAuth from '../auth/store/reducers';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ApiService {
+  public $authToken: Observable<string>;
+
   public authToken: string;
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) {
-    this.authService.getToken().subscribe( token => {
+  constructor(private httpClient: HttpClient, private store: Store<fromAuth.State>) {
+
+    this.$authToken = this.store.select(fromAuth.getToken);
+
+    this.$authToken.subscribe( token => {
       this.authToken = token;
     });
   }
 
   signUp(userInfo: Authenticate) {
-    const url = `${environment.baseApiUrl}/signup`;
-
-    return this.httpClient.post(url, userInfo);
+    return this._post<TokenAuthenticate>('/signup', userInfo);
   }
 
   signIn(userInfo: Authenticate) {
-    const url = `${environment.baseApiUrl}/signin`;
-
-    return this.httpClient.post(url, userInfo);
+    return this._post<TokenAuthenticate>('/signin', userInfo);
   }
 
   getAllNotes() {
@@ -113,14 +113,42 @@ export class ApiService {
 
     return this.httpClient.get(url);
   }
-  authenticateWithGoogle(code) {
-    const url = `${environment.baseApiUrl}/auth/google`;
-    const body = { code };
 
-    return this.httpClient.post(url, body);
+
+  private _get<T>(path: string, authenticated = true): Observable<T> {
+    const url = this._getUrl(path);
+    const headers = this._getAuthHeaders();
+
+    if (this.authToken) {
+      return this.httpClient.get<T>(url, {
+        headers
+      });
+    } else {
+      return this.httpClient.get<T>(url);
+    }
   }
 
 
+  private _post<T>(path: string, body: any, authenticated = true): Observable<T> {
+    const url = this._getUrl(path);
+    const headers = this._getAuthHeaders();
+
+    if (this.authToken) {
+      return this.httpClient.post<T>(url, body, {
+        headers
+      });
+    } else {
+      return this.httpClient.post<T>(url, body);
+    }
+  }
+
+  private _getUrl(path: string) {
+    return `${environment.baseApiUrl}${path}`;
+  }
+
+  private _getAuthHeaders() {
+    return new HttpHeaders().set('Authorization', `bearer ${this.authToken}`);
+  }
 
   private _removeInvalidKeys(dataObject: any) {
     return Object.keys(dataObject).reduce((prev, key) => {

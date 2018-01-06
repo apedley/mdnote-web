@@ -2,7 +2,7 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromCategories from './category';
 import * as fromNotes from './notes';
-import * as fromRoot from '../../../reducers';
+import * as fromRoot from '../../../store/reducers';
 
 export interface NotesState {
   categories: fromCategories.State;

@@ -1,11 +1,6 @@
 @import '../../../../theme.scss';
 
-.passwordConfirmation {
-  max-width: 500px;
-}
-
 .auth-form {
-
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -23,15 +18,12 @@
   display: inline
 }
 
-h5.form-error {
-  color: $warn
-
-}
-
-.authInfo {
+.form-buttons {
   text-align: center;
 }
 
-.form-buttons {
+.error {
+  color: $warn;
+  margin: 3em auto 0;
   text-align: center;
 }

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AppMaterialModule } from '../core/app-material.module';
+import { MaterialModule } from '../shared/material.module';
 import { ListCategoriesComponent } from './views/categories/list-categories/list-categories.component';
 import { CategoryItemComponent } from './components/category-item/category-item.component';
 import { EditNoteFormComponent } from './components/edit-note/edit-note-form.component';
@@ -25,24 +25,29 @@ import { EditNoteComponent } from './views/notes/edit-note/edit-note.component';
 import { ShowCategoryComponent } from './views/categories/show-category/show-category.component';
 import { ShowNoteComponent } from './views/notes/show-note/show-note.component';
 import { ShowShareComponent } from './views/notes/show-share/show-share.component';
+import { SidebarLayoutComponent } from '../core/containers/sidebar-layout/sidebar-layout.component';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    AppMaterialModule,
+    MaterialModule,
     CoreModule,
     AuthModule,
     HttpClientModule,
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
     RouterModule.forChild([
-      { path: 'new', component: CreateNoteComponent },
-      { path: ':noteId', component: ShowNoteComponent },
-      { path: ':noteId/edit', component: EditNoteComponent },
-      { path: 'categories/:categoryId', component: ShowCategoryComponent },
-      { path: '', component: ListCategoriesComponent, pathMatch: 'full' }
+      { path: '', component: SidebarLayoutComponent, children: [
+        { path: '', pathMatch: 'full', component: ListCategoriesComponent },
+        { path: 's/:shareUrl', component: ShowShareComponent },
+        { path: 'new', component: CreateNoteComponent },
+        { path: ':noteId', component: ShowNoteComponent },
+        { path: ':noteId/edit', component: EditNoteComponent },
+        { path: 'categories/:categoryId', component: ShowCategoryComponent },
+
+      ]},
     ]),
     StoreModule.forFeature('notes', reducers),
     EffectsModule.forFeature([CategoryEffects, NoteEffects]),
@@ -61,7 +66,8 @@ import { ShowShareComponent } from './views/notes/show-share/show-share.componen
     ShowShareComponent
   ],
   providers: [
-    NotesService
+    NotesService,
+
   ],
   exports: [
 

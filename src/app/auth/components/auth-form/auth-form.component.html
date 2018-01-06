@@ -1,0 +1,31 @@
+<form [formGroup]="authForm" class="auth-form" (ngSubmit)="submitAuthForm()">
+  <h2>{{ authFunction }}</h2>
+
+  <h5 class="form-error" *ngIf="formError">Error: {{ (formErrors | async ) | json }}</h5>
+  <mat-form-field>
+    <input matInput formControlName="email" placeholder="Email Address">
+    <mat-error *ngIf="authForm.controls['email'].hasError('email')">
+      Please enter a valid email address
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field hintLabel="Min 6 characters">
+    <input type="password" matInput formControlName="password" placeholder="Password">
+    <mat-error *ngIf="authForm.controls['password'].hasError('minlength') || authForm.controls['password'].hasError('required')">
+      Please enter at least 6 characters
+    </mat-error>
+  </mat-form-field>
+  <div class="form-buttons">
+    <button mat-raised-button color="primary" [disabled]="authForm.invalid || formLoading">
+      <span *ngIf="!formLoading">
+        {{ authFunction }}
+      </span>
+      <span *ngIf="formLoading">
+        Loading
+      </span>
+    </button>
+  </div>
+
+  <h4 class="error">
+    {{ error }}
+  </h4>
+</form>

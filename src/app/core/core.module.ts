@@ -4,36 +4,52 @@ import { UserInputDialogComponent } from './components/user-input-dialog.compone
 import { LayoutService } from './layout.service';
 import { NotesModule } from '../notes/notes.module';
 import { FormsModule } from '@angular/forms';
-import { AppMaterialModule } from './app-material.module';
+import { MaterialModule } from '../shared/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from './containers/layout/layout.component';
 import { ApiService } from './api.service';
 import { Routes, RouterModule } from '@angular/router';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AppViewComponent } from './containers/app-view/app-view.component';
+import { ApiInterceptor } from '../shared/api.interceptor';
+import { SingleViewLayoutComponent } from './containers/single-view-layout/single-view-layout.component';
+import { SidebarLayoutComponent } from './containers/sidebar-layout/sidebar-layout.component';
+
+
+const Components = [
+  HeaderComponent,
+  SidebarComponent,
+  UserInputDialogComponent,
+  ConfirmationDialogComponent,
+  SidebarContainerComponent,
+  AppViewComponent,
+  SingleViewLayoutComponent,
+  SidebarLayoutComponent
+];
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
-    AppMaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
-  exports: [
-    LayoutComponent
-  ],
-  declarations: [
-    LayoutComponent,
-    UserInputDialogComponent,
-    ConfirmationDialogComponent,
-    SidebarContainerComponent
-  ],
+  exports: Components,
+  declarations: Components,
   entryComponents: [
     UserInputDialogComponent,
     ConfirmationDialogComponent
   ],
-  providers: [
-    ApiService,
-    LayoutService
-  ]
 })
-export class CoreModule { }
+export class CoreModule {
+  static forRoot() {
+    return {
+      ngModule: CoreModule,
+      providers: [ApiService, LayoutService],
+    };
+  }
+}
