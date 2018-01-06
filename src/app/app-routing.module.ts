@@ -3,6 +3,7 @@ import { AuthComponent } from './auth/components/auth/auth.component';
 import { LayoutComponent } from './core/containers/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ShowShareComponent } from './notes/views/notes/show-share/show-share.component';
 
 const routes: Routes = [
 
@@ -30,6 +31,13 @@ const routes: Routes = [
     path: 'notes',
     loadChildren: './notes/notes.module#NotesModule',
     canActivate: [AuthGuard]
+  },
+  {
+    path: 's/:shareId',
+    component: ShowShareComponent,
+    data: {
+      hideSidebar: true,
+    }
   },
   {
     path: '',

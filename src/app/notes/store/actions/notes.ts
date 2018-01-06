@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Note } from '../../models/note.model';
+import { Share } from 'app/notes/models/share.model';
 
 export const LOAD = '[Notes] Load';
 export const LOAD_SUCCESS = '[Notes] Load Success';
@@ -18,7 +19,9 @@ export const DELETE_FAIL = '[Notes] Delete Fail';
 export const SEARCH = '[Notes] Search';
 export const SEARCH_SUCCESS = '[Notes] Search Success';
 export const SEARCH_FAIL = '[Notes] Search Fail';
-
+export const LOAD_SHARE = '[Notes] Load share';
+export const LOAD_SHARE_SUCCESS = '[Notes] Load Share Success';
+export const LOAD_SHARE_FAIL = '[Notes] Load Share Fail';
 
 export class Load implements Action {
   readonly type = LOAD;
@@ -121,6 +124,27 @@ export class SearchSuccess implements Action {
 }
 
 
+export class LoadShare implements Action {
+  readonly type = LOAD_SHARE;
+
+  constructor(public url: string) {}
+}
+
+
+export class LoadShareSuccess implements Action {
+  readonly type = LOAD_SHARE_SUCCESS;
+
+  constructor(public share: Share) {}
+}
+
+
+export class LoadShareFail implements Action {
+  readonly type = LOAD_SHARE_FAIL;
+
+  constructor(public payload: string) {}
+}
+
+
 export type actions =
   Load |
   LoadSuccess |
@@ -138,4 +162,7 @@ export type actions =
   SearchSuccess |
   Delete |
   DeleteFail |
-  DeleteSuccess;
+  DeleteSuccess |
+  LoadShare |
+  LoadShareSuccess |
+  LoadShareFail;

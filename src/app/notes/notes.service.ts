@@ -32,7 +32,7 @@ export class NotesService {
       if (!loaded) {
         this.loadCategoriesAndNotes();
       }
-    })
+    });
     this.categories = store.select(fromNotes.getAllCategories);
     this.notes = store.select(fromNotes.getAllNotes);
   }
@@ -150,5 +150,13 @@ export class NotesService {
 
   getRouterSelectedNote() {
     return this.store.select(fromNotes.getRouteNote);
+  }
+
+  getShare(url: string) {
+    return this.store.dispatch(new notes.LoadShare(url));
+  }
+
+  selectShare() {
+    return this.store.select(fromNotes.selectShare);
   }
 }

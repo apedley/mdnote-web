@@ -82,3 +82,8 @@ export const getRouteNote = createSelector(
     return router.state && entities[router.state.params.noteId];
   }
 );
+
+export const selectShare = createSelector(
+  getNoteEntitiesState,
+  fromNotes.getShare
+);

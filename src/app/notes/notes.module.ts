@@ -24,6 +24,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { EditNoteComponent } from './views/notes/edit-note/edit-note.component';
 import { ShowCategoryComponent } from './views/categories/show-category/show-category.component';
 import { ShowNoteComponent } from './views/notes/show-note/show-note.component';
+import { ShowShareComponent } from './views/notes/show-share/show-share.component';
 
 
 
@@ -56,8 +57,8 @@ import { ShowNoteComponent } from './views/notes/show-note/show-note.component';
     EditNoteFormComponent,
     EditNoteComponent,
     ShowCategoryComponent,
-    ShowNoteComponent
-
+    ShowNoteComponent,
+    ShowShareComponent
   ],
   providers: [
     NotesService

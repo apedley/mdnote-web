@@ -2,10 +2,13 @@ import * as notes from '../actions/notes';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createSelector } from '@ngrx/store';
 import { Note } from '../../models/note.model';
+import { Share } from 'app/notes/models/share.model';
 
 export interface State extends EntityState<Note> {
   selectedNoteId: string | null;
   deletingNoteId: string | null;
+  share: Share;
+  errors: string[];
 }
 
 export const adapter: EntityAdapter<Note> = createEntityAdapter<Note>({
@@ -15,7 +18,9 @@ export const adapter: EntityAdapter<Note> = createEntityAdapter<Note>({
 
 export const initialState: State = adapter.getInitialState({
   selectedNoteId: null,
-  deletingNoteId: null
+  deletingNoteId: null,
+  share: null,
+  errors: []
 });
 
 export function reducer(state = initialState, action: notes.actions): State {
@@ -62,6 +67,19 @@ export function reducer(state = initialState, action: notes.actions): State {
       };
     }
 
+    case notes.LOAD_SHARE_SUCCESS: {
+      return {
+        ...state,
+        share: action.share
+      };
+    }
+    case notes.LOAD_SHARE_FAIL: {
+      return {
+        ...state,
+        share: null,
+        errors: [...state.errors, action.payload]
+      };
+    }
     default: {
       return state;
     }
@@ -70,3 +88,5 @@ export function reducer(state = initialState, action: notes.actions): State {
 
 
 export const getSelectedId = (state: State) => state.selectedNoteId;
+
+export const getShare = (state: State) => state.share;

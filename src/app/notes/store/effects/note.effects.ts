@@ -103,6 +103,19 @@ export class NoteEffects {
     catchError(error => of(new notesActions.SearchFail(error)))
   );
 
+  @Effect()
+  loadShare = this.actions.ofType(notesActions.LOAD_SHARE).pipe(
+    switchMap((action: notesActions.LoadShare) => {
+      return this.api.loadShare(action.url);
+    }),
+    map((result) => {
+      return {
+        type: notesActions.LOAD_SHARE_SUCCESS,
+        share: result
+      };
+    }),
+    catchError(error => of(new notesActions.LoadShareFail(error)))
+  );
 
   constructor(private actions: Actions, private api: ApiService, private router: Router, private auth: AuthService) { }
 }

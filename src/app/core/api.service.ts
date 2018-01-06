@@ -108,12 +108,19 @@ export class ApiService {
     });
   }
 
+  loadShare(shareUrl: string) {
+    const url = `${environment.baseApiUrl}/shared/${shareUrl}`;
+
+    return this.httpClient.get(url);
+  }
   authenticateWithGoogle(code) {
     const url = `${environment.baseApiUrl}/auth/google`;
     const body = { code };
 
     return this.httpClient.post(url, body);
   }
+
+
 
   private _removeInvalidKeys(dataObject: any) {
     return Object.keys(dataObject).reduce((prev, key) => {

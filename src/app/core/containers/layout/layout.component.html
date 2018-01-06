@@ -1,7 +1,7 @@
 <div class="layout" [class.app-is-mobile]="mobileQuery.matches">
 
   <mat-toolbar color="primary" class="app-toolbar mat-elevation-z8">
-    <button mat-icon-button (click)="menuButtonClicked()">
+    <button mat-icon-button (click)="menuButtonClicked()" *ngIf="sidebarEnabled">
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="app-title-name app-toolbar-name" [routerLink]="['/notes']">
@@ -11,13 +11,13 @@
       <ng-content select="[page-title]"></ng-content>
     </span>
     <span class="toolbar-spacer"></span>
-    <span class="app-search">
+    <!-- <span class="app-search">
       <form #searchForm="ngForm" (ngSubmit)="submitSearch()">
         <mat-form-field>
           <input matInput placeholder="search" floatPlaceholder="never" name="search" [(ngModel)]="searchString">
         </mat-form-field>
       </form>
-    </span>
+    </span> -->
     <span class="toolbar-spacer"></span>
     <button mat-mini-fab color="accent" [routerLink]="['/notes','new']" class="add-fab" *ngIf="authenticated | async">
       <mat-icon>add</mat-icon>
