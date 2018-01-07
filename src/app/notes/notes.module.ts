@@ -1,31 +1,31 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NotesService } from './notes.service';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AuthModule } from 'app/auth/auth.module';
+import { CoreModule } from 'app/core/core.module';
+import { MarkdownModule } from 'ngx-markdown';
+
+import { SidebarLayoutComponent } from '../core/containers/sidebar-layout/sidebar-layout.component';
 import { MaterialModule } from '../shared/material.module';
-import { ListCategoriesComponent } from './views/categories/list-categories/list-categories.component';
 import { CategoryItemComponent } from './components/category-item/category-item.component';
 import { EditNoteFormComponent } from './components/edit-note/edit-note-form.component';
 import { EditNotePreviewComponent } from './components/edit-note/edit-note-preview.component';
+import { NoteRenderComponent } from './components/note-render/note-render.component';
+import { NotesListComponent } from './components/notes-list/notes-list.component';
+import { NotesService } from './notes.service';
 import { CategoryEffects } from './store/effects/category.effects';
 import { NoteEffects } from './store/effects/note.effects';
-import { CoreModule } from 'app/core/core.module';
-import { AuthModule } from 'app/auth/auth.module';
-import { RouterModule } from '@angular/router';
 import { reducers } from './store/reducers';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NotesListComponent } from './components/notes-list/notes-list.component';
-import { NoteRenderComponent } from './components/note-render/note-render.component';
-import { CreateNoteComponent } from './views/notes/create-note/create-note.component';
-
-import { MarkdownModule } from 'ngx-markdown';
-import { EditNoteComponent } from './views/notes/edit-note/edit-note.component';
+import { ListCategoriesComponent } from './views/categories/list-categories/list-categories.component';
 import { ShowCategoryComponent } from './views/categories/show-category/show-category.component';
+import { CreateNoteComponent } from './views/notes/create-note/create-note.component';
+import { EditNoteComponent } from './views/notes/edit-note/edit-note.component';
 import { ShowNoteComponent } from './views/notes/show-note/show-note.component';
 import { ShowShareComponent } from './views/notes/show-share/show-share.component';
-import { SidebarLayoutComponent } from '../core/containers/sidebar-layout/sidebar-layout.component';
 
 
 
@@ -45,8 +45,7 @@ import { SidebarLayoutComponent } from '../core/containers/sidebar-layout/sideba
         { path: 'new', component: CreateNoteComponent },
         { path: ':noteId', component: ShowNoteComponent },
         { path: ':noteId/edit', component: EditNoteComponent },
-        { path: 'categories/:categoryId', component: ShowCategoryComponent },
-
+        { path: 'categories/:categoryId', component: ShowCategoryComponent }
       ]},
     ]),
     StoreModule.forFeature('notes', reducers),
@@ -73,4 +72,5 @@ import { SidebarLayoutComponent } from '../core/containers/sidebar-layout/sideba
 
   ]
 })
-export class NotesModule { }
+export class NotesModule {
+}

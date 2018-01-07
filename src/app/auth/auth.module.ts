@@ -1,18 +1,19 @@
-import { AuthGuard } from './auth.guard';
-import { AuthService } from './auth.service';
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../shared/material.module';
-import { AuthViewComponent } from './containers/auth/auth-view.component';
 import { RouterModule } from '@angular/router';
-import { reducers } from './store/reducers';
-import { AuthEffects } from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { CoreModule } from '../core/core.module';
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { SingleViewLayoutComponent } from 'app/core/containers/single-view-layout/single-view-layout.component';
+
+import { CoreModule } from '../core/core.module';
+import { MaterialModule } from '../shared/material.module';
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
+import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { AuthViewComponent } from './containers/auth/auth-view.component';
+import { AuthEffects } from './store/effects';
+import { reducers } from './store/reducers';
 
 const components = [
   AuthViewComponent,
@@ -28,8 +29,8 @@ const components = [
     MaterialModule,
     CoreModule
   ],
-  declarations: [components],
-  exports: [components],
+  declarations: components,
+  exports: components,
 })
 export class AuthModule {
   static forRoot(): ModuleWithProviders {

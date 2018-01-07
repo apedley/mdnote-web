@@ -1,12 +1,12 @@
 import { Authenticate, User, TokenAuthenticate } from '../auth/user.model';
 import { Observable } from 'rxjs/Observable';
-import { Category } from '../notes/models/category.model';
-import { Note } from '../notes/models/note.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import * as fromAuth from '../auth/store/reducers';
 import { Store } from '@ngrx/store';
+import { Category } from '../notes/models/category.model';
+import { Note } from '../notes/models/note.model';
 
 @Injectable()
 export class ApiService {
@@ -24,11 +24,11 @@ export class ApiService {
   }
 
   signUp(userInfo: Authenticate) {
-    return this._post<TokenAuthenticate>('/signup', userInfo);
+    return this.post<TokenAuthenticate>('/signup', userInfo);
   }
 
   signIn(userInfo: Authenticate) {
-    return this._post<TokenAuthenticate>('/signin', userInfo);
+    return this.post<TokenAuthenticate>('/signin', userInfo);
   }
 
   getAllNotes() {
@@ -115,21 +115,7 @@ export class ApiService {
   }
 
 
-  private _get<T>(path: string, authenticated = true): Observable<T> {
-    const url = this._getUrl(path);
-    const headers = this._getAuthHeaders();
-
-    if (this.authToken) {
-      return this.httpClient.get<T>(url, {
-        headers
-      });
-    } else {
-      return this.httpClient.get<T>(url);
-    }
-  }
-
-
-  private _post<T>(path: string, body: any, authenticated = true): Observable<T> {
+  post<T>(path: string, body: any, authenticated = true): Observable<T> {
     const url = this._getUrl(path);
     const headers = this._getAuthHeaders();
 
@@ -139,6 +125,19 @@ export class ApiService {
       });
     } else {
       return this.httpClient.post<T>(url, body);
+    }
+  }
+
+  get<T>(path: string, authenticated = true): Observable<T> {
+    const url = this._getUrl(path);
+    const headers = this._getAuthHeaders();
+
+    if (this.authToken) {
+      return this.httpClient.get<T>(url, {
+        headers
+      });
+    } else {
+      return this.httpClient.get<T>(url);
     }
   }
 

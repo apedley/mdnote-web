@@ -5,7 +5,6 @@ export const OPEN_SIDEBAR = '[Layout] Open sidebar';
 export const CLOSE_SIDEBAR = '[Layout] Close sidebar';
 export const TOGGLE_SIDEBAR = '[Layout] Toggle sidebar';
 
-
 export const OPEN_INPUT_DIALOG = '[Layout] Open input dialog';
 export const INPUT_DIALOG_FINISHED = '[Layout] Input dialog finished';
 

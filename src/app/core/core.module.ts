@@ -1,21 +1,20 @@
-import { ConfirmationDialogComponent } from './components/confirmation-dialog.component';
-import { SidebarContainerComponent } from './containers/sidebar/sidebar-container.component';
-import { UserInputDialogComponent } from './components/user-input-dialog.component';
-import { LayoutService } from './layout.service';
-import { NotesModule } from '../notes/notes.module';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '../shared/material.module';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+import { MaterialModule } from '../shared/material.module';
 import { ApiService } from './api.service';
-import { Routes, RouterModule } from '@angular/router';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { UserInputDialogComponent } from './components/user-input-dialog.component';
 import { AppViewComponent } from './containers/app-view/app-view.component';
-import { ApiInterceptor } from '../shared/api.interceptor';
-import { SingleViewLayoutComponent } from './containers/single-view-layout/single-view-layout.component';
 import { SidebarLayoutComponent } from './containers/sidebar-layout/sidebar-layout.component';
+import { SidebarContainerComponent } from './containers/sidebar/sidebar-container.component';
+import { SingleViewLayoutComponent } from './containers/single-view-layout/single-view-layout.component';
+import { LayoutService } from './layout.service';
 
 
 const Components = [

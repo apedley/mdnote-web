@@ -1,5 +1,3 @@
-<div page-title *ngIf="note | async as theNote">Note: {{ theNote.title }}</div>
-
 <div class="split-view">
   <div class="note-view">
     <app-note-render [note]="note | async" *ngIf="(note | async)" (deleteNoteClicked)="deleteNote($event)"></app-note-render>

@@ -72,5 +72,5 @@ export class CategoryEffects {
   );
 
 
-  constructor(private actions: Actions, private api: ApiService, private router: Router, private notesService: NotesService, private auth: AuthService) { }
+  constructor(private actions: Actions, private api: ApiService, private router: Router, private auth: AuthService) { }
 }

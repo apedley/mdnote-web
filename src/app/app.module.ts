@@ -1,30 +1,26 @@
-import { environment } from '../environments/environment';
-import { AuthEffects } from './auth/store/effects';
-import { LayoutEffects } from './core/store/layout.effects';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AuthModule } from './auth/auth.module';
-import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module';
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MarkdownModule } from 'ngx-markdown';
 
-
-import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
-
-import { NotesModule } from 'app/notes/notes.module';
-
-
-import * as fromRootStore from './store/reducers';
-import { LayoutComponent } from './core/containers/layout/layout.component';
-import { RouterEffects } from './store/router-effects';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthEffects } from './auth/store/effects';
 import { AppViewComponent } from './core/containers/app-view/app-view.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CoreModule } from './core/core.module';
 import { ApiInterceptor } from './shared/api.interceptor';
+import * as fromRootStore from './store/reducers';
+import { RouterEffects } from './store/router-effects';
+
+
 
 @NgModule({
   declarations: [
@@ -39,7 +35,7 @@ import { ApiInterceptor } from './shared/api.interceptor';
     CoreModule.forRoot(),
     AuthModule.forRoot(),
     StoreRouterConnectingModule,
-    StoreModule.forRoot(fromRootStore.reducers),
+    StoreModule.forRoot(fromRootStore.reducers, { metaReducers: fromRootStore.metaReducers }),
     EffectsModule.forRoot([AuthEffects, RouterEffects]),
     !environment.production
     ? StoreDevtoolsModule.instrument()
@@ -52,4 +48,9 @@ import { ApiInterceptor } from './shared/api.interceptor';
   // bootstrap: [AppComponent]
   bootstrap: [AppViewComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {
+    console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
+
+  }
+}
