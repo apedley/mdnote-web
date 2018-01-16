@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Note } from '../../models/note.model';
 
@@ -7,7 +7,7 @@ import { Note } from '../../models/note.model';
   templateUrl: './note-list.component.html',
   styleUrls: ['./note-list.component.scss']
 })
-export class NoteListComponent implements OnInit {
+export class NoteListComponent implements OnInit, OnChanges {
   @Input() notes: Note[];
   @Input() collapsed: boolean;
 
@@ -21,6 +21,11 @@ export class NoteListComponent implements OnInit {
 
 
   ngOnInit() {
+
+  }
+
+  ngOnChanges() {
+
     this.notes.forEach(note => {
       note.preview = note.body.substr(0, 70);
     });

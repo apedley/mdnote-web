@@ -20,6 +20,10 @@ import { ComposeNoteViewComponent } from './containers/compose-note-view/compose
 import { NoteFormComponent } from './components/note-form/note-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotePreviewComponent } from './components/note-preview/note-preview.component';
+import { PipesModule } from '../shared/pipes/index';
+import { DirectivesModule } from '../shared/directives/index';
+import { CategoryViewComponent } from './containers/category-view/category-view.component';
+import { CategoryListItemComponent } from './components/category-list/category-list-item/category-list-item.component';
 
 @NgModule({
   imports: [
@@ -27,10 +31,15 @@ import { NotePreviewComponent } from './components/note-preview/note-preview.com
     MaterialModule,
     ReactiveFormsModule,
     CoreModule,
+    PipesModule,
+    DirectivesModule,
     MarkdownModule.forChild(),
     RouterModule.forChild([
       { path: '', component: SidebarLayoutComponent, children: [
+        { path: 'categories/:categoryId', component: CategoryViewComponent },
+        { path: 'categories/:categoryId/notes/:noteId', component: CategoryViewComponent },
         { path: 'new', component: ComposeNoteViewComponent },
+        { path: ':noteId/edit', component: ComposeNoteViewComponent },
         { path: ':noteId', pathMatch: 'full', component: CategoryListViewComponent },
         { path: '', pathMatch: 'full', component: CategoryListViewComponent },
       ]}
@@ -47,7 +56,9 @@ import { NotePreviewComponent } from './components/note-preview/note-preview.com
     NoteShowComponent,
     ComposeNoteViewComponent,
     NoteFormComponent,
-    NotePreviewComponent
+    NotePreviewComponent,
+    CategoryViewComponent,
+    CategoryListItemComponent
   ],
   exports: [],
   providers: [NotesService]

@@ -141,6 +141,32 @@ export class ApiService {
     }
   }
 
+  patch<T>(path: string, body: any, authenticated = true): Observable<T> {
+    const url = this._getUrl(path);
+    const headers = this._getAuthHeaders();
+
+    if (this.authToken) {
+      return this.httpClient.patch<T>(url, body, {
+        headers
+      });
+    } else {
+      return this.httpClient.patch<T>(url, body);
+    }
+  }
+
+  delete<T>(path: string, authenticated = true): Observable<number> {
+    const url = this._getUrl(path);
+    const headers = this._getAuthHeaders();
+
+    if (this.authToken) {
+      return this.httpClient.delete<number>(url, {
+        headers
+      });
+    } else {
+      return this.httpClient.delete<number>(url);
+    }
+  }
+
   private _getUrl(path: string) {
     return `${environment.baseApiUrl}${path}`;
   }

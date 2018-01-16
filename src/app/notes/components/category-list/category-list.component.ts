@@ -11,8 +11,7 @@ export class CategoryListComponent {
   @Input() collapsed: {};
   @Output() noteClicked = new EventEmitter<number>();
   @Output() categoryClicked = new EventEmitter<number>();
+  @Output() deleteCategoryClicked = new EventEmitter<number>();
 
   constructor() { }
-  deleteCategoryClicked() {}
-
 }

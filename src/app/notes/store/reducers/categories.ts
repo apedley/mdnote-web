@@ -30,16 +30,9 @@ export function reducer(state = initialState, action: CategoriesActions): State 
   switch (action.type) {
 
     case(CategoriesActionTypes.AddCategory):
+    case(CategoriesActionTypes.DeleteCategory):
     case(CategoriesActionTypes.Fetch): {
       return { ...state, loading: true };
-    }
-
-    case(CategoriesActionTypes.AddCategorySuccess): {
-      return { ...adapter.addOne(action.payload, state), loading: false };
-    }
-
-    case(CategoriesActionTypes.AddCategoryFailure): {
-      return { ...state, error: action.payload, loading: false };
     }
 
     case(CategoriesActionTypes.FetchSuccess): {
@@ -53,6 +46,20 @@ export function reducer(state = initialState, action: CategoriesActions): State 
     case(CategoriesActionTypes.Select): {
       return { ...state, selectedCategoryId: action.payload };
     }
+
+    case(CategoriesActionTypes.AddCategorySuccess): {
+      return { ...adapter.addOne(action.payload, state), loading: false };
+    }
+
+    case(CategoriesActionTypes.AddCategoryFailure):
+    case(CategoriesActionTypes.DeleteCategoryFailure): {
+      return { ...state, error: action.payload, loading: false };
+    }
+
+    case(CategoriesActionTypes.DeleteCategorySuccess): {
+      return { ...adapter.removeOne(action.payload, state), loading: false};
+    }
+
 
     case(CategoriesActionTypes.ToggleCategory): {
       return {

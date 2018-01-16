@@ -15,13 +15,12 @@ export class NoteFormComponent implements OnInit {
 
   @Output() formSubmitted = new EventEmitter<Note>();
   @Output() bodyChanged = new EventEmitter<string>();
-
+  @Output() newCategory = new EventEmitter<void>();
 
   noteForm: FormGroup;
   formLoading = false;
 
   existingNoteId: number;
-
 
   constructor(public fb: FormBuilder) { }
 
@@ -32,24 +31,38 @@ export class NoteFormComponent implements OnInit {
       categoryId: ['0']
     });
 
-
     if (!this.initialData) {
       return;
     }
 
     this.initialData.subscribe((note) => {
-      debugger;
+      if (!note) { return; }
+      this.existingNoteId = note.id;
+      this.noteForm.controls['title'].setValue(note.title);
+      this.noteForm.controls['body'].setValue(note.body);
+      this.bodyChanged.emit(note.body);
+      this.noteForm.controls['categoryId'].setValue(note.categoryId);
     });
   }
 
   submitForm() {
+
     const noteData: Note = {
       title: String(this.noteForm.value['title']),
       body: String(this.noteForm.value['body']),
       categoryId: parseInt(this.noteForm.value['categoryId'], 10)
     };
 
+    if (this.existingNoteId) {
+      noteData.id = this.existingNoteId;
+    }
+
     this.formSubmitted.emit(noteData);
+  }
+
+  newCategoryClicked(event) {
+    event.preventDefault();
+    this.newCategory.emit();
   }
 
 }

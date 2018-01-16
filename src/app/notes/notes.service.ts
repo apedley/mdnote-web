@@ -28,8 +28,32 @@ export class NotesService {
     }
 
     const cleanNoteData = this._removeInvalidKeys(note);
-    debugger;
     return this.api.post('/notes', cleanNoteData, true);
+  }
+
+  updateNote(note: Note) {
+    const noteId = note.id;
+
+    if (note.categoryId === 0) {
+      note.categoryId = null;
+    }
+
+    const cleanNoteData = this._removeInvalidKeys(note);
+
+    return this.api.patch(`/notes/${noteId}`, cleanNoteData, true);
+  }
+
+  deleteNote(noteId: number) {
+    return this.api.delete(`/notes/${noteId}`, true);
+  }
+
+  addCategory(category: Category) {
+    const cleanCategoryData = this._removeInvalidKeys(category);
+    return this.api.post('/categories', cleanCategoryData, true);
+  }
+
+  deleteCategory(categoryId: number) {
+    return this.api.delete(`/categories/${categoryId}`, true);
   }
 
   combineCategoriesNotes($categories: Observable<Category[]>, $notes: Observable<Note[]>): Observable<Category[]> {

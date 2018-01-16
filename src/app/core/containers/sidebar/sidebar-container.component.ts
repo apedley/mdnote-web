@@ -2,6 +2,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { LayoutService } from '../../layout.service';
 import { Category } from '../../../notes/models/category.model';
 import * as fromNotes from '../../../notes/store/reducers';
+import * as Categories from '../../../notes/store/actions/categories';
 import * as Auth from '../../../auth/store/actions';
 import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -31,6 +32,7 @@ export class SidebarContainerComponent implements OnInit {
   newCategory() {
     this.layoutService.openUserInputDialog({ title: 'New Category', content: 'Name for new Category?', response: null}).subscribe(result => {
       if (!result) { return; }
+      this.store.dispatch(new Categories.AddCategory({ name: result }));
     });
   }
 

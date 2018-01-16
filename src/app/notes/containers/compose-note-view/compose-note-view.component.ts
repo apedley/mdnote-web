@@ -38,8 +38,9 @@ export class ComposeNoteViewComponent implements OnInit {
 
     this.selectedNote.subscribe(note => {
       if (!note) {
-        this.layout.setTitle('New Note');
+        return this.layout.setTitle('New Note');
       }
+      this.layout.setTitle(`Edit: ${note.title}`);
     });
   }
 
@@ -52,6 +53,17 @@ export class ComposeNoteViewComponent implements OnInit {
   }
 
   formSubmitted(data: Note) {
-    this.store.dispatch(new Notes.AddNote(data));
+    if (data.id) {
+      this.store.dispatch(new Notes.UpdateNote(data));
+    } else {
+      this.store.dispatch(new Notes.AddNote(data));
+    }
+  }
+
+  newCategory() {
+    this.layout.openUserInputDialog({ title: 'New Category', content: 'Name for new Category?', response: null}).subscribe(result => {
+      if (!result) { return; }
+      this.store.dispatch(new Categories.AddCategory({ name: result }));
+    });
   }
 }

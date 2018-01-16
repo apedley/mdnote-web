@@ -2,7 +2,7 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
-import { NotesActions, NotesActionTypes } from '../actions/notes';
+import { NotesActions, NotesActionTypes, DeleteNote, DeleteNoteFailure, UpdateNoteSuccess } from '../actions/notes';
 import { Note } from '../../models/note.model';
 
 export interface State extends EntityState<Note> {
@@ -28,15 +28,15 @@ export function reducer(state = initialState, action: NotesActions): State {
   switch (action.type) {
 
     case(NotesActionTypes.AddNote):
-    case(NotesActionTypes.Fetch): {
+    case(NotesActionTypes.UpdateNote):
+    case(NotesActionTypes.Fetch):
+    case(NotesActionTypes.DeleteNote): {
       return { ...state, loading: true };
     }
 
-    case(NotesActionTypes.AddNoteSuccess): {
-      return { ...adapter.addOne(action.payload, state), loading: false };
-    }
-
-    case(NotesActionTypes.AddNoteFailure): {
+    case(NotesActionTypes.AddNoteFailure):
+    case(NotesActionTypes.UpdateNoteFailure):
+    case(NotesActionTypes.DeleteNoteFailure): {
       return { ...state, error: action.payload, loading: false };
     }
 
@@ -52,6 +52,17 @@ export function reducer(state = initialState, action: NotesActions): State {
       return { ...state, selectedNoteId: action.payload };
     }
 
+    case(NotesActionTypes.AddNoteSuccess): {
+      return { ...adapter.addOne(action.payload, state), loading: false };
+    }
+
+    case(NotesActionTypes.UpdateNoteSuccess): {
+      return { ...adapter.updateOne({ id: action.payload.id, changes: action.payload }, state), loading: false };
+    }
+
+    case(NotesActionTypes.DeleteNoteSuccess): {
+      return { ...adapter.removeOne(action.payload, state), loading: false };
+    }
     default: {
       return state;
     }

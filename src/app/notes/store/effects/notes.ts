@@ -11,12 +11,10 @@ import { NotesService } from '../../notes.service';
 
 import {
   NotesActionTypes,
-  Fetch,
-  FetchSuccess,
-  FetchFailure,
-  AddNote,
-  AddNoteSuccess,
-  AddNoteFailure
+  Fetch, FetchSuccess, FetchFailure,
+  AddNote, AddNoteSuccess, AddNoteFailure,
+  UpdateNote, UpdateNoteSuccess, UpdateNoteFailure,
+  DeleteNote, DeleteNoteSuccess, DeleteNoteFailure
 } from '../actions/notes';
 import { Note } from 'app/notes/models/note.model';
 
@@ -35,17 +33,15 @@ export class NotesEffects {
     catchError((err) => of(new FetchFailure(err.error)))
   );
 
-
   @Effect()
   addNote: Observable<Action> = this.actions.ofType(NotesActionTypes.AddNote).pipe(
     switchMap((action: AddNote) => {
       return this.notes.addNote(action.payload);
     }),
     map((note: Note) => {
-      debugger;
       return new AddNoteSuccess(note);
     }),
-    catchError((err) => of(new FetchFailure(err.error)))
+    catchError((err) => of(new AddNoteFailure(err.error)))
   );
 
   @Effect()
@@ -55,7 +51,40 @@ export class NotesEffects {
     })
   );
 
+  @Effect()
+  updateNote: Observable<Action> = this.actions.ofType(NotesActionTypes.UpdateNote).pipe(
+    switchMap((action: UpdateNote) => {
+      return this.notes.updateNote(action.payload);
+    }),
+    map((note: Note) => {
+      return new UpdateNoteSuccess(note);
+    }),
+    catchError((err) => of(new UpdateNoteFailure(err.error)))
+  );
 
+  @Effect()
+  updateNoteSuccess: Observable<Action> = this.actions.ofType(NotesActionTypes.UpdateNoteSuccess).pipe(
+    map((action: UpdateNoteSuccess) => {
+      return new routerActions.Go({ path: ['/notes', action.payload.id] });
+    })
+  );
+  @Effect()
+  deleteNote = this.actions.ofType(NotesActionTypes.DeleteNote).pipe(
+    switchMap((action: DeleteNote) => {
+      return this.notes.deleteNote(action.payload);
+    }),
+    map((noteId: number) => {
+      return new DeleteNoteSuccess(noteId);
+    }),
+    catchError((err) => of(new DeleteNoteFailure(err.error)))
+  );
+
+  @Effect()
+  deleteNoteSuccess: Observable<Action> = this.actions.ofType(NotesActionTypes.DeleteNoteSuccess).pipe(
+    map((action: DeleteNoteSuccess) => {
+      return new routerActions.Go({ path: ['/notes'] });
+    })
+  );
 
   constructor(private actions: Actions, private notes: NotesService) { }
 }

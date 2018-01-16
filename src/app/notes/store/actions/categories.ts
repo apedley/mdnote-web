@@ -2,29 +2,17 @@ import { Action } from '@ngrx/store';
 import { Category } from '../../models/category.model';
 
 export enum CategoriesActionTypes {
-  AddCategory = '[Categories] Add Category',
-  AddCategorySuccess = '[Categories] Add Category Success',
-  AddCategoryFailure = '[Categories] Add Category Failure',
   Select = '[Categories] Select',
   Fetch = '[Categories] Fetch',
   FetchSuccess = '[Categories] Fetch Success',
   FetchFailure = '[Categories] Fetch Failure',
+  AddCategory = '[Categories] Add Category',
+  AddCategorySuccess = '[Categories] Add Category Success',
+  AddCategoryFailure = '[Categories] Add Category Failure',
+  DeleteCategory = '[Categories] Delete Category',
+  DeleteCategorySuccess = '[Categories] Delete Category Success',
+  DeleteCategoryFailure = '[Categories] Delete Category Failure',
   ToggleCategory = '[Categories] Toggle',
-}
-
-export class AddCategory implements Action {
-  readonly type = CategoriesActionTypes.AddCategory;
-  constructor(public payload: Category) { }
-}
-
-export class AddCategorySuccess implements Action {
-  readonly type = CategoriesActionTypes.AddCategorySuccess;
-  constructor(public payload: Category) { }
-}
-
-export class AddCategoryFailure implements Action {
-  readonly type = CategoriesActionTypes.AddCategoryFailure;
-  constructor(public payload: string) { }
 }
 
 export class Select implements Action {
@@ -51,6 +39,37 @@ export class ToggleCategory implements Action {
   constructor(public payload: number) { }
 }
 
+export class AddCategory implements Action {
+  readonly type = CategoriesActionTypes.AddCategory;
+  constructor(public payload: Category) { }
+}
+
+export class AddCategorySuccess implements Action {
+  readonly type = CategoriesActionTypes.AddCategorySuccess;
+  constructor(public payload: Category) { }
+}
+
+export class AddCategoryFailure implements Action {
+  readonly type = CategoriesActionTypes.AddCategoryFailure;
+  constructor(public payload: string) { }
+}
+
+
+export class DeleteCategory implements Action {
+  readonly type = CategoriesActionTypes.DeleteCategory;
+  constructor(public payload: number) { }
+}
+
+export class DeleteCategorySuccess implements Action {
+  readonly type = CategoriesActionTypes.DeleteCategorySuccess;
+  constructor(public payload: number) { }
+}
+
+export class DeleteCategoryFailure implements Action {
+  readonly type = CategoriesActionTypes.DeleteCategoryFailure;
+  constructor(public payload: string) { }
+}
+
 export type CategoriesActions =
 Fetch |
 FetchSuccess |
@@ -59,4 +78,7 @@ Select |
 AddCategory |
 AddCategorySuccess |
 AddCategoryFailure |
+DeleteCategory |
+DeleteCategorySuccess |
+DeleteCategoryFailure |
 ToggleCategory;

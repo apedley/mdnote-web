@@ -1,18 +1,11 @@
-<div>
-  <div *ngFor="let category of categories">
-    <div class="actions">
-      <button mat-button *ngIf="category.notes.length === 0" (click)="deleteCategoryClicked(category.id)" class="delete-button">Delete</button>
-    </div>
 
-    <!-- <h3 [routerLink]="['/notes', 'categories', category.id]"> -->
-    <h3 (click)="categoryClicked.emit(category.id)">
-      {{ category.name | titlecase }} <span class="note-count">({{ category.notes.length }})</span>
-    </h3>
+<div *ngFor="let category of categories">
+  <app-category-list-item
+    [category]="category"
+    [collapsed]="collapsed[category.id] === true"
+    (categoryClicked)="categoryClicked.emit($event)"
+    (noteClicked)="noteClicked.emit($event)"
+    (deleteCategoryClicked)="deleteCategoryClicked.emit($event)"
+  ></app-category-list-item>
 
-    <app-note-list
-      [collapsed]="collapsed[category.id] === true"
-      [notes]="category.notes"
-      (noteClicked)="noteClicked.emit($event)"></app-note-list>
-
-  </div>
 </div>

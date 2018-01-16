@@ -31,7 +31,6 @@ export class CategoryListViewComponent implements OnInit {
 
   constructor(private store: Store<fromNotes.State>, private layout: LayoutService, private notesService: NotesService, private router: Router) {
 
-
     this.categories = this.store.select(fromNotes.getAllCategories);
     this.notes = this.store.select(fromNotes.getAllNotes);
 
@@ -40,8 +39,6 @@ export class CategoryListViewComponent implements OnInit {
 
     this.categoriesCollapsed = this.store.select(fromNotes.getCategoriesCollapsed);
 
-    // this.store.dispatch(new Notes.Fetch());
-    // this.store.dispatch(new Categories.Fetch());
     this.notesLoaded.subscribe(loaded => {
       if (!loaded) {
         this.store.dispatch(new Notes.Fetch());
@@ -76,6 +73,14 @@ export class CategoryListViewComponent implements OnInit {
 
   toggleCategory(id: number) {
     this.store.dispatch(new Categories.ToggleCategory(id));
+  }
+
+
+  deleteNote(noteId) {
+    this.layout.openConfirmationDialog({ title: 'Delete Note', content: 'Are you sure you want to delete this note?'}).subscribe(result => {
+      if (!result) { return; }
+      this.store.dispatch(new Notes.DeleteNote(noteId));
+    });
   }
 
 }

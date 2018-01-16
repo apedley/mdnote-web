@@ -61,3 +61,29 @@ export const getSelectedNote = createSelector(getNoteEntities, getSelectedNoteId
 export const getRouteNote = createSelector(getNoteEntities, fromRoot.getRouterState, (notes, router) => {
   return router.state && notes[router.state.params.noteId];
 });
+
+export const getRouteCategory = createSelector(getCategoryEntities, getNoteEntities, fromRoot.getRouterState, (categories, notes, router) => {
+
+  if (router.state && router.state.params.categoryId === '0') {
+    const uncategorizedNotes = [];
+
+    Object.keys(notes).forEach(noteKey => {
+      const note = notes[noteKey];
+      if (note.categoryId === null || note.categoryId === 0) {
+        note.categoryId = 0;
+        note.category = {
+          name: 'Uncategorized',
+          id: 0
+        };
+        uncategorizedNotes.push(notes[noteKey]);
+      }
+    });
+
+    return {
+      name: 'Uncategorized',
+      id: 0,
+      notes: uncategorizedNotes
+    };
+  }
+  return router.state && categories[router.state.params.categoryId];
+});

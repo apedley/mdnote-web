@@ -8,9 +8,14 @@ import { Note } from '../../models/note.model';
     <h3 *ngIf="title">{{ title }}</h3>
     <markdown [data]="body">
     </markdown>
+    <h5 class="placeholder" *ngIf="body === ''">Note Preview</h5>
   </div>
 `,
   styles: [`
+  h5.placeholder {
+    color: #AAA;
+    text-align: center;
+  }
   `]
 })
 export class NotePreviewComponent {

@@ -9,6 +9,8 @@ import { Note } from '../../models/note.model';
 export class NoteShowComponent {
   @Input() note: Note;
 
+  @Output() deleteNote = new EventEmitter<number>();
+
   constructor() { }
 
 
