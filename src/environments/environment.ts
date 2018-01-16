@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   baseApiUrl: 'http://localhost:3030',
+  baseShareUrl: 'http://localhost:4200/s',
   google: {
     clientId: '',
     redirectURI: ''

@@ -10,6 +10,7 @@ export class NoteShowComponent {
   @Input() note: Note;
 
   @Output() deleteNote = new EventEmitter<number>();
+  @Output() shareNote = new EventEmitter<number>();
 
   constructor() { }
 

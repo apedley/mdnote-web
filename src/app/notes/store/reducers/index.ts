@@ -2,6 +2,7 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromCategories from './categories';
 import * as fromNotes from './notes';
+import * as fromShares from './shares';
 
 import * as fromRoot from '../../../store/reducers';
 
@@ -9,6 +10,7 @@ import * as fromRoot from '../../../store/reducers';
 export interface NotesState {
   notes: fromNotes.State;
   categories: fromCategories.State;
+  shares: fromShares.State;
 }
 
 
@@ -20,12 +22,14 @@ export interface State extends fromRoot.State {
 export const reducers = {
   notes: fromNotes.reducer,
   categories: fromCategories.reducer,
+  shares: fromShares.reducer
 };
 
 export const getNotesFeatureState = createFeatureSelector<NotesState>('notes');
 
 export const getNotesState = createSelector(getNotesFeatureState, state => state.notes);
 export const getCategoriesState = createSelector(getNotesFeatureState, state => state.categories);
+export const getSharesState = createSelector(getNotesFeatureState, state => state.shares);
 
 export const getSelectedNoteId = createSelector(getNotesState, fromNotes.getSelectedId);
 export const getNotesError = createSelector(getNotesState, fromNotes.getError);
@@ -87,3 +91,8 @@ export const getRouteCategory = createSelector(getCategoryEntities, getNoteEntit
   }
   return router.state && categories[router.state.params.categoryId];
 });
+
+export const getSharesLoading = createSelector(getSharesState, fromShares.getLoading);
+export const getSharesError = createSelector(getSharesState, fromShares.getError);
+export const getSharesShare = createSelector(getSharesState, fromShares.getShare);
+export const getSharesCreatedShare = createSelector(getSharesState, fromShares.getCreatedShare);

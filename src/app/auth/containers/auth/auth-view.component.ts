@@ -5,6 +5,7 @@ import * as Auth from '../../store/actions';
 
 import { ActivatedRoute } from '@angular/router';
 import { Authenticate } from '../../user.model';
+import { LayoutService } from '../../../core/layout.service';
 
 @Component({
   selector: 'app-auth',
@@ -18,10 +19,13 @@ export class AuthViewComponent implements OnInit {
   formError;
   formLoading;
 
-  constructor(private store: Store<fromAuth.State>, route: ActivatedRoute) {
+  constructor(private store: Store<fromAuth.State>, public route: ActivatedRoute, public layout: LayoutService) {
     this.authFunction = route.snapshot.data['authFunction'];
     this.formError = this.store.select(fromAuth.getAuthFormError);
     this.formLoading = this.store.select(fromAuth.getAuthFormLoading);
+
+    this.layout.setTitle(this.authFunction);
+
   }
 
   ngOnInit() {

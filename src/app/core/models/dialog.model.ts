@@ -8,3 +8,9 @@ export interface ConfirmationDialog {
   title: string;
   content: string;
 }
+
+export interface ShareDialog {
+  title: string;
+  url: string;
+  fullUrl: string;
+}

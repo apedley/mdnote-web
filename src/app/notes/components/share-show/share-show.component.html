@@ -1,0 +1,13 @@
+
+<div class="share">
+  <h1>{{ share.title }}</h1>
+  <h5 class="subheader">
+    <span>
+      {{ share.views }} Views
+    </span>
+    <span>
+      Created on {{ share.created_at | date }}
+    </span>
+  </h5>
+  <markdown [data]="share.body"></markdown>
+</div>

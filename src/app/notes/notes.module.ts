@@ -24,6 +24,11 @@ import { PipesModule } from '../shared/pipes/index';
 import { DirectivesModule } from '../shared/directives/index';
 import { CategoryViewComponent } from './containers/category-view/category-view.component';
 import { CategoryListItemComponent } from './components/category-list/category-list-item/category-list-item.component';
+import { SingleViewLayoutComponent } from '../core/containers/single-view-layout/single-view-layout.component';
+import { AuthGuard } from '../auth/auth.guard';
+import { SharesEffects } from './store/effects/shares';
+import { ShareShowComponent } from './components/share-show/share-show.component';
+import { ShareViewComponent } from './containers/share-view/share-view.component';
 
 @NgModule({
   imports: [
@@ -35,19 +40,25 @@ import { CategoryListItemComponent } from './components/category-list/category-l
     DirectivesModule,
     MarkdownModule.forChild(),
     RouterModule.forChild([
-      { path: '', component: SidebarLayoutComponent, children: [
+      {
+        path: 's', component: SingleViewLayoutComponent, children: [
+          { path: ':shareUrl', component: ShareViewComponent}
+        ]},
+      {
+        path: '', component: SidebarLayoutComponent, children: [
         { path: 'categories/:categoryId', component: CategoryViewComponent },
         { path: 'categories/:categoryId/notes/:noteId', component: CategoryViewComponent },
         { path: 'new', component: ComposeNoteViewComponent },
         { path: ':noteId/edit', component: ComposeNoteViewComponent },
         { path: ':noteId', pathMatch: 'full', component: CategoryListViewComponent },
         { path: '', pathMatch: 'full', component: CategoryListViewComponent },
-      ]}
+      ],
+      canActivate: [AuthGuard]}
     ]),
 
     StoreModule.forFeature('notes', reducers),
 
-    EffectsModule.forFeature([CategoriesEffects, NotesEffects]),
+    EffectsModule.forFeature([CategoriesEffects, NotesEffects, SharesEffects]),
   ],
   declarations: [
     CategoryListViewComponent,
@@ -58,7 +69,9 @@ import { CategoryListItemComponent } from './components/category-list/category-l
     NoteFormComponent,
     NotePreviewComponent,
     CategoryViewComponent,
-    CategoryListItemComponent
+    CategoryListItemComponent,
+    ShareViewComponent,
+    ShareShowComponent
   ],
   exports: [],
   providers: [NotesService]

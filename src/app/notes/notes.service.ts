@@ -56,6 +56,13 @@ export class NotesService {
     return this.api.delete(`/categories/${categoryId}`, true);
   }
 
+  loadShare(shareUrl: string) {
+    return this.api.get(`/shared/${shareUrl}`, false);
+  }
+
+  createShare(noteId: number) {
+    return this.api.post(`/notes/${noteId}/share`, {}, true);
+  }
   combineCategoriesNotes($categories: Observable<Category[]>, $notes: Observable<Note[]>): Observable<Category[]> {
     return Observable.combineLatest($categories, $notes, (categories, notes): Category[] => {
 

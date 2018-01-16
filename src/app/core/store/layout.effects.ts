@@ -36,7 +36,6 @@ export class LayoutEffects {
   //     }
   //   })
   // );
-
   constructor(private actions: Actions, private router: Router, public dialog: MatDialog, private layoutService: LayoutService) { }
 
 }

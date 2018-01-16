@@ -1,5 +1,5 @@
 import { ConfirmationDialogComponent } from './components/confirmation-dialog.component';
-import { InputDialog, ConfirmationDialog } from './models/dialog.model';
+import { InputDialog, ConfirmationDialog, ShareDialog } from './models/dialog.model';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromLayout from './store/layout.reducers';
@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
 
 import { environment } from '../../environments/environment';
+import { ShareDialogComponent } from './components/dialogs/share-dialog.component';
 
 @Injectable()
 export class LayoutService {
@@ -38,6 +39,15 @@ export class LayoutService {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
       data: { title: dialog.title, content: dialog.content }
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  openShareDialog(dialog: ShareDialog) {
+    const dialogRef = this.dialog.open(ShareDialogComponent, {
+      width: '400px',
+      data: { title: dialog.title, url: dialog.url, fullUrl: dialog.fullUrl }
     });
 
     return dialogRef.afterClosed();

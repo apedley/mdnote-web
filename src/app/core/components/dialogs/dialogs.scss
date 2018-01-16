@@ -1,0 +1,20 @@
+@import '../../../../theme.scss';
+
+
+.color-title {
+  color: $primary;
+}
+
+a.external-link {
+  color: $primary;
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+a.external-link:hover, a.external-link:active {
+  border-bottom: 1px solid $primary;
+}
+
+div.share-link {
+  margin-bottom: 1.5em;
+}

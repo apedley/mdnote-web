@@ -6,13 +6,12 @@ import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
   {
     path: 'notes',
-    loadChildren: './notes/notes.module#NotesModule',
-    canActivate: [AuthGuard]
+    loadChildren: './notes/notes.module#NotesModule'
   },
-  // {
-  //   path: 's/:shareUrl',
-  //   redirectTo: 'notes/s/:shareUrl'
-  // },
+  {
+    path: 's/:shareUrl',
+    redirectTo: 'notes/s/:shareUrl'
+  },
   {
     path: '',
     redirectTo: '/notes',

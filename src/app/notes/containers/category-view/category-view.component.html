@@ -9,7 +9,7 @@
     ></app-category-list-item>
   </div>
   <div class="note-view">
-    <app-note-show *ngIf="selectedNote | async" [note]="selectedNote | async" (deleteNote)="deleteNote($event)">
+    <app-note-show *ngIf="selectedNote | async" [note]="selectedNote | async" (deleteNote)="deleteNote($event)" (shareNote)="shareNote($event)">
 
     </app-note-show>
   </div>

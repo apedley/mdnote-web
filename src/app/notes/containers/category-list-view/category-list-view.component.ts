@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Categories from '../../store/actions/categories';
 import * as Notes from '../../store/actions/notes';
+import * as Shares from '../../store/actions/shares';
 import * as fromNotes from '../../store/reducers';
 import { Store } from '@ngrx/store';
 import { Category } from '../../models/category.model';
@@ -83,4 +84,7 @@ export class CategoryListViewComponent implements OnInit {
     });
   }
 
+  shareNote(noteId) {
+    this.store.dispatch(new Shares.CreateShare(noteId));
+  }
 }

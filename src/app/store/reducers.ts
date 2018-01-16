@@ -50,10 +50,10 @@ export const reducers: ActionReducerMap<State> = {
 export const getRouterState = createFeatureSelector<fromRouter.RouterReducerState<RouterStateUrl>>('router');
 
 
-// export const getUrl = createSelector(
-//   getRouterState,
-//   state => state.state.url
-// );
+export const getParams = createSelector(
+  getRouterState,
+  state => state.state.params
+);
 
 export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
 

@@ -16,13 +16,15 @@ import { SidebarContainerComponent } from './containers/sidebar/sidebar-containe
 import { SingleViewLayoutComponent } from './containers/single-view-layout/single-view-layout.component';
 import { LayoutService } from './layout.service';
 import { SidebarListItemComponent } from './components/sidebar/sidebar-list-item.component';
-
+import { ShareDialogComponent } from './components/dialogs/share-dialog.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 const Components = [
   HeaderComponent,
   SidebarComponent,
   UserInputDialogComponent,
   ConfirmationDialogComponent,
+  ShareDialogComponent,
   SidebarContainerComponent,
   AppViewComponent,
   SingleViewLayoutComponent,
@@ -36,6 +38,7 @@ const Components = [
     CommonModule,
     FormsModule,
     RouterModule,
+    ClipboardModule,
     MaterialModule,
     HttpClientModule
   ],
@@ -43,7 +46,8 @@ const Components = [
   declarations: Components,
   entryComponents: [
     UserInputDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ShareDialogComponent
   ],
 })
 export class CoreModule {
