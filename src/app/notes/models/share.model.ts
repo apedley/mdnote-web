@@ -10,5 +10,6 @@ export interface Share {
   note: Note;
   url: string;
   userId: number;
+  views?: number;
 }
 

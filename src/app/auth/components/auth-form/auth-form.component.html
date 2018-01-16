@@ -1,7 +1,7 @@
 <form [formGroup]="authForm" class="auth-form" (ngSubmit)="submitAuthForm()">
   <h2>{{ authFunction }}</h2>
 
-  <h5 class="form-error" *ngIf="formError">Error: {{ (formErrors | async ) | json }}</h5>
+  <h5 class="form-error" *ngIf="error">Error: {{ error | json }}</h5>
   <mat-form-field>
     <input matInput formControlName="email" placeholder="Email Address">
     <mat-error *ngIf="authForm.controls['email'].hasError('email')">
@@ -15,11 +15,11 @@
     </mat-error>
   </mat-form-field>
   <div class="form-buttons">
-    <button mat-raised-button color="primary" [disabled]="authForm.invalid || formLoading">
-      <span *ngIf="!formLoading">
+    <button mat-raised-button color="primary" [disabled]="authForm.invalid || loading">
+      <span *ngIf="!loading">
         {{ authFunction }}
       </span>
-      <span *ngIf="formLoading">
+      <span *ngIf="loading">
         Loading
       </span>
     </button>
