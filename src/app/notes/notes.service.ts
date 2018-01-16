@@ -28,7 +28,6 @@ export class NotesService {
     this.categoriesLoaded = store.select(fromNotes.getCategoriesLoaded);
 
     this.categoriesLoadedSubscription = this.categoriesLoaded.subscribe(loaded => {
-      // debugger;
       if (!loaded) {
         this.loadCategoriesAndNotes();
       }

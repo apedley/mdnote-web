@@ -38,6 +38,10 @@ export class AuthEffects {
     map((action: auth.SigninSuccess) => new routerActions.Go({ path: ['/notes'] }) )
   );
 
+  @Effect()
+  signout = this.actions.ofType(auth.SIGNOUT).pipe(
+    map((action: auth.Signout) => new routerActions.Go({ path: ['/signin'] }) )
+  );
 
   // @Effect({ dispatch: false })
   // saveAuthInfo = this.actions.ofType(auth.SIGNIN_SUCCESS).pipe(

@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Note } from '../../models/note.model';
 
 @Component({
   selector: 'app-note-render',
   templateUrl: './note-render.component.html',
-  styleUrls: ['./note-render.component.scss']
+  styleUrls: ['./note-render.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class NoteRenderComponent implements OnInit {
   @Input() note: Note;

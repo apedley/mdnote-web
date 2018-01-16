@@ -1,6 +1,8 @@
 import * as fromLayout from '../core/store/layout.reducers';
 import * as fromRouter from '@ngrx/router-store';
 import * as fromLocalMeta from './local-storage.metareducer';
+import { storeFreeze } from 'ngrx-store-freeze';
+import { environment } from '../../environments/environment'; // Angular CLI environment
 
 import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer, ActionReducer } from '@ngrx/store';
 import { Params, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
@@ -10,6 +12,8 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
   return fromLocalMeta.localStorageSync({keys: ['auth', 'notes'], rehydrate: true})(reducer);
 }
 
+// const freezeReducers = !environment.production ? [storeFreeze] : [];
+// export const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer, ...freezeReducers];
 export const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 export interface RouterStateUrl {

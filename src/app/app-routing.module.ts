@@ -10,6 +10,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 's/:shareUrl',
+    redirectTo: 'notes/s/:shareUrl'
+  },
+  {
     path: '',
     redirectTo: '/notes',
     canActivate: [AuthGuard],
