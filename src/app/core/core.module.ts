@@ -15,6 +15,7 @@ import { SidebarLayoutComponent } from './containers/sidebar-layout/sidebar-layo
 import { SidebarContainerComponent } from './containers/sidebar/sidebar-container.component';
 import { SingleViewLayoutComponent } from './containers/single-view-layout/single-view-layout.component';
 import { LayoutService } from './layout.service';
+import { SidebarListItemComponent } from './components/sidebar/sidebar-list-item.component';
 
 
 const Components = [
@@ -25,7 +26,8 @@ const Components = [
   SidebarContainerComponent,
   AppViewComponent,
   SingleViewLayoutComponent,
-  SidebarLayoutComponent
+  SidebarLayoutComponent,
+  SidebarListItemComponent
 ];
 
 

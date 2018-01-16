@@ -1,49 +1,51 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import * as fromCategories from './category';
+import * as fromCategories from './categories';
 import * as fromNotes from './notes';
+
 import * as fromRoot from '../../../store/reducers';
 
+
 export interface NotesState {
-  categories: fromCategories.State;
   notes: fromNotes.State;
+  categories: fromCategories.State;
 }
+
 
 export interface State extends fromRoot.State {
   notes: NotesState;
 }
 
+
 export const reducers = {
+  notes: fromNotes.reducer,
   categories: fromCategories.reducer,
-  notes: fromNotes.reducer
 };
 
-export const getNotesState = createFeatureSelector<NotesState>('notes');
+export const getNotesFeatureState = createFeatureSelector<NotesState>('notes');
 
-export const getCategoriesState = createSelector(
-  getNotesState,
-  state => state.categories
-);
+export const getNotesState = createSelector(getNotesFeatureState, state => state.notes);
+export const getCategoriesState = createSelector(getNotesFeatureState, state => state.categories);
 
-export const getSelectedCategoryId = createSelector(
-  getCategoriesState,
-  fromCategories.getSelectedId
-);
+export const getSelectedNoteId = createSelector(getNotesState, fromNotes.getSelectedId);
+export const getNotesError = createSelector(getNotesState, fromNotes.getError);
+export const getNotesLoaded = createSelector(getNotesState, fromNotes.getLoaded);
+export const getNotesLoading = createSelector(getNotesState, fromNotes.getLoading);
 
-export const getCategoriesLoaded = createSelector(
-  getCategoriesState,
-  fromCategories.getCategoriesLoaded
-);
+export const getSelectedCategoryId = createSelector(getCategoriesState, fromCategories.getSelectedId);
+export const getCategoriesError = createSelector(getCategoriesState, fromCategories.getError);
+export const getCategoriesLoaded = createSelector(getCategoriesState, fromCategories.getLoaded);
+export const getCategoriesLoading = createSelector(getCategoriesState, fromCategories.getLoading);
+export const getCategoriesCollapsed = createSelector(getCategoriesState, fromCategories.getCollapsed);
 
-export const getNoteEntitiesState = createSelector(
-  getNotesState,
-  state => state.notes
-);
+export const {
+  selectIds: getNoteIds,
+  selectEntities: getNoteEntities,
+  selectAll: getAllNotes,
+  selectTotal: getTotalNotes
+} = fromNotes.adapter.getSelectors(getNotesState);
 
-export const getSelectedNoteId = createSelector(
-  getNoteEntitiesState,
-  fromNotes.getSelectedId
-);
+
 export const {
   selectIds: getCategoryIds,
   selectEntities: getCategoryEntities,
@@ -51,39 +53,11 @@ export const {
   selectTotal: getTotalCategories,
 } = fromCategories.adapter.getSelectors(getCategoriesState);
 
-export const {
-  selectIds: getNoteIds,
-  selectEntities: getNoteEntities,
-  selectAll: getAllNotes,
-  selectTotal: getTotalNotes,
-} = fromNotes.adapter.getSelectors(getNoteEntitiesState);
 
+export const getSelectedNote = createSelector(getNoteEntities, getSelectedNoteId, (notes, id) => {
+  return id && notes[id];
+});
 
-export const getSelectedCategory = createSelector(
-  getCategoryEntities,
-  getSelectedCategoryId,
-  (entities, selectedId) => {
-    return selectedId && entities[selectedId];
-  }
-);
-
-export const getSelectedNote = createSelector(
-  getNoteEntities,
-  getSelectedNoteId,
-  (entities, selectedId) => {
-    return selectedId && entities[selectedId];
-  }
-);
-
-export const getRouteNote = createSelector(
-  getNoteEntities,
-  fromRoot.getRouterState,
-  (entities, router) => {
-    return router.state && entities[router.state.params.noteId];
-  }
-);
-
-export const selectShare = createSelector(
-  getNoteEntitiesState,
-  fromNotes.getShare
-);
+export const getRouteNote = createSelector(getNoteEntities, fromRoot.getRouterState, (notes, router) => {
+  return router.state && notes[router.state.params.noteId];
+});

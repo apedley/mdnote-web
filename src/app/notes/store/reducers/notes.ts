@@ -1,92 +1,64 @@
-import * as notes from '../actions/notes';
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+
 import { createSelector } from '@ngrx/store';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+
+import { NotesActions, NotesActionTypes } from '../actions/notes';
 import { Note } from '../../models/note.model';
-import { Share } from 'app/notes/models/share.model';
 
 export interface State extends EntityState<Note> {
-  selectedNoteId: string | null;
-  deletingNoteId: string | null;
-  share: Share;
-  errors: string[];
+  selectedNoteId: number | null;
+  loading: boolean;
+  loaded: boolean;
+  error: string;
 }
 
 export const adapter: EntityAdapter<Note> = createEntityAdapter<Note>({
   selectId: (note: Note) => note.id,
-  sortComparer: false
+  sortComparer: false,
 });
 
 export const initialState: State = adapter.getInitialState({
   selectedNoteId: null,
-  deletingNoteId: null,
-  share: null,
-  errors: []
+  loading: false,
+  loaded: false,
+  error: null
 });
 
-export function reducer(state = initialState, action: notes.actions): State {
+export function reducer(state = initialState, action: NotesActions): State {
   switch (action.type) {
-    case notes.LOAD_SUCCESS: {
-      return {
-        ...adapter.addAll(action.payload, state),
-        selectedNoteId: state.selectedNoteId
-      };
+
+    case(NotesActionTypes.AddNote):
+    case(NotesActionTypes.Fetch): {
+      return { ...state, loading: true };
     }
 
-    case notes.SELECT: {
-      return {
-        ...state,
-        selectedNoteId: action.payload
-      };
+    case(NotesActionTypes.AddNoteSuccess): {
+      return { ...adapter.addOne(action.payload, state), loading: false };
     }
 
-    case notes.DESELECT: {
-      return {
-        ...state,
-        selectedNoteId: null
-      };
+    case(NotesActionTypes.AddNoteFailure): {
+      return { ...state, error: action.payload, loading: false };
     }
 
-    case notes.DELETE: {
-      return {
-        ...state,
-        deletingNoteId: action.noteId + ''
-      };
+    case(NotesActionTypes.FetchSuccess): {
+      return { ...adapter.addAll(action.payload, state), loading: false, loaded: true };
     }
 
-    case notes.DELETE_SUCCESS: {
-      return {
-        ...adapter.removeOne(state.deletingNoteId, state),
-        deletingNoteId: null
-      };
+    case(NotesActionTypes.FetchFailure): {
+      return { ...state, error: action.payload, loading: false, loaded: false };
     }
 
-    case notes.DELETE_FAIL: {
-      return {
-        ...state,
-        deletingNoteId: null
-      };
+    case(NotesActionTypes.Select): {
+      return { ...state, selectedNoteId: action.payload };
     }
 
-    case notes.LOAD_SHARE_SUCCESS: {
-      return {
-        ...state,
-        share: action.share
-      };
-    }
-    case notes.LOAD_SHARE_FAIL: {
-      return {
-        ...state,
-        share: null,
-        errors: [...state.errors, action.payload]
-      };
-    }
     default: {
       return state;
     }
   }
 }
 
-
 export const getSelectedId = (state: State) => state.selectedNoteId;
-
-export const getShare = (state: State) => state.share;
+export const getError = (state: State) => state.error;
+export const getLoaded = (state: State) => state.loaded;
+export const getLoading = (state: State) => state.loading;

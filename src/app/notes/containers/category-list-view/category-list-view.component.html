@@ -1,0 +1,15 @@
+<div class="split-view">
+  <div class="category-list">
+    <app-category-list
+      [categories]="categoriesWithNotes | async"
+      [collapsed]="categoriesCollapsed | async"
+      (noteClicked)="selectNote($event)"
+      (categoryClicked)="toggleCategory($event)">
+    </app-category-list>
+  </div>
+  <div class="note-view">
+    <app-note-show *ngIf="selectedNote | async" [note]="selectedNote | async">
+
+    </app-note-show>
+  </div>
+</div>

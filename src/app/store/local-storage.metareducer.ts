@@ -38,7 +38,7 @@ const validateStateKeys = (keys: any[]) => {
 };
 
 export const rehydrateApplicationState = (keys: any[], storage: Storage, storageKeySerializer: (key: string) => string, restoreDates: boolean) => {
-  return keys.reduce((acc, curr) => {
+  const rehydratedState = keys.reduce((acc, curr) => {
     let key = curr;
     let reviver = restoreDates ? dateReviver : dummyReviver;
     let deserialize;
@@ -105,6 +105,13 @@ export const rehydrateApplicationState = (keys: any[], storage: Storage, storage
     return acc;
   }, {});
 
+  if (rehydratedState.notes) {
+    rehydratedState.notes.categories.loaded = false;
+    rehydratedState.notes.notes.loaded = false;
+  }
+
+    // debugger;
+  return rehydratedState;
 };
 
 export const syncStateUpdate = (state: any, keys: any[], storage: Storage, storageKeySerializer: (key: string) => string, removeOnUndefined: boolean) => {

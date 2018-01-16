@@ -1,0 +1,26 @@
+<form [formGroup]="noteForm" (ngSubmit)="submitForm()">
+  <mat-form-field class="full-width">
+    <input matInput formControlName="title" placeholder="Title">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <textarea matInput formControlName="body" rows="30" placeholder="Body" (ngModelChange)="this.bodyChanged.emit($event)"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName="categoryId" placeholder="Category">
+      <mat-option>
+        Uncategorized
+      </mat-option>
+      <mat-option *ngFor="let category of categories | async" [value]="category.id">
+        {{ category.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button (click)="newCategoryClicked($event)">New Category</button>
+
+  <div>
+    <button mat-raised-button color="primary" [disabled]="noteForm.invalid || formLoading">
+      {{ formLoading ? 'Loading..' : 'Submit' }}
+    </button>
+  </div>
+</form>

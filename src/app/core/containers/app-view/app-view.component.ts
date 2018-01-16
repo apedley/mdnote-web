@@ -10,7 +10,7 @@ import { LayoutService } from '../../layout.service';
   `,
   styles: [`
   `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppViewComponent {
   constructor() {

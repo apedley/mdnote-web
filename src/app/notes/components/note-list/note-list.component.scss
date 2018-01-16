@@ -1,0 +1,26 @@
+@import '../../../../theme.scss';
+.notes-list {
+  z-index: 5;
+  margin-bottom: 15px;
+}
+
+mat-header-row {
+  display: none;
+}
+
+mat-row {
+  cursor: pointer;
+}
+.mat-column-title {
+  max-width: 30%;
+  min-width: 10%;
+  flex-grow: 1;
+}
+.mat-column-preview {
+  flex-grow: 4;
+}
+.mat-column-updated {
+  max-width: 25%;
+  text-align: right;
+  flex-grow: 1;
+}

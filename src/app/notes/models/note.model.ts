@@ -1,12 +1,12 @@
 import { Category } from './category.model';
 
 export interface Note {
+  id?: number;
   title: string;
-  body?: string;
-  preview?: string;
+  body: string;
+  categoryId?: number;
+  category?: Category;
   created_at?: string;
   updated_at?: string;
-  id?: string;
-  categoryId?: string;
-  category?: Category;
+  preview?: string;
 }

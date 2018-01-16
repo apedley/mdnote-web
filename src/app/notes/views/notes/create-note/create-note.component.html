@@ -1,8 +1,0 @@
-<div class="create-note">
-  <div>
-    <app-edit-note-form (bodyChanged)="updatePreview($event)" (formSubmitted)="createNote($event)" [categories]="categories"></app-edit-note-form>
-  </div>
-  <div>
-    <app-edit-note-preview [body]="rawBody"></app-edit-note-preview>
-  </div>
-</div>

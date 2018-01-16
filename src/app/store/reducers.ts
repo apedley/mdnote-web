@@ -59,3 +59,5 @@ export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
 
 export const getSidebarOpen = createSelector(getLayoutState, fromLayout.getSidebarOpen);
 
+export const getTitle = createSelector(getLayoutState, fromLayout.getTitle);
+

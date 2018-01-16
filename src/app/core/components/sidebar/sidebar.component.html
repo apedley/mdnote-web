@@ -1,1 +1,37 @@
-<div class="sidebar">sidebar</div>
+<mat-nav-list *ngIf="(categories | async) as asyncCategories">
+
+  <app-sidebar-list-item [routerLinkComponents]="['/notes', 'new']" iconName="add">
+    New Note
+  </app-sidebar-list-item>
+
+  <mat-divider></mat-divider>
+
+  <app-sidebar-list-item [routerLinkComponents]="['/notes']" iconName="library_books">
+    All Categories
+  </app-sidebar-list-item>
+
+  <h3 matSubheader>Categories</h3>
+
+
+  <app-sidebar-list-item [routerLinkComponents]="['/notes','categories','0']" iconName="folder">
+    Uncategorized
+  </app-sidebar-list-item>
+
+
+  <app-sidebar-list-item *ngFor="let category of asyncCategories" [routerLinkComponents]="['/notes','categories',category.id]" iconName="folder">
+    {{ category.name }}
+  </app-sidebar-list-item>
+
+
+
+  <app-sidebar-list-item [routerLinkComponents]="null" iconName="create_new_folder" (click)="newCategoryClicked()">
+      New Category
+  </app-sidebar-list-item>
+
+  <mat-divider></mat-divider>
+
+  <app-sidebar-list-item [routerLinkComponents]="null" iconName="power_settings_new" (click)="logoutClicked()">
+      Logout
+  </app-sidebar-list-item>
+
+</mat-nav-list>

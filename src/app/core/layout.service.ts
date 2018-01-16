@@ -10,6 +10,7 @@ import * as layout from './store/layout.actions';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UserInputDialogComponent } from './components/user-input-dialog.component';
 import { Observable } from 'rxjs/Observable';
+import { Title } from '@angular/platform-browser';
 
 import { environment } from '../../environments/environment';
 
@@ -19,6 +20,7 @@ export class LayoutService {
 
   constructor(
     private layoutStore: Store<fromLayout.State>,
+    private titleService: Title,
     // private notesStore: Store<fromNotes.State>,
     public dialog: MatDialog) { }
 
@@ -43,6 +45,11 @@ export class LayoutService {
 
   sidebarDisabledForRoute(path: string) {
 
+  }
+
+  setTitle(title: string) {
+    this.titleService.setTitle(`${title} | mdNote`);
+    this.layoutStore.dispatch(new layout.SetTitle(title));
   }
 
 }

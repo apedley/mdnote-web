@@ -9,10 +9,10 @@ const routes: Routes = [
     loadChildren: './notes/notes.module#NotesModule',
     canActivate: [AuthGuard]
   },
-  {
-    path: 's/:shareUrl',
-    redirectTo: 'notes/s/:shareUrl'
-  },
+  // {
+  //   path: 's/:shareUrl',
+  //   redirectTo: 'notes/s/:shareUrl'
+  // },
   {
     path: '',
     redirectTo: '/notes',

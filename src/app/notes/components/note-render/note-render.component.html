@@ -1,8 +1,0 @@
-<div>
-  <h1 [routerLink]="['/notes', note.id]">{{ note.title }}</h1>
-  <div class="subheader">
-    <a [routerLink]="['/notes',note.id,'edit']">Edit</a> | <a (click)="deleteNote(note.id)">Delete</a>
-    | <mat-icon class="icon">folder_open</mat-icon><span>{{ note.category ? note.category.name : 'Uncategorized' }}</span>
-  </div>
-  <markdown [data]="note.body"></markdown>
-</div>

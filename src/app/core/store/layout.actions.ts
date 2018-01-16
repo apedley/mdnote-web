@@ -5,6 +5,8 @@ export const OPEN_SIDEBAR = '[Layout] Open sidebar';
 export const CLOSE_SIDEBAR = '[Layout] Close sidebar';
 export const TOGGLE_SIDEBAR = '[Layout] Toggle sidebar';
 
+export const SET_TITLE = '[Layout] Set title';
+
 export const OPEN_INPUT_DIALOG = '[Layout] Open input dialog';
 export const INPUT_DIALOG_FINISHED = '[Layout] Input dialog finished';
 
@@ -18,6 +20,12 @@ export class CloseSidebar implements Action {
 
 export class ToggleSidebar implements Action {
   readonly type = TOGGLE_SIDEBAR;
+}
+
+
+export class SetTitle implements Action {
+  readonly type = SET_TITLE;
+  constructor(public payload: string) {}
 }
 
 export class OpenInputDialog implements Action {
@@ -35,4 +43,5 @@ export type Actions =
   | CloseSidebar
   | ToggleSidebar
   | OpenInputDialog
-  | InputDialogFinished;
+  | InputDialogFinished
+  | SetTitle;

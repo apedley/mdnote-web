@@ -6,12 +6,14 @@ export interface State {
   sidebarOpen: boolean;
   inputDialogOpen: boolean;
   inputDialog: InputDialog | null;
+  title: string;
 }
 
 export const initialState: State = {
   sidebarOpen: false,
   inputDialogOpen: false,
-  inputDialog: null
+  inputDialog: null,
+  title: null
 };
 
 export function reducer(state = initialState, action: layout.Actions): State {
@@ -31,6 +33,9 @@ export function reducer(state = initialState, action: layout.Actions): State {
     case layout.INPUT_DIALOG_FINISHED: {
       return { ...state, inputDialogOpen: false, inputDialog: null };
     }
+    case layout.SET_TITLE: {
+      return { ...state, title: action.payload };
+    }
     default: {
       return state;
     }
@@ -39,3 +44,5 @@ export function reducer(state = initialState, action: layout.Actions): State {
 
 
 export const getSidebarOpen = (state: State) => state.sidebarOpen;
+
+export const getTitle = (state: State) => state.title;

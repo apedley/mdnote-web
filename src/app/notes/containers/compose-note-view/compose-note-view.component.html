@@ -1,0 +1,12 @@
+<div class="split-view">
+  <div class="note-form">
+    <app-note-form
+      [categories]="categories"
+      (formSubmitted)="formSubmitted($event)"
+      (bodyChanged)="bodyChanged($event)"
+    ></app-note-form>
+  </div>
+  <div class="note-preview">
+    <app-note-preview [body]="body"></app-note-preview>
+  </div>
+</div>

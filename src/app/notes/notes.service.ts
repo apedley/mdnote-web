@@ -1,161 +1,75 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
-import * as category from './store/actions/category';
-import * as notes from './store/actions/notes';
-import * as fromNotes from './store/reducers/index';
+import { Injectable } from '@angular/core';
+import { ApiService } from '../core/api.service';
 import { Category } from './models/category.model';
 import { Note } from './models/note.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { AuthService } from 'app/auth/auth.service';
-import { environment } from '../../environments/environment';
-import 'rxjs/add/observable/zip';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/first';
-import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
+import * as fromNotes from './store/reducers';
 
 @Injectable()
 export class NotesService {
-  categories: Observable<Category[]>;
-  notes: Observable<Note[]>;
 
-  categoriesLoaded: Observable<boolean>;
-  categoriesLoadedSubscription: Subscription;
 
-  constructor(private store: Store<fromNotes.State>) {
-    this.categoriesLoaded = store.select(fromNotes.getCategoriesLoaded);
-
-    this.categoriesLoadedSubscription = this.categoriesLoaded.subscribe(loaded => {
-      if (!loaded) {
-        this.loadCategoriesAndNotes();
-      }
-    });
-    this.categories = store.select(fromNotes.getAllCategories);
-    this.notes = store.select(fromNotes.getAllNotes);
+  constructor(private api: ApiService) {
   }
 
-  loadCategories() {
-    this.store.dispatch(new category.Load());
-  }
-  loadCategoriesAndNotes() {
-    // debugger;
-    this.store.dispatch(new category.Load());
-    this.store.dispatch(new notes.Load());
+  fetchCategories() {
+    return this.api.get<Category[]>('/categories', true);
   }
 
+  fetchNotes() {
+    return this.api.get<Note[]>('/notes', true);
+  }
 
-  getCategoriesWithNotes() {
-    return Observable.combineLatest(this.categories, this.notes, (selectedCategories, selectedNotes) => {
+  addNote(note: Note) {
+    if (note.categoryId === 0) {
+      note.categoryId = null;
+    }
 
-      selectedCategories.forEach(cat => {
-        cat.notes = selectedNotes.filter(note => {
+    const cleanNoteData = this._removeInvalidKeys(note);
+    debugger;
+    return this.api.post('/notes', cleanNoteData, true);
+  }
+
+  combineCategoriesNotes($categories: Observable<Category[]>, $notes: Observable<Note[]>): Observable<Category[]> {
+    return Observable.combineLatest($categories, $notes, (categories, notes): Category[] => {
+
+      categories.forEach(cat => {
+        cat.notes = notes.filter(note => {
           return note.categoryId === cat.id;
         });
       });
 
 
-      const uncategorizedNotes = selectedNotes.filter(note => {
+      const uncategorizedNotes = notes.filter(note => {
         return note.categoryId === null;
       });
 
-
       if (uncategorizedNotes.length === 0) {
-        return selectedCategories;
+        return categories;
       }
 
+
       const uncategorizedCategory = {
-        id: '0',
+        id: 0,
         name: 'Uncategorized',
         notes: uncategorizedNotes
       };
 
-      const newCategories = [...selectedCategories, uncategorizedCategory];
+      const newCategories = [...categories, uncategorizedCategory];
 
       return newCategories;
     });
   }
 
-  getCategoryWithNotes(categoryId: number) {
-    return Observable.combineLatest(this.categories, this.notes, (selectedCategories, selectedNotes) => {
-
-      if (categoryId === 0) {
-
-        const uncategorizedNotes = selectedNotes.filter(note => {
-          return note.categoryId === null;
-        });
-
-        return {
-          id: '0',
-          name: 'Uncategorized',
-          notes: uncategorizedNotes
-        };
+  private _removeInvalidKeys(dataObject: any) {
+    return Object.keys(dataObject).reduce((prev, key) => {
+      if (dataObject[key] && dataObject[key] !== 'null') {
+        prev[key] = dataObject[key];
       }
-
-      selectedCategories = selectedCategories.filter(selectedCategory => {
-        return selectedCategory.id + '' === categoryId + '';
-      });
-
-      selectedCategories.forEach(cat => {
-        cat.notes = selectedNotes.filter(note => {
-          return note.categoryId === cat.id;
-        });
-      });
-
-      return selectedCategories[0];
-    });
+      return prev;
+    }, {});
   }
 
-  selectNote(id) {
-    this.store.dispatch(new notes.Select(id));
-  }
-
-  deselectNote() {
-    this.store.dispatch(new notes.Deselect());
-  }
-
-  getSelectedNote() {
-    return this.store.select(fromNotes.getSelectedNote);
-  }
-
-  createNote(noteData) {
-    return this.store.dispatch(new notes.Create(noteData));
-  }
-
-  editNote(noteId: number, noteData: Note) {
-    return this.store.dispatch(new notes.Edit(noteId, noteData));
-  }
-
-  selectCategory(id) {
-    this.store.dispatch(new category.Select(id));
-  }
-
-  getSelectedCategory() {
-    return this.store.select(fromNotes.getSelectedCategory);
-  }
-
-  deleteNote(noteId) {
-    return this.store.dispatch(new notes.Delete(noteId));
-  }
-
-  createCategory(name: string) {
-    return this.store.dispatch(new category.Create(name));
-  }
-
-  deleteCategory(categoryId) {
-    return this.store.dispatch(new category.Delete(categoryId));
-  }
-
-  getRouterSelectedNote() {
-    return this.store.select(fromNotes.getRouteNote);
-  }
-
-  getShare(url: string) {
-    return this.store.dispatch(new notes.LoadShare(url));
-  }
-
-  selectShare() {
-    return this.store.select(fromNotes.selectShare);
-  }
 }

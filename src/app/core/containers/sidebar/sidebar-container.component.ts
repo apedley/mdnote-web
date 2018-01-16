@@ -1,7 +1,6 @@
 import { AuthService } from '../../../auth/auth.service';
 import { LayoutService } from '../../layout.service';
 import { Category } from '../../../notes/models/category.model';
-// import { NotesService } from '../../../notes/notes.service';
 import * as fromNotes from '../../../notes/store/reducers';
 import * as Auth from '../../../auth/store/actions';
 import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';

@@ -8,6 +8,7 @@ import * as Layout from '../../store/layout.actions';
 import * as fromRoot from '../../../store/reducers';
 
 import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar-layout',
@@ -25,10 +26,15 @@ export class SidebarLayoutComponent implements OnInit, OnDestroy {
 
   public searchString = '';
 
+  public pageTitle: Observable<string>;
+
+  public routeData: any;
+
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher,
-    private layoutStore: Store<fromLayout.State>
+    private layoutStore: Store<fromLayout.State>,
+    private route: ActivatedRoute
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 800px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -37,12 +43,14 @@ export class SidebarLayoutComponent implements OnInit, OnDestroy {
     this.sidebar = this.layoutStore.select(fromRoot.getSidebarOpen);
 
     this.authenticated = of(true);
+
   }
 
   ngOnInit(): void {
     if (this.mobileQuery.matches) {
       this.layoutStore.dispatch(new Layout.CloseSidebar());
     }
+    this.pageTitle = this.layoutStore.select(fromRoot.getTitle);
   }
 
   ngOnDestroy(): void {
