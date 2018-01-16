@@ -1,15 +1,19 @@
-<!-- <div class="actions">
-  <button mat-button *ngIf="category.notes.length === 0" (click)="deleteCategoryClicked.emit(category.id)" class="delete-button">Delete</button>
-</div> -->
+
 
 <!-- <h3 [routerLink]="['/notes', 'categories', category.id]"> -->
 <h3 (click)="categoryClicked.emit(category.id)">
+    <div class="actions">
+        <button mat-button *ngIf="category.notes.length === 0" (click)="deleteCategoryClicked.emit(category.id)" class="delete-button">Delete</button>
+      </div>
+  <span *ngIf="!alwaysShow && category.notes">
   <mat-icon *ngIf="category.notes.length > 0 && collapsed">keyboard_arrow_down</mat-icon>
   <mat-icon *ngIf="category.notes.length > 0 && !collapsed">keyboard_arrow_up</mat-icon>
-  {{ category.name | titlecase }} <span class="note-count">({{ category.notes.length }})</span>
+  </span>
+  {{ category.name | titlecase }} <span class="note-count" *ngIf="category.notes">({{ category.notes.length }})</span>
 </h3>
 
 <app-note-list
+*ngIf="category.notes"
   [collapsed]="collapsed"
   [notes]="category.notes"
   (noteClicked)="noteClicked.emit($event)"></app-note-list>

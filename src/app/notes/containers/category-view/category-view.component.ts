@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { LayoutService } from '../../../core/layout.service';
 import { Note } from '../../models/note.model';
 import * as routerActions from '../../../store/router-actions';
+import { NotesService } from '../../notes.service';
 
 @Component({
   selector: 'app-category-view',
@@ -20,9 +21,16 @@ export class CategoryViewComponent {
   public selectedCategory: Observable<Category>;
   public selectedCategoryId: number;
   public selectedNote: Observable<Note>;
+  public notesLoaded: Observable<boolean>;
 
-  constructor(private store: Store<fromNotes.State>, private layout: LayoutService) {
+  public categories: Observable<Category[]>;
+  public notes: Observable<Note[]>;
+  public categoriesWithNotes: Observable<Category[]>;
+
+  constructor(private store: Store<fromNotes.State>, private layout: LayoutService, public notesService: NotesService) {
+
     this.selectedCategory = this.store.select(fromNotes.getRouteCategory);
+
 
     this.selectedCategory.subscribe(cat => {
       if (!cat) { this.selectedCategoryId = null; return; }
@@ -31,6 +39,8 @@ export class CategoryViewComponent {
       this.layout.setTitle(`${cat.name}`);
     });
     this.selectedNote = this.store.select(fromNotes.getRouteNote);
+
+
   }
 
   categoryClicked(event) {

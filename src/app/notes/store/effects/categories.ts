@@ -44,7 +44,6 @@ export class CategoriesEffects {
       return this.notes.addCategory(action.payload);
     }),
     map((category: Category) => {
-      debugger;
       return new AddCategorySuccess(category);
     }),
     catchError((err) => of(new AddCategoryFailure(err.error)))

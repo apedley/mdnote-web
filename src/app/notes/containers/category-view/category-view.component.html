@@ -1,8 +1,10 @@
 <div class="split-view">
   <div class="category-list">
     <app-category-list-item
+      *ngIf="(selectedCategory | async)"
       [category]="(selectedCategory | async)"
       [collapsed]="false"
+      [alwaysShow]="true"
       (categoryClicked)="categoryClicked($event)"
       (noteClicked)="selectNote($event)"
       (deleteCategoryClicked)="deleteCategory($event)"

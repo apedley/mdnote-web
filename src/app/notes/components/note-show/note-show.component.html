@@ -2,7 +2,7 @@
   <h1 [routerLink]="['/notes', note.id]">{{ note.title }}</h1>
   <div class="subheader">
     <a [routerLink]="['/notes',note.id,'edit']">Edit</a> | <a (click)="shareNote.emit(note.id)">Share</a> | <a (click)="deleteNote.emit(note.id)">Delete</a> |
-    <mat-icon class="icon">folder_open</mat-icon><span>{{ note.category ? note.category.name : 'Uncategorized' }}</span>
+    <mat-icon class="icon">folder_open</mat-icon><span [routerLink]="['/notes/categories', note.category.id, 'notes', note.id]"s>{{ note.category ? note.category.name : 'Uncategorized' }}</span>
   </div>
   <markdown [data]="note.body"></markdown>
 </div>

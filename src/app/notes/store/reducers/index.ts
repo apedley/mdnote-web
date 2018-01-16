@@ -58,6 +58,10 @@ export const {
 } = fromCategories.adapter.getSelectors(getCategoriesState);
 
 
+export const getCategoriesWithNotes = createSelector(getNoteEntities, getCategoryEntities, (notes, categories) => {
+  debugger;
+});
+
 export const getSelectedNote = createSelector(getNoteEntities, getSelectedNoteId, (notes, id) => {
   return id && notes[id];
 });

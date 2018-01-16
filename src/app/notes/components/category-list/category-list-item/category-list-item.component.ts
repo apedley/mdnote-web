@@ -9,6 +9,7 @@ import { Category } from '../../../models/category.model';
 export class CategoryListItemComponent {
   @Input() category: Category;
   @Input() collapsed: boolean;
+  @Input() alwaysShow: boolean;
   @Output() noteClicked = new EventEmitter<number>();
   @Output() categoryClicked = new EventEmitter<number>();
   @Output() deleteCategoryClicked = new EventEmitter<number>();

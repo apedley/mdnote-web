@@ -1,6 +1,6 @@
 <div class="layout">
 
-  <app-header [sidebarEnabled]="true" [pageTitle]="pageTitle | async" (menuClicked)="menuButtonClicked()"></app-header>
+  <app-header [sidebarEnabled]="true" [pageTitle]="pageTitle | async" (menuClicked)="menuButtonClicked()" [authenticated]="(authenticated)"></app-header>
 
   <mat-sidenav-container class="app-sidebar-container">
     <mat-sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidebar | async" class="app-sidebar">
