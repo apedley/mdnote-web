@@ -18,6 +18,8 @@ import { LayoutService } from './layout.service';
 import { SidebarListItemComponent } from './components/sidebar/sidebar-list-item.component';
 import { ShareDialogComponent } from './components/dialogs/share-dialog.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { NotFoundViewComponent } from './containers/not-found-view/not-found-view.component';
+import { WelcomeViewComponent } from './containers/welcome-view/welcome-view.component';
 
 const Components = [
   HeaderComponent,
@@ -30,6 +32,8 @@ const Components = [
   SingleViewLayoutComponent,
   SidebarLayoutComponent,
   SidebarListItemComponent,
+  NotFoundViewComponent,
+  WelcomeViewComponent
 ];
 
 

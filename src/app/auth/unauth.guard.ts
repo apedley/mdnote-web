@@ -5,18 +5,15 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 @Injectable()
-export class WelcomeAuthGuard implements CanActivate {
+export class UnauthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) { }
 
   canActivate() {
-    debugger;
     return this.authService.getAuthenticated().map(isAuth => {
-      if (!isAuth) {
-        this.router.navigate(['/welcome']);
+      if (isAuth) {
+        this.router.navigate(['/notes']);
         return false;
       } else {
-
-        this.router.navigate(['/notes']);
         return true;
       }
     });

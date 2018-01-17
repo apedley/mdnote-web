@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './auth/auth.guard';
 import { SingleViewLayoutComponent } from './core/containers/single-view-layout/single-view-layout.component';
+import { NotFoundViewComponent } from './core/containers/not-found-view/not-found-view.component';
+import { WelcomeViewComponent } from './core/containers/welcome-view/welcome-view.component';
+import { UnauthGuard } from './auth/unauth.guard';
 
 const routes: Routes = [
   {
@@ -15,9 +18,19 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/notes',
-    canActivate: [AuthGuard],
-    pathMatch: 'full'
+    component: SingleViewLayoutComponent,
+    canActivate: [UnauthGuard],
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: WelcomeViewComponent
+      }
+    ]
+  },
+  {
+    path: '**',
+    component: NotFoundViewComponent
   }
 ];
 

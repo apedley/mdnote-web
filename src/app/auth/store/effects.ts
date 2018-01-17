@@ -46,7 +46,7 @@ export class AuthEffects {
 
   @Effect()
   signout = this.actions.ofType(auth.SIGNOUT).pipe(
-    map((action: auth.Signout) => new routerActions.Go({ path: ['/signin'] }) )
+    map((action: auth.Signout) => new routerActions.Go({ path: ['/user/signin'] }) )
   );
 
   // @Effect({ dispatch: false })

@@ -30,9 +30,9 @@ export class NoteExistsGuard implements CanActivate {
       map(entities => {
         const result = !!entities[id];
 
-        if (!result) {
-          this.router.navigate(['/notes']);
-        }
+        // if (!result) {
+        //   this.router.navigate(['/notes']);
+        // }
         return result;
       }),
       take(1)
@@ -42,7 +42,13 @@ export class NoteExistsGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return this.waitForNotesToLoad().pipe(
       switchMap(() => {
-        return this.noteExists(route.params['noteId']);
+        return this.noteExists(parseInt(route.params['noteId'], 10));
+      }),
+      map(exists => {
+        if (!exists) {
+          this.router.navigate(['/notes']);
+        }
+        return exists;
       })
     );
   }

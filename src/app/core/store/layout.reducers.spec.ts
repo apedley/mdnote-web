@@ -48,6 +48,15 @@ describe('LayoutReducer', () => {
     });
   });
 
+  describe('SET_TITLE action', () => {
+    it('shoud update the title', () => {
+      const { initialState } = fromLayout;
+      const action = new layout.SetTitle('title');
+      const state = fromLayout.reducer(initialState, action);
+
+      expect(state.title).toEqual('title');
+    });
+  });
 
   const dialog: InputDialog = {
     title: 'title',
