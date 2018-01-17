@@ -28,7 +28,13 @@ export class AuthEffects {
     exhaustMap((authData: Authenticate) => this.api.signIn(authData)
       .pipe(
         map(response => new auth.SigninSuccess(response)),
-        catchError(error => of(new auth.SigninFailure(error.error)))
+        catchError(error => {
+          let message = error.error;
+          if (message === 'Unauthorized') {
+            message = 'Invalid name or password';
+          }
+          return of(new auth.SigninFailure(message));
+        })
       )
     )
   );

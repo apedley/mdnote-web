@@ -1,4 +1,4 @@
-import { ConfirmationDialogComponent } from './components/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog.component';
 import { InputDialog, ConfirmationDialog, ShareDialog } from './models/dialog.model';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -8,7 +8,7 @@ import * as layout from './store/layout.actions';
 // import * as fromNotes from '../notes/store/reducers';
 // import * as notesActions from '../notes/store/actions/notes';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { UserInputDialogComponent } from './components/user-input-dialog.component';
+import { UserInputDialogComponent } from './components/dialogs/user-input-dialog.component';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
 
@@ -28,17 +28,17 @@ export class LayoutService {
   openUserInputDialog(dialog: InputDialog) {
 
     const dialogRef = this.dialog.open(UserInputDialogComponent, {
-      width: '250px',
+      width: '300px',
       data: { title: dialog.title, content: dialog.content, response: dialog.response }
     });
 
     return dialogRef.afterClosed();
   }
 
-  openConfirmationDialog(dialog: ConfirmationDialog) {
+  openConfirmationDialog(dialog: ConfirmationDialog, cancelButton = true) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
-      data: { title: dialog.title, content: dialog.content }
+      data: { title: dialog.title, content: dialog.content, cancelButton}
     });
 
     return dialogRef.afterClosed();

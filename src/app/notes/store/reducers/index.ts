@@ -35,12 +35,21 @@ export const getSelectedNoteId = createSelector(getNotesState, fromNotes.getSele
 export const getNotesError = createSelector(getNotesState, fromNotes.getError);
 export const getNotesLoaded = createSelector(getNotesState, fromNotes.getLoaded);
 export const getNotesLoading = createSelector(getNotesState, fromNotes.getLoading);
+export const getNotesLastLoaded = createSelector(getNotesState, fromNotes.getLastLoaded);
 
 export const getSelectedCategoryId = createSelector(getCategoriesState, fromCategories.getSelectedId);
 export const getCategoriesError = createSelector(getCategoriesState, fromCategories.getError);
 export const getCategoriesLoaded = createSelector(getCategoriesState, fromCategories.getLoaded);
 export const getCategoriesLoading = createSelector(getCategoriesState, fromCategories.getLoading);
 export const getCategoriesCollapsed = createSelector(getCategoriesState, fromCategories.getCollapsed);
+export const getCategoriesLastLoaded = createSelector(getCategoriesState, fromCategories.getLastLoaded);
+
+export const getLastLoaded = createSelector(getCategoriesLastLoaded, getNotesLastLoaded, (categoriesLastLoaded, notesLastLoaded) => {
+  return {
+    categories: categoriesLastLoaded,
+    notes: notesLastLoaded
+  };
+});
 
 export const {
   selectIds: getNoteIds,
@@ -58,8 +67,40 @@ export const {
 } = fromCategories.adapter.getSelectors(getCategoriesState);
 
 
-export const getCategoriesWithNotes = createSelector(getNoteEntities, getCategoryEntities, (notes, categories) => {
-  debugger;
+export const getCategoriesWithNotes = createSelector(getAllNotes, getCategoryEntities, (notes, categories) => {
+
+  Object.keys(categories).forEach(categoryKey => {
+    const cat = categories[categoryKey];
+    cat.notes = [];
+  });
+
+  const uncategorized = {
+    name: 'Uncategorized',
+    id: 0,
+    notes: []
+  };
+
+  Object.keys(notes).forEach(noteKey => {
+    const note = notes[noteKey];
+
+    if (note.categoryId) {
+      categories[note.categoryId].notes.push(note);
+    } else {
+      note.categoryId = 0;
+      note.category = {
+        name: 'Uncategorized',
+        id: 0,
+      };
+      uncategorized.notes.push(note);
+    }
+  });
+
+  const result = [
+    uncategorized,
+    ...Object.values(categories)
+  ];
+
+  return result;
 });
 
 export const getSelectedNote = createSelector(getNoteEntities, getSelectedNoteId, (notes, id) => {
@@ -100,3 +141,5 @@ export const getSharesLoading = createSelector(getSharesState, fromShares.getLoa
 export const getSharesError = createSelector(getSharesState, fromShares.getError);
 export const getSharesShare = createSelector(getSharesState, fromShares.getShare);
 export const getSharesCreatedShare = createSelector(getSharesState, fromShares.getCreatedShare);
+
+

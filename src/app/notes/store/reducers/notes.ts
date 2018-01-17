@@ -9,6 +9,7 @@ export interface State extends EntityState<Note> {
   selectedNoteId: number | null;
   loading: boolean;
   loaded: boolean;
+  lastLoaded: number;
   error: string;
 }
 
@@ -21,6 +22,7 @@ export const initialState: State = adapter.getInitialState({
   selectedNoteId: null,
   loading: false,
   loaded: false,
+  lastLoaded: null,
   error: null
 });
 
@@ -41,7 +43,7 @@ export function reducer(state = initialState, action: NotesActions): State {
     }
 
     case(NotesActionTypes.FetchSuccess): {
-      return { ...adapter.addAll(action.payload, state), loading: false, loaded: true };
+      return { ...adapter.addAll(action.payload, state), loading: false, loaded: true, lastLoaded: Date.now() };
     }
 
     case(NotesActionTypes.FetchFailure): {
@@ -73,3 +75,5 @@ export const getSelectedId = (state: State) => state.selectedNoteId;
 export const getError = (state: State) => state.error;
 export const getLoaded = (state: State) => state.loaded;
 export const getLoading = (state: State) => state.loading;
+export const getLastLoaded = (state: State) => state.lastLoaded;
+

@@ -25,7 +25,7 @@ export class ComposeNoteViewComponent implements OnInit {
   constructor(private store: Store<fromNotes.State>, private layout: LayoutService) {
 
 
-    this.categories = this.store.select(fromNotes.getAllCategories);
+    this.categories = this.store.select(fromNotes.getCategoriesWithNotes);
     this.categoriesLoaded = this.store.select(fromNotes.getCategoriesLoaded);
 
     this.categoriesLoaded.subscribe(loaded => {

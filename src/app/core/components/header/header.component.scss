@@ -19,12 +19,12 @@ h1.app-title-name.app-toolbar-name {
 
 .add-fab {
   margin-right: 30px;
-  position: relative;
+  position: absolute;
   right: 20%;
   display: block;
 }
 @media (max-width: 700px) {
   .add-fab {
-    display: none;
+    right: 5%;
   }
 }

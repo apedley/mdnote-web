@@ -104,13 +104,22 @@ export const rehydrateApplicationState = (keys: any[], storage: Storage, storage
     }
     return acc;
   }, {});
-
+  if (rehydratedState.auth) {
+    rehydratedState.auth.authForm.formError = null;
+    rehydratedState.auth.authForm.loading = false;
+  }
   if (rehydratedState.notes) {
-    rehydratedState.notes.categories.loaded = false;
-    rehydratedState.notes.notes.loaded = false;
+
+
+    if (expiredDate(rehydratedState.notes.categories.lastLoaded)) {
+      rehydratedState.notes.categories.loaded = false;
+    }
+
+    if (expiredDate(rehydratedState.notes.notes.lastLoaded)) {
+      rehydratedState.notes.notes.loaded = false;
+    }
   }
 
-    // debugger;
   return rehydratedState;
 };
 
@@ -242,6 +251,12 @@ export const localStorageSync = (config: LocalStorageConfig) => (reducer: Action
     return nextState;
 
   };
+};
+
+const expiredDate = (date: number): boolean => {
+  const expiration = 1000 * 60 * 5;
+
+  return Date.now() > date + expiration;
 };
 
 export interface LocalStorageConfig {

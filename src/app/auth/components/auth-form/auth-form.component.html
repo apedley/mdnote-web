@@ -1,7 +1,6 @@
 <form [formGroup]="authForm" class="auth-form" (ngSubmit)="submitAuthForm()">
   <h2>{{ authFunction }}</h2>
 
-  <h5 class="form-error" *ngIf="error">Error: {{ error | json }}</h5>
   <mat-form-field>
     <input matInput formControlName="email" placeholder="Email Address">
     <mat-error *ngIf="authForm.controls['email'].hasError('email')">

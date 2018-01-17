@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './auth/auth.guard';
+import { SingleViewLayoutComponent } from './core/containers/single-view-layout/single-view-layout.component';
 
 const routes: Routes = [
   {

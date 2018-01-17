@@ -6,10 +6,10 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from '../shared/material.module';
 import { ApiService } from './api.service';
-import { ConfirmationDialogComponent } from './components/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { UserInputDialogComponent } from './components/user-input-dialog.component';
+import { UserInputDialogComponent } from './components/dialogs/user-input-dialog.component';
 import { AppViewComponent } from './containers/app-view/app-view.component';
 import { SidebarLayoutComponent } from './containers/sidebar-layout/sidebar-layout.component';
 import { SidebarContainerComponent } from './containers/sidebar/sidebar-container.component';
@@ -29,7 +29,7 @@ const Components = [
   AppViewComponent,
   SingleViewLayoutComponent,
   SidebarLayoutComponent,
-  SidebarListItemComponent
+  SidebarListItemComponent,
 ];
 
 

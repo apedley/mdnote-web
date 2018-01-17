@@ -9,6 +9,7 @@ export interface State extends EntityState<Category> {
   selectedCategoryId: number | null;
   loading: boolean;
   loaded: boolean;
+  lastLoaded: number;
   error: string;
   collapsed: {};
 }
@@ -22,6 +23,7 @@ export const initialState: State = adapter.getInitialState({
   selectedCategoryId: null,
   loading: false,
   loaded: false,
+  lastLoaded: null,
   error: null,
   collapsed: {},
 });
@@ -36,7 +38,7 @@ export function reducer(state = initialState, action: CategoriesActions): State 
     }
 
     case(CategoriesActionTypes.FetchSuccess): {
-      return { ...adapter.addAll(action.payload, state), loading: false, loaded: true };
+      return { ...adapter.addAll(action.payload, state), loading: false, loaded: true, lastLoaded: Date.now() };
     }
 
     case(CategoriesActionTypes.FetchFailure): {
@@ -81,4 +83,5 @@ export const getSelectedId = (state: State) => state.selectedCategoryId;
 export const getError = (state: State) => state.error;
 export const getLoaded = (state: State) => state.loaded;
 export const getLoading = (state: State) => state.loading;
+export const getLastLoaded = (state: State) => state.lastLoaded;
 export const getCollapsed = (state: State) => state.collapsed;

@@ -6,12 +6,24 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import { Store } from '@ngrx/store';
 import * as fromNotes from './store/reducers';
+import * as Categories from './store/actions/categories';
+import * as Notes from './store/actions/notes';
+import { filter, switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class NotesService {
 
+  public categoriesWithNotes: Observable<Category[]>;
 
-  constructor(private api: ApiService) {
+  public lastLoaded: Observable<{ categories: number, notes: number }>;
+
+  public needsFetch = false;
+
+  constructor(private api: ApiService, private store: Store<fromNotes.State>) {
+    this.categoriesWithNotes = this.store.select(fromNotes.getCategoriesWithNotes);
+
+    this.lastLoaded = this.store.select(fromNotes.getLastLoaded);
+
   }
 
   fetchCategories() {
@@ -63,6 +75,7 @@ export class NotesService {
   createShare(noteId: number) {
     return this.api.post(`/notes/${noteId}/share`, {}, true);
   }
+
   combineCategoriesNotes($categories: Observable<Category[]>, $notes: Observable<Note[]>): Observable<Category[]> {
     return Observable.combineLatest($categories, $notes, (categories, notes): Category[] => {
 

@@ -41,6 +41,8 @@ export class AuthViewComponent implements OnInit {
 
   forgotPassword(e) {
     e.preventDefault();
+
+    this.layout.openConfirmationDialog({ title: 'Forgot Password', content: 'Coming soon'}, false);
   }
 
 }

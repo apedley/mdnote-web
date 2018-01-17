@@ -10,7 +10,7 @@
 
 @media (max-width: 800px) {
   .split-view {
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
   }
   .split-view div {
     width: 100%;

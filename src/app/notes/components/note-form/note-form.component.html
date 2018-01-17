@@ -7,9 +7,6 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="categoryId" >
-      <mat-option value="0">
-        Uncategorized
-      </mat-option>
       <mat-option *ngFor="let category of categories | async" [value]="category.id">
         {{ category.name }}
       </mat-option>

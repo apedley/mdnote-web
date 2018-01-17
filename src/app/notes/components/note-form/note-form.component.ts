@@ -10,8 +10,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit {
-  @Input() categories: Category[];
+  @Input() categories: Observable<Category[]>;
   @Input() initialData: Observable<Note>;
+
 
   @Output() formSubmitted = new EventEmitter<Note>();
   @Output() bodyChanged = new EventEmitter<string>();
@@ -22,7 +23,9 @@ export class NoteFormComponent implements OnInit {
 
   existingNoteId: number;
 
-  constructor(public fb: FormBuilder) { }
+
+  constructor(public fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.noteForm = this.fb.group({
@@ -30,6 +33,7 @@ export class NoteFormComponent implements OnInit {
       body: ['', [Validators.required, Validators.minLength(3)]],
       categoryId: ['0']
     });
+
 
     if (!this.initialData) {
       return;
@@ -44,6 +48,7 @@ export class NoteFormComponent implements OnInit {
       this.noteForm.controls['categoryId'].setValue(note.categoryId);
     });
   }
+
 
   submitForm() {
 

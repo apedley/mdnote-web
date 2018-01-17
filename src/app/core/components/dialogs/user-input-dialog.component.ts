@@ -16,6 +16,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
     <button mat-button [mat-dialog-close]="data.response" tabindex="2">Ok</button>
   </div>
   `,
+  styleUrls: ['./dialogs.scss']
 })
 export class UserInputDialogComponent {
   constructor(public dialogRef: MatDialogRef<UserInputDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }

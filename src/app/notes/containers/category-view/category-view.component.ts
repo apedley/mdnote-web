@@ -4,7 +4,10 @@ import { Observable } from 'rxjs/Observable';
 
 import * as Categories from '../../store/actions/categories';
 import * as Notes from '../../store/actions/notes';
+import * as Shares from '../../store/actions/shares';
+
 import * as fromNotes from '../../store/reducers';
+
 import { Store } from '@ngrx/store';
 import { LayoutService } from '../../../core/layout.service';
 import { Note } from '../../models/note.model';
@@ -63,5 +66,10 @@ export class CategoryViewComponent {
       if (!result) { return; }
       this.store.dispatch(new Categories.DeleteCategory(categoryId));
     });
+  }
+
+
+  shareNote(noteId) {
+    this.store.dispatch(new Shares.CreateShare(noteId));
   }
 }

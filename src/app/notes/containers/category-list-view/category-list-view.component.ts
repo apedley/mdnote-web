@@ -29,6 +29,7 @@ export class CategoryListViewComponent implements OnInit {
   public selectedNote: Observable<Note>;
 
   public categoriesWithNotes: Observable<Category[]>;
+  public categoriesWithNotesTwo: Observable<Category[]>;
 
   constructor(private store: Store<fromNotes.State>, private layout: LayoutService, private notesService: NotesService, private router: Router) {
 
@@ -46,13 +47,14 @@ export class CategoryListViewComponent implements OnInit {
       }
     });
 
+
     this.categoriesLoaded.subscribe(loaded => {
       if (!loaded) {
         this.store.dispatch(new Categories.Fetch());
       }
     });
 
-    this.categoriesWithNotes = this.notesService.combineCategoriesNotes(this.categories, this.notes);
+    // this.categoriesWithNotes = this.notesService.combineCategoriesNotes(this.categories, this.notes);
 
     this.selectedNote = this.store.select(fromNotes.getRouteNote);
 
@@ -63,6 +65,8 @@ export class CategoryListViewComponent implements OnInit {
 
       this.layout.setTitle(note.title);
     });
+
+    this.categoriesWithNotes = this.notesService.categoriesWithNotes;
   }
 
   ngOnInit() {

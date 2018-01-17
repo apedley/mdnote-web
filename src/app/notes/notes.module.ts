@@ -29,6 +29,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { SharesEffects } from './store/effects/shares';
 import { ShareShowComponent } from './components/share-show/share-show.component';
 import { ShareViewComponent } from './containers/share-view/share-view.component';
+import { NoteExistsGuard } from './note-exists.guard';
 
 @NgModule({
   imports: [
@@ -47,10 +48,10 @@ import { ShareViewComponent } from './containers/share-view/share-view.component
       {
         path: '', component: SidebarLayoutComponent, children: [
         { path: 'categories/:categoryId', component: CategoryViewComponent },
-        { path: 'categories/:categoryId/notes/:noteId', component: CategoryViewComponent },
+        { path: 'categories/:categoryId/notes/:noteId', component: CategoryViewComponent, canActivate: [NoteExistsGuard] },
         { path: 'new', component: ComposeNoteViewComponent },
-        { path: ':noteId/edit', component: ComposeNoteViewComponent },
-        { path: ':noteId', pathMatch: 'full', component: CategoryListViewComponent },
+        { path: ':noteId/edit', component: ComposeNoteViewComponent, canActivate: [NoteExistsGuard] },
+        { path: ':noteId', pathMatch: 'full', component: CategoryListViewComponent, canActivate: [NoteExistsGuard] },
         { path: '', pathMatch: 'full', component: CategoryListViewComponent },
       ],
       canActivate: [AuthGuard]}
@@ -74,6 +75,6 @@ import { ShareViewComponent } from './containers/share-view/share-view.component
     ShareShowComponent
   ],
   exports: [],
-  providers: [NotesService]
+  providers: [NotesService, NoteExistsGuard]
 })
 export class NotesModule { }
