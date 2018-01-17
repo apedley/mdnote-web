@@ -1,111 +1,91 @@
-import * as fromAuth from './actions';
+import * as Auth from './actions';
+import { testEmptyAction, testPayloadAction } from '../../../../testing/action-helpers';
 
 const userInfo = {
   email: 'test123@test.com',
   password: 'test123'
 };
+
+const user = {
+  email: 'abc@gmail.com',
+  tokens: [],
+  created_at: '12-25',
+  updated_at: '12-25'
+};
+
 const error = {error: 'error'};
 
 describe('Auth Actions', () => {
-  describe('Sign Up Actions', () => {
+
+  describe('Signup Actions', () => {
+
     describe('Signup', () => {
       it('should create an action', () => {
-        const action = new fromAuth.Signup(userInfo);
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNUP,
-          payload: userInfo
-        });
+        testPayloadAction(Auth.SIGNUP, Auth.Signup, userInfo);
       });
     });
 
     describe('SignupSuccess', () => {
       it('should create an action', () => {
-        const action = new fromAuth.SignupSuccess();
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNUP_SUCCESS
-        });
+        const payload = {
+          user,
+          token: 'abcdef'
+        };
+        testPayloadAction(Auth.SIGNUP_SUCCESS, Auth.SignupSuccess, payload);
       });
     });
 
     describe('SignupFailure', () => {
       it('should create an action', () => {
-        const action = new fromAuth.SignupFailure(error);
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNUP_FAILURE,
-          payload: error
-        });
+        testPayloadAction(Auth.SIGNUP_FAILURE, Auth.SignupFailure, 'an error');
       });
     });
+
   });
 
-  describe('Sign In Actions', () => {
+  describe('Signin Actions', () => {
+
     describe('Signin', () => {
       it('should create an action', () => {
-        const action = new fromAuth.Signin(userInfo);
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNIN,
-          payload: userInfo
-        });
-      });
-    });
-    describe('SigninSuccess', () => {
-      it('should create an action', () => {
-        const payload = { user: userInfo, token: 'abc'};
-        const action = new fromAuth.SigninSuccess(payload);
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNIN_SUCCESS,
-          payload: { user: userInfo, token: 'abc'}
-        });
+        testPayloadAction(Auth.SIGNIN, Auth.Signin, userInfo);
       });
     });
 
-    describe('SigninRedirect', () => {
+    describe('SigninSuccess', () => {
       it('should create an action', () => {
-        const action = new fromAuth.SigninRedirect();
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNIN_REDIRECT
-        });
+        const payload = {
+          user,
+          token: 'abcdef'
+        };
+        testPayloadAction(Auth.SIGNIN_SUCCESS, Auth.SigninSuccess, payload);
       });
     });
 
     describe('SigninFailure', () => {
       it('should create an action', () => {
-        const action = new fromAuth.SigninFailure(error);
-        expect({...action}).toEqual({
-          type: fromAuth.SIGNIN_FAILURE,
-          payload: error
-        });
+        testPayloadAction(Auth.SIGNIN_FAILURE, Auth.SigninFailure, 'an error');
       });
     });
+
   });
 
-  describe('Signout', () => {
-    it('should create an action', () => {
-      const action = new fromAuth.Signout();
-      expect({...action}).toEqual({
-        type: fromAuth.SIGNOUT
-      });
-    });
-  });
 
-  describe('Local Auth Data Actions', () => {
+  describe('Local Data Actions', () => {
+
     describe('ReadLocalAuthData', () => {
       it('should create an action', () => {
-        const action = new fromAuth.ReadLocalAuthData();
-        expect({...action}).toEqual({
-          type: fromAuth.READ_LOCAL_AUTH_DATA
-        });
+        testEmptyAction(Auth.READ_LOCAL_AUTH_DATA, Auth.ReadLocalAuthData);
       });
     });
 
     describe('LoadLocalAuthData', () => {
       it('should create an action', () => {
-        const payload = { user: userInfo, token: 'abc'};
-        const action = new fromAuth.LoadLocalAuthData(payload);
-        expect({...action}).toEqual({
-          type: fromAuth.LOAD_LOCAL_AUTH_DATA,
-          payload: payload
-        });
+        const payload = {
+          user,
+          token: 'abcdef'
+        };
+
+        testPayloadAction(Auth.LOAD_LOCAL_AUTH_DATA, Auth.LoadLocalAuthData, payload);
       });
     });
   });

@@ -7,9 +7,9 @@ export interface Share {
   updated_at: string;
   id: number;
   noteId: number;
-  note: Note;
+  note?: Note;
   url: string;
-  userId: number;
+  userId?: number;
   views?: number;
 }
 

@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class StripMarkdownPipe implements PipeTransform {
   transform(initialString: string) {
-    const textWithoutSymbols = initialString.replace(/^(#|\*|-){1,3} /gm, '');
+    const textWithoutSymbols = initialString.trim().replace(/^(#|\*|-){1,3} /gm, '');
 
     const textWithoutLanguageDeclarations = textWithoutSymbols.replace(/^```(\w+)?$/gm, '');
 
