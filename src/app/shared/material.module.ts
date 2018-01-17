@@ -13,7 +13,8 @@ import {
   MatTableModule,
   MatExpansionModule,
   MatSelectModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -33,7 +34,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatTableModule,
     MatExpansionModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -50,7 +52,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatTableModule,
     MatExpansionModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule {}

@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 
 import { environment } from '../../environments/environment';
 import { ShareDialogComponent } from './components/dialogs/share-dialog.component';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class LayoutService {
@@ -22,6 +23,7 @@ export class LayoutService {
   constructor(
     private layoutStore: Store<fromLayout.State>,
     private titleService: Title,
+    public snackBar: MatSnackBar,
     // private notesStore: Store<fromNotes.State>,
     public dialog: MatDialog) { }
 
@@ -60,6 +62,12 @@ export class LayoutService {
   setTitle(title: string) {
     this.titleService.setTitle(`${title} | mdNote`);
     this.layoutStore.dispatch(new layout.SetTitle(title));
+  }
+
+  openSnackBar(message: string, action?: string, duration = 3000) {
+    this.snackBar.open(message, action, {
+      duration
+    });
   }
 
 }

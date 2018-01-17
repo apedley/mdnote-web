@@ -4,6 +4,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 import { CategoriesActions, CategoriesActionTypes } from '../actions/categories';
 import { Category } from '../../models/category.model';
+import * as authActions from '../../../auth/store/actions';
 
 export interface State extends EntityState<Category> {
   selectedCategoryId: number | null;
@@ -28,7 +29,7 @@ export const initialState: State = adapter.getInitialState({
   collapsed: {},
 });
 
-export function reducer(state = initialState, action: CategoriesActions): State {
+export function reducer(state = initialState, action: CategoriesActions | authActions.Actions): State {
   switch (action.type) {
 
     case(CategoriesActionTypes.AddCategory):
@@ -60,6 +61,10 @@ export function reducer(state = initialState, action: CategoriesActions): State 
 
     case(CategoriesActionTypes.DeleteCategorySuccess): {
       return { ...adapter.removeOne(action.payload, state), loading: false};
+    }
+
+    case(authActions.SIGNOUT): {
+      return initialState;
     }
 
 

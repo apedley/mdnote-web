@@ -4,6 +4,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 import { NotesActions, NotesActionTypes, DeleteNote, DeleteNoteFailure, UpdateNoteSuccess } from '../actions/notes';
 import { Note } from '../../models/note.model';
+import * as authActions from '../../../auth/store/actions';
 
 export interface State extends EntityState<Note> {
   selectedNoteId: number | null;
@@ -26,7 +27,7 @@ export const initialState: State = adapter.getInitialState({
   error: null
 });
 
-export function reducer(state = initialState, action: NotesActions): State {
+export function reducer(state = initialState, action: NotesActions | authActions.Actions): State {
   switch (action.type) {
 
     case(NotesActionTypes.AddNote):
@@ -65,6 +66,12 @@ export function reducer(state = initialState, action: NotesActions): State {
     case(NotesActionTypes.DeleteNoteSuccess): {
       return { ...adapter.removeOne(action.payload, state), loading: false };
     }
+
+
+    case(authActions.SIGNOUT): {
+      return initialState;
+    }
+
     default: {
       return state;
     }

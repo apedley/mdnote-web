@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { LayoutService } from '../../layout.service';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -11,7 +12,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
     </div>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button ngxClipboard [cbContent]="data.fullUrl">Copy Link</button>
+    <button mat-raised-button ngxClipboard [cbContent]="data.fullUrl" (click)="copied()">{{ copyButtonText }}</button>
     <button mat-raised-button [mat-dialog-close]="true">Ok</button>
   </div>
   `,
@@ -19,12 +20,16 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class ShareDialogComponent {
   constructor(public dialogRef: MatDialogRef<ShareDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  public copyButtonText = 'Copy Link';
 
   copyUrl() {
     console.log(this.data.fullUrl);
   }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  copied() {
+    this.copyButtonText = 'Copied!';
   }
 
 }
